@@ -1,13 +1,13 @@
-	
+
     var dataset;
-	
+
 	var width = 960,
 		height = 500;
 
 	var svg = d3.select("#map").append("g").append("svg")
 		.attr("width", width)
 		.attr("height", height);
-    
+
     var div = d3.select("body").append("div")
         .attr("class","tooltip")
         .style("opacity",0);
@@ -20,27 +20,27 @@
     //load data files
 	d3.queue()
 		.defer(d3.json, "map-TG.json")
-		.defer(d3.csv, "Abstimmung.csv")
+		.defer(d3.csv, "data/gemeinden/3.csv")
         .defer(d3.csv, "Parteien_2016.csv")
 		.await(ready)
-		
+
 function ready (error, data, csvAbstimmung, csvParteien){
 
 	if(error){console.log("Error: "+ error)};
-			
+
     dataset = data;
-    
+
     //legend
     function drawLegend(scale){
         d3.select('#legend').selectAll('ul').remove();
-    
+
     var legend = d3.select('#legend')
         .append('ul')
         .attr('class', 'list-inline');
-    
+
     var keys = legend.selectAll('li.key')
         .data(scale.range());
-    
+
     keys.enter().append('li')
         .attr('class', 'key')
         .style('border-top-color', String)
@@ -49,9 +49,9 @@ function ready (error, data, csvAbstimmung, csvParteien){
             return Math.round(r[0]*1000)/10+'%';
     });
 }
-	
+
 	var Gemeinden = topojson.feature(data, data.objects.municipalities).features;
-	
+
 	//match id (topojson) & BFS_NR_GEMEINDE (csvAbstimmung)
 	Gemeinden.forEach(function(gemeinde){
 	csvAbstimmung.some(function(csvrow){
@@ -61,7 +61,7 @@ function ready (error, data, csvAbstimmung, csvParteien){
             }
 		});
 	});
-    
+
     //match id (topojson) & BFS_NR_GEMEINDE (csvParteien)
     Gemeinden.forEach(function(gemeinde){
 	csvParteien.some(function(csvrow){
@@ -71,11 +71,11 @@ function ready (error, data, csvAbstimmung, csvParteien){
             }
 		});
 	});
-    
-    
+
+
     var path = d3.geoPath()
 		.projection(null);
-	
+
     drawLegend(mapColour);
 	svg.append("g")
 		.attr("class", "municipalities")
@@ -90,7 +90,7 @@ function ready (error, data, csvAbstimmung, csvParteien){
                 /*console.log(percentage)*/; return mapColour((percentage)); //Ja-Stimmen in Prozent
             }else if (d.id == "9329"){return "#2299ee"} //if lake fill blue
         })
-        
+
         .on("mouseover", function(d) {
              d3.select(this)
                 .style('stroke', function (d) {
@@ -98,8 +98,8 @@ function ready (error, data, csvAbstimmung, csvParteien){
                 })
                 .style('stroke-width', function (d) {
                     return '1';
-                });  
-            
+                });
+
             div.transition()
                 .duration(200)
                 .style("opacity", .9);
@@ -108,7 +108,7 @@ function ready (error, data, csvAbstimmung, csvParteien){
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 28) + "px");
             })
-    
+
         .on("mouseout", function(d) {
             d3.select(this)
                 .style('stroke', '#000')
@@ -117,6 +117,6 @@ function ready (error, data, csvAbstimmung, csvParteien){
                 .duration(500)
                 .style("opacity", 0);
         })
-    
+
 		.attr("d", path);
 };
