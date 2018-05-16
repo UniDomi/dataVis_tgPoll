@@ -1,0 +1,48 @@
+
+text {
+font-size: 10px;
+text-anchor: middle;
+fill: #4f442b;
+}
+g > text.active {
+font-size: 30px;
+}
+circle {
+fill: #75739F;
+stroke: black;
+stroke-width: 1px;
+}
+circle.active {
+fill: #FE9922;
+}
+circle.inactive {
+fill:
+{
+    margin:0;padding:0;
+}
+html,body,.container, .sideBar, .content
+{
+    height: 100%;
+}
+h1
+{
+    height: 50px;
+    line-height: 50px;
+}
+.container
+{
+    margin-top: -50px;
+    padding-top: 50px;
+    box-sizing: border-box;
+}
+.sideBar
+{
+    float:left;
+    width: 100px;
+    background: aqua;
+}
+.content
+{
+    overflow:hidden;
+    background: yellow;
+}
