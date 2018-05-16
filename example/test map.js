@@ -20,7 +20,7 @@
     //load data files
 	d3.queue()
 		.defer(d3.json, "map-TG.json")
-		.defer(d3.csv, "data/gemeinden/3.csv")
+		.defer(d3.csv, "data/gemeinden/25.csv")
         .defer(d3.csv, "Parteien_2016.csv")
 		.await(ready)
 
