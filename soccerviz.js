@@ -1,9 +1,11 @@
+createSoccerViz();
+
 function createSoccerViz() {
   d3.csv("data/Eidg_Abstimmungen_2000_2017_Kanton_inkl_Themen.csv", data =>
   {overallTeamViz(data)})
 
   function overallTeamViz(incomingData) {
-    d3.select("svg")
+    d3.select("#tree")
       .append("g")
       .attr("id", "teamsG")
       .attr("transform", "translate(50,300)")

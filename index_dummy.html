@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <title>This is it!</title>
+    <meta charset="utf-8" />
+    <link type="text/css" rel="stylesheet" href="d3ia.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  </head>
+  <script src="d3.js"></script>
+  <script src="colorbrewer.js"></script>
+  <script src="soccerviz.js"></script>
+  <script src="code/sidebar.js"></script>
+  <script src="code/pollsTree.js"></script>
+  <script src="code/w3_helpers.js"></script>
+  <script src="example/topojson.v1.min.js"></script>
+  <body onload="createSidebar()">
+    <!-- Sidebar -->
+    <div class="w3-sidebar w3-bar-block" style="display:none" id="mySidebar">
+      <button onclick="w3_close()" class="w3-bar-item w3-button w3-large">Close &times;</button>
+      <div id="myBar">
+        <svg style="width:5000px;height:5000px;border:1px lightgray solid;" />
+      </div>
+      <div id="viz">
+        <svg style="width:5000px;height:5000px;border:1px lightgray solid;" />
+      </div>
+    </div>
+    <div class="w3-teal">
+      <button class="w3-button w3-teal w3-xlarge" onclick="w3_open()">☰</button>
+      <div class="w3-container">
+        <h1>My Page</h1>
+      </div>
+    </div>
+
+    <div class="w3-container">
+      <div id="viz">
+        <div id="legend">
+            <h3>Anteil Ja-Stimmen</h3>
+        </div>
+
+        <div id="map" style="float:left"></div>
+
+        <div id="piechart">
+            <h4 BFS-Nr="000">Kanton Thurgau</h4>
+        </div>
+
+        <script src="test_map.js" charset="utf-8"></script>
+      </div>
+    </div>
+
+
+  </body>
+</html>

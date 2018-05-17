@@ -1,26 +1,30 @@
+createSidebar();
+
+poll = 2;
+
 function createSidebar(){
   d3.csv("data/Eidg_Abstimmungen_2000_2017_Kanton_inkl_Themen.csv", data =>
   {createThemeBlocks(data)})
 
   function createThemeBlocks(data){
-    d3.select("svg")
+    d3.select("#tree")
       .append("g")
       .attr("id", "pollsG")
-      .attr("transform", "translate(50,300)")
+      .attr("transform", "translate(30,30)")
       .selectAll("g")
       .data(data)
       .enter()
       .append("g")
       .attr("class", "overallG")
-      .attr("transform", (d, i) => "translate(0, "+ (i* 50) + " ) ")
+      .attr("transform", (d, i) => "translate(0, "+ (i* 30) + " ) ")
 
     var pollsG = d3.selectAll("g.overallG");
     pollsG
       .append("circle")
-      .attr("r", 20)
+      .attr("r", 5)
     pollsG
       .append("text")
-      .attr("x",1000)
+      .attr("x",250)
       .text( d => d.VORLAGE_BEZEICHNUNG)
 
     const dataKeys = Object.keys(data[0])
@@ -43,6 +47,13 @@ function createSidebar(){
         .select("circle")
         .classed("inactice", false).classed("active", false)
     })
+
+    pollsG.on("click", function(d){
+      d3.select("#map")
+      poll = d.VORLAGE_NR;
+      drawMap();
+      console.log(poll)
+    });
 
     function buttonClick(datapoint) {
     var maxValue = d3.max(data, d => parseFloat(d[datapoint]))
