@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+    <head>
+        <script src="d3.js"></script>
+    </head>
+    <body>
+        <script>  
+                    
+          d3.csv("Steuerfuss.csv", function (data){ 
+              
+               data.forEach(function(d) {
+                    d.Gemeindesteuerfuss = +d.Gemeindesteuerfuss;
+               });
+              
+              //filter nach Jahr
+              var filteredData = data.filter(function(d) {
+                  return d.Jahr === "2017";
+              });
+              
+              //Daten in passende Form bringen
+              var newdata = []
+                filteredData.forEach(function(d) {
+                  newdata.push({Gemeindesteuerfuss: d.Gemeindesteuerfuss})
+            })
+              
+              var svg = d3.select("body").append("svg")
+					.attr("width", 800)
+					.attr("height", 800)
+                    .attr("transform", "translate(200, 0)");
+                    
+              //histogram
+                var xScale = d3.scaleLinear().domain([0, 100]).range([0, 400]);
+                var yScale = d3.scaleLinear().domain([0, 80]).range([400,0]);
+                var xAxis = d3.axisBottom().scale(xScale).ticks(18)
+                var histoChart = d3.histogram();
+                
+                histoChart
+                    .domain([0, 100])
+                    .thresholds([5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95])
+                    .value(function (d) {return d.Gemeindesteuerfuss;})
+                
+                histoData = histoChart(newdata);
+                
+                console.log(histoData);
+                
+                d3.select("svg")
+                    .selectAll("rect")
+                    .data(histoData).enter()
+                    .append("rect")
+                    .attr("x", d => xScale(d.x0))
+                    .attr("y", d => yScale(d.length))
+                    .attr("width", d => xScale(d.x1 - d.x0) -2)
+                    .attr("height", d => 400 - yScale(d.length))
+                    .style("fill", "black")
+                    .attr("transform", "translate(200, 50)"); //solve cutting off of y-axis
+                
+              // add the x Axis
+                d3.select("svg").append("g").attr("class", "x axis")
+                    .attr("transform", "translate(200, 450)").call(xAxis); /* 450 -> 400 (range) + 50 (y-axis) */
+                d3.select("g axis").selectAll("text").attr("dx", 50);  
+                
+              //add y axis
+          svg.append("g")
+              .call(d3.axisLeft(yScale))
+              .attr("transform", "translate(200, 50)");;   //solve cutting off of y-axis              
+    });
+
+		</script>
+    </body>
+</html>
+
+
+
+
