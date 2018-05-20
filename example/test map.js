@@ -1,7 +1,7 @@
 
     var dataset;
 
-	var width = 960,
+	var width = 880,
 		height = 500;
 
 	var svg = d3.select("#map").append("g").append("svg")
