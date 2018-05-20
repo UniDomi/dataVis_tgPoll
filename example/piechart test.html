@@ -44,36 +44,22 @@
             var filteredData = data.filter(function(d) {
                 return d.BFS_NR_GEMEINDE === "4551";
                 });
+		  
+		//Dataien in passende Form bringen
+            var newdata = []
+                filteredData.forEach(function(d) {
+                  newdata.push({party: 'EDU', votes: d.EDU})
+                    newdata.push({party: 'EVP', votes: d.EVP})
+                    newdata.push({party: 'GP', votes: d.GP})
+                    newdata.push({party: 'SP', votes: d.SP})
+                    newdata.push({party: 'CVP', votes: d.CVP})
+                    newdata.push({party: 'FDP', votes: d.FDP})
+                    newdata.push({party: 'SVP', votes: d.SVP})
+                    newdata.push({party: 'glp', votes: d.glp})
+                    newdata.push({party: 'BDP', votes: d.BDP})
+            })
+              console.log(newdata); 
               
-            //Daten in passendes Format bringen
-              /*   funktioniert so noch nicht, nur wenn Werte manuell eingefügt wurden     
-            var newdata = [
-                {'party':"EDU",'votes':d.EDU},
-                {'party':"EVP",'votes':d.EVP},
-                {'party':"GP",'votes':d.GP},
-                {'party':"SP",'votes':d.SP},
-                {'party':"CVP",'votes':d.CVP},
-                {'party':"FDP",'votes':d.FDP}, 
-                {'party':"SVP",'votes':d.SVP},
-                {'party':"glp",'votes':d.glp},
-                {'party':"BDP",'votes':d.BDP}
-            ];
-      */  
-              //wenn Werte manuell eingefügt werden funktioniert Code -> Daten sollten zum Visualisieren in diesem Format sein
-            var newdata = [
-                {'party':"EDU",'votes':3.4},
-                {'party':"EVP",'votes':2.9},
-                {'party':"GP",'votes':8.7},
-                {'party':"SP",'votes':9.6},
-                {'party':"CVP",'votes':23.1},
-                {'party':"FDP",'votes':13.7}, 
-                {'party':"SVP",'votes':30.6},
-                {'party':"glp",'votes':5.7},
-                {'party':"BDP",'votes':2.4}
-            ];
-              
-        console.log(newdata);
-        
 			var r = 300;
 			
               //Farbskala
@@ -116,7 +102,7 @@
                             .duration(200)
                             .style("opacity", .9);
                         div
-                            .html("<strong>" + "Partei: " + "</strong>" + d.party + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + d.votes + "%")
+                            .html("<strong>" + "Partei: " + "</strong>" + newdata.party + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + newdata.votes + "%")
                             .style("left", (d3.event.pageX) + "px")
                             .style("top", (d3.event.pageY - 28) + "px");
                     })

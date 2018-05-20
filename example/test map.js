@@ -1,6 +1,7 @@
 
     var dataset;
 
+
 	var widthT = 960,
 		height = 500;
 
@@ -52,6 +53,18 @@ function ready (error, data, csvAbstimmung, csvParteien){
 	if(error){console.log("Error: "+ error)};
 
     dataset = data;
+	
+    csvParteien.forEach(function(d) {
+                    d.EDU = +d.EDU;
+                   d.EVP = +d.EVP;
+                   d.GP = +d.GP;
+                   d.SP = +d.SP;
+                   d.CVP = +d.CVP;
+                   d.FDP = +d.FDP;
+                   d.SVP = +d.SVP;
+                   d.glp = +d.glp;
+                   d.BDP = +d.BDP;
+               });
 
     //legend
     function drawLegend(scale){
@@ -140,6 +153,91 @@ function ready (error, data, csvAbstimmung, csvParteien){
                 .duration(500)
                 .style("opacity", 0);
         })
+	
+	.on("click",function(d){  //function(e,f){
+            
+                d3.select('#piechart').select('h4').html(d.properties.data.GEMEINDE_NAME);
+                d3.select('#piechart').select('h4').attr("BFS-Nr",d.id);
+        
+                //drawPiechart();
+           })
 
 		.attr("d", path);
+	
+	
+     var width2 = 360;
+    var height2 = 480;
+    var r = Math.min(width2, height2) / 2; //var r = 180;
+	
+    	//Farbskala
+	var colorpie = d3.scaleOrdinal()
+		.range(["#6a51a3", "#08306b", "green", "red", "orange", "#2171b5", "#67000d", "#c7e9c0", "#ffff00"])
+            
+        // d3.select('#piechart').selectAll('svg').remove();
+            
+            
+       //function drawPiechart() {
+          
+            var piefilteredData = csvParteien.filter(function(d) {
+                return d.BFS_NR_GEMEINDE === "4551";
+                });
+    
+            var piedata = []
+                piefilteredData.forEach(function(d) {
+                  piedata.push({party: 'EDU', votes: d.EDU})
+                    piedata.push({party: 'EVP', votes: d.EVP})
+                    piedata.push({party: 'GP', votes: d.GP})
+                    piedata.push({party: 'SP', votes: d.SP})
+                    piedata.push({party: 'CVP', votes: d.CVP})
+                    piedata.push({party: 'FDP', votes: d.FDP})
+                    piedata.push({party: 'SVP', votes: d.SVP})
+                    piedata.push({party: 'glp', votes: d.glp})
+                    piedata.push({party: 'BDP', votes: d.BDP})
+            })
+    
+            var arc = d3.arc()
+		.innerRadius(80) //if inner radius is 0 then it becomes a pie chart
+		.outerRadius(r);
+				
+		var pie = d3.pie()
+			.value(function (d) {return d.votes;});
+            
+            
+            var canvas = d3.select("#piechart").append("svg")
+                .attr("width", width2)
+                .attr("height", height2)
+                .append("g")
+                .attr("transform", "translate(" + width2 / 2 + "," + 200 + ")")
+            
+            var arcs = canvas.selectAll(".arc")
+		.data(pie(piedata))
+		.enter()
+		.append("g")
+                .attr("class", "arc");  
+				
+	arcs.append("path")
+		.attr("d", arc)
+        
+                  .on("mouseover", function(d) {
+                     d3.select(this)
+                        .style('stroke', function (d) {
+                            return '#a0a0a0';
+                        })
+                        .style('stroke-width', function (d) {
+                            return '1';
+                        });  
+
+                        div.transition()
+                            .duration(200)
+                            .style("opacity", .9);
+                        div
+                            .html("<strong>" + "Partei: " + "</strong>" + piedata.party + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata.votes + "%")
+                            .style("left", (d3.event.pageX) + "px")
+                            .style("top", (d3.event.pageY - 28) + "px");
+                    })
+                
+                .attr("fill", function (d) {return colorpie (d.value);}); 
+       //}
+	
+	
 };
