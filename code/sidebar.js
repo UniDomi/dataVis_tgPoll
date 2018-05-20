@@ -49,10 +49,12 @@ function createSidebar(){
     })
 
     pollsG.on("click", function(d){
-      d3.select("#map")
+      //d3.select("#map").select("svg").destroy();
+      d3.selectAll("#map").select("svg").remove()
       poll = d.VORLAGE_NR;
       drawMap();
       console.log(poll)
+      w3_close()
     });
 
     function buttonClick(datapoint) {
