@@ -1,11 +1,35 @@
 
     var dataset;
 
-	var width = 880,
+
+	var widthT = 960,
 		height = 500;
 
+    d3.select("#year").on("change", function(d){
+    var selectedIndex = d3.select(this).property('selectedIndex');
+    var dataCSV;
+    switch (selectedIndex){
+        case 1:
+            dataCSV="/data/gemeinden/1.csv";
+            break;
+        case 2:
+            dataCSV="Gemeinden_2011.csv";
+            break;
+        case 3:
+            dataCSV="Gemeinden_2010.csv";
+            break;
+
+        default:
+            dataCSV="Gemeinden_2013.csv";
+            break;
+
+    }
+
+    loadDataSet(dataCSV);
+});
+
 	var svg = d3.select("#map").append("g").append("svg")
-		.attr("width", width)
+		.attr("widthT", widthT)
 		.attr("height", height);
 
     var div = d3.select("body").append("div")
@@ -20,7 +44,7 @@
     //load data files
 	d3.queue()
 		.defer(d3.json, "map-TG.json")
-		.defer(d3.csv, "data/gemeinden/25.csv")
+		.defer(d3.csv, "data/gemeinden/10.csv")
         .defer(d3.csv, "Parteien_2016.csv")
 		.await(ready)
 
@@ -108,7 +132,7 @@ function ready (error, data, csvAbstimmung, csvParteien){
                 .style('stroke', function (d) {
                     return '#a0a0a0';
                 })
-                .style('stroke-width', function (d) {
+                .style('stroke-widthT', function (d) {
                     return '1';
                 });
 
@@ -124,7 +148,7 @@ function ready (error, data, csvAbstimmung, csvParteien){
         .on("mouseout", function(d) {
             d3.select(this)
                 .style('stroke', '#000')
-                .style('stroke-width', '0.5');
+                .style('stroke-widthT', '0.5');
             div.transition()
                 .duration(500)
                 .style("opacity", 0);

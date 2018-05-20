@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+    <head>
+        <script src="d3.js"></script>
+        <style type="text/css">
+        
+        div.tooltip{
+            position: absolute;
+            text-align: center;
+            width: auto;
+            height: auto;
+            padding: 10px;
+            font: 12px sans-serif;
+            color: #ffffff;
+            background: #000000;
+            border: 0px;
+            border-radius: 8px;
+            pointer-events: none;
+        }
+        </style>
+    </head>
+    <body>
+        <script>
+            
+        var div = d3.select("body").append("div")
+                .attr("class","tooltip")
+                .style("opacity",0);
+            
+          d3.csv("Parteien_2016.csv", function (data){
+              //Stimmenanteil als Zahl
+               data.forEach(function(d) {
+                    d.EDU = +d.EDU;
+                   d.EVP = +d.EVP;
+                   d.GP = +d.GP;
+                   d.SP = +d.SP;
+                   d.CVP = +d.CVP;
+                   d.FDP = +d.FDP;
+                   d.SVP = +d.SVP;
+                   d.glp = +d.glp;
+                   d.BDP = +d.BDP;
+               });
+         
+            //Filter für einzelne Gemeinde
+            var filteredData = data.filter(function(d) {
+                return d.BFS_NR_GEMEINDE === "4551";
+                });
+		  
+		//Dataien in passende Form bringen
+            var newdata = []
+                filteredData.forEach(function(d) {
+                  newdata.push({party: 'EDU', votes: d.EDU})
+                    newdata.push({party: 'EVP', votes: d.EVP})
+                    newdata.push({party: 'GP', votes: d.GP})
+                    newdata.push({party: 'SP', votes: d.SP})
+                    newdata.push({party: 'CVP', votes: d.CVP})
+                    newdata.push({party: 'FDP', votes: d.FDP})
+                    newdata.push({party: 'SVP', votes: d.SVP})
+                    newdata.push({party: 'glp', votes: d.glp})
+                    newdata.push({party: 'BDP', votes: d.BDP})
+            })
+              console.log(newdata); 
+              
+			var r = 300;
+			
+              //Farbskala
+			var colorpie = d3.scaleOrdinal()
+				.range(["#6a51a3", "#08306b", "green", "red", "orange", "#2171b5", "#67000d", "#c7e9c0", "#ffff00"])
+			
+			var canvas = d3.select("body").append("svg")
+					.attr("width", 1500)
+					.attr("height", 1500);
+			
+			var group = canvas.append("g")
+					.attr("transform", "translate(300, 300)");
+
+			var arc = d3.arc()
+				.innerRadius(150) //if inner radius is 0 then it becomes a pie chart
+				.outerRadius(r);
+				
+			var pie = d3.pie()
+				.value(function (d) {return d.votes;});
+				
+			var arcs = group.selectAll(".arc")
+				.data(pie(newdata))
+				.enter()
+				.append("g")
+				.attr("class", "arc");
+				
+			arcs.append("path")
+				.attr("d", arc)
+              
+                  .on("mouseover", function(d) {
+                     d3.select(this)
+                        .style('stroke', function (d) {
+                            return '#a0a0a0';
+                        })
+                        .style('stroke-width', function (d) {
+                            return '1';
+                        });  
+
+                        div.transition()
+                            .duration(200)
+                            .style("opacity", .9);
+                        div
+                            .html("<strong>" + "Partei: " + "</strong>" + newdata.party + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + newdata.votes + "%")
+                            .style("left", (d3.event.pageX) + "px")
+                            .style("top", (d3.event.pageY - 28) + "px");
+                    })
+
+				.attr("fill", function (d) {return colorpie (d.value);});       
+    });
+		</script>
+    </body>
+</html>
