@@ -158,6 +158,9 @@ function ready (error, data, csvAbstimmung, csvParteien){
             
                 d3.select('#piechart').select('h4').html(d.properties.data.GEMEINDE_NAME);
                 d3.select('#piechart').select('h4').attr("BFS-Nr",d.id);
+		
+		var filteredDataGemeinde = d.properties.data2; //Daten von angeklickter Gemeinde
+		console.log(filteredDataGemeinde);
         
                 //drawPiechart();
            })
