@@ -32,6 +32,12 @@
 		.attr("widthT", widthT)
 		.attr("height", height);
 
+	var canvas = d3.select("#piechart").append("svg")
+                .attr("width", width2)
+                .attr("height", height2)
+                .append("g")
+                //.attr("transform", "translate(" + width2 / 2 + "," + 200 + ")")
+
     var div = d3.select("body").append("div")
         .attr("class","tooltip")
         .style("opacity",0);
@@ -46,9 +52,10 @@
 		.defer(d3.json, "map-TG.json")
 		.defer(d3.csv, "data/gemeinden/10.csv")
         .defer(d3.csv, "Parteien_2016.csv")
+	.defer(d3.csv, "Steuerfuss.csv")
 		.await(ready)
 
-function ready (error, data, csvAbstimmung, csvParteien){
+function ready (error, data, csvAbstimmung, csvParteien, csvSteuerfuss){
 
 	if(error){console.log("Error: "+ error)};
 
@@ -178,7 +185,7 @@ function ready (error, data, csvAbstimmung, csvParteien){
             
         // d3.select('#piechart').selectAll('svg').remove();
             
-            
+   /*         
        //function drawPiechart() {
           
             var piefilteredData = csvParteien.filter(function(d) {
@@ -204,13 +211,6 @@ function ready (error, data, csvAbstimmung, csvParteien){
 				
 		var pie = d3.pie()
 			.value(function (d) {return d.votes;});
-            
-            
-            var canvas = d3.select("#piechart").append("svg")
-                .attr("width", width2)
-                .attr("height", height2)
-                .append("g")
-                .attr("transform", "translate(" + width2 / 2 + "," + 200 + ")")
             
             var arcs = canvas.selectAll(".arc")
 		.data(pie(piedata))
@@ -241,6 +241,67 @@ function ready (error, data, csvAbstimmung, csvParteien){
                 
                 .attr("fill", function (d) {return colorpie (d.value);}); 
        //}
+*/	
+	
+	
+  
+    //Histogram
+            csvSteuerfuss.forEach(function(d) {
+                    d.Gemeindesteuerfuss = +d.Gemeindesteuerfuss;
+               });
+              
+              //filter nach Jahr
+              var filteredhistoData = csvSteuerfuss.filter(function(d) {
+                  return d.Jahr === "2017";
+              });
+              
+              //Daten in passende Form bringen
+              var newhistodata = []
+                filteredhistoData.forEach(function(d) {
+                  newhistodata.push({Gemeindesteuerfuss: d.Gemeindesteuerfuss})
+            })
+                  
+                    
+              //histogram
+                var xScale = d3.scaleLinear().domain([0, 100]).range([0, 330]);
+                var yScale = d3.scaleLinear().domain([0, 80]).range([330,0]);
+                var xAxis = d3.axisBottom().scale(xScale).ticks(18)
+                var histoChart = d3.histogram();
+                
+                histoChart
+                    .domain([0, 100])
+                    .thresholds([5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95])
+                    .value(function (d) {return d.Gemeindesteuerfuss;})
+                
+                histoData = histoChart(newhistodata);
+                
+                //console.log(histoData);
+                
+                    canvas.selectAll("rect")
+                    .data(histoData).enter()
+                    .append("rect")
+                    .attr("x", d => xScale(d.x0))
+                    .attr("y", d => yScale(d.length))
+                    .attr("width", d => xScale(d.x1 - d.x0) -2)
+                    .attr("height", d => 330 - yScale(d.length))
+                    .style("fill", "black")
+                    .attr("transform", "translate(20, 10)");
+                
+              // add the x Axis
+                //d3.select("svg")
+                canvas.append("g").attr("class", "x axis")
+                    .attr("transform", "translate(20, 340)").call(xAxis); // 340 -> 330 (range) + 10 (translate) 
+                d3.select("g axis").selectAll("text").attr("dx", 50);  
+                
+              //add y axis
+        canvas.append("g")
+              .call(d3.axisLeft(yScale))
+              .attr("transform", "translate(20, 10)");        
+   	
+	
+	
+	
+	
 	
 	
 };
