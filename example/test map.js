@@ -27,6 +27,8 @@
 
     loadDataSet(dataCSV);
 });
+	     var width2 = 360;
+    		var height2 = 480;
 
 	var svg = d3.select("#map").append("g").append("svg")
 		.attr("widthT", widthT)
@@ -174,9 +176,7 @@ function ready (error, data, csvAbstimmung, csvParteien, csvSteuerfuss){
 
 		.attr("d", path);
 	
-	
-     var width2 = 360;
-    var height2 = 480;
+
     var r = Math.min(width2, height2) / 2; //var r = 180;
 	
     	//Farbskala
