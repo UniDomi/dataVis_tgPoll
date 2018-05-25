@@ -7,8 +7,28 @@ function createSidebar(){
     createD1E1(data);
   })
 
+  function drawBlocks(blockId){
+    var block = d3.selectAll("g."+blockId);
+      block
+      .append("rect")
+      .attr("width", 250)
+      .attr("height", 40)
+      .attr("fill", function(d){ return d.value <= 50 ? 'red' : 'green' })
+      .attr("border", "solid black 1px")
+
+      block
+      .append("text")
+      .style("text-anchor", "start")
+      .attr("x", 0)
+      .attr("y", 25)
+
+      .text(d => d.key)
+      .style("font-size", "20px")
+      .style("font-weight", "bold")
+      return block
+    }
+
   function createD1E1(dataf){
-    let csv = dataf
     var j = -1
     let data = d3.nest()
       .key(function(d) { return d.D1E1_BEZEICHNUNG; })
@@ -33,30 +53,9 @@ function createSidebar(){
       d3.selectAll("#d1E2").remove();
       d3.selectAll("#pollsG").remove();
       console.log(d.key)
-      createD1E2(csv, d.key);
+      createD1E2(dataf, d.key);
     });
   }
-
-  function drawBlocks(blockId){
-    var block = d3.selectAll("g."+blockId);
-      block
-      .append("rect")
-      .attr("width", 250)
-      .attr("height", 40)
-      .attr("fill", function(d){ return d.value <= 222 ? 'red' : 'green' })
-      .attr("border", "solid black 1px")
-
-      block
-      .append("text")
-      .style("text-anchor", "start")
-      .attr("x", 0)
-      .attr("y", 25)
-
-      .text(d => d.key)
-      .style("font-size", "20px")
-      .style("font-weight", "bold")
-      return block
-    }
 
   function createD1E2(dataf, d1e1){
     console.log(d1e1);
@@ -64,7 +63,6 @@ function createSidebar(){
       if(d["D1E1_BEZEICHNUNG"] == d1e1) return d;
     })
     console.log(filteredData);
-    let csv = dataf;
     dataf = filteredData;
     var j = -1;
     let data = d3.nest()
@@ -89,7 +87,7 @@ function createSidebar(){
     d1e2.on("click", function(d){
       d3.selectAll("#pollsG").remove();
       console.log(d.key)
-      createThemeBlocks(csv, d.key);
+      createThemeBlocks(dataf, d.key);
     });
   }
 
@@ -108,16 +106,24 @@ function createSidebar(){
       .enter()
       .append("g")
       .attr("class", "overallG")
-      .attr("transform", (d, i) => "translate(500, "+ (i* 30) + " ) ")
+      .attr("transform", (d, i) => "translate(600, "+ (i* 60) + " ) ")
 
     var pollsG = d3.selectAll("g.overallG");
     pollsG
-      .append("circle")
-      .attr("r", 5)
+        .append("rect")
+        .attr("width", 1500)
+        .attr("height", 40)
+        .attr("fill", function(d){ return d.JA_STIMMEN_PROZENT <= 50 ? 'red' : 'green' })
+        .attr("border", "solid black 1px")
     pollsG
       .append("text")
-      .attr("x",250)
-      .text( d => d.VORLAGE_BEZEICHNUNG)
+      .style("text-anchor", "start")
+      .attr("x", 0)
+      .attr("y", 25)
+      .attr("content-area", "10px, 10px")
+      .text(d => d.VORLAGE_BEZEICHNUNG)
+      .style("font-size", "20px")
+      .style("font-weight", "bold")
 
     const dataKeys = Object.keys(data[0])
     .filter(d => d !== "VORLAGE_BEZEICHNUNG" && d !=="D1E1_CODE")
