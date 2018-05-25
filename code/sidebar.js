@@ -35,14 +35,22 @@ function createSidebar(){
       .append("circle")
       .attr("r", 10)
 
-      d1e1.on("click", function(){
-        createD1E2(csv);
+      d1e1.on("click", function(d){
+        d3.selectAll("#d1E2").remove();
+        console.log(d.key)
+        createD1E2(csv, d.key);
       });
   }
 
 
-  function createD1E2(dataf){
+  function createD1E2(dataf, d1e1){
+    console.log(d1e1);
+    var filteredData = dataf.filter(function (d){
+      if(d["D1E1_BEZEICHNUNG"] == d1e1) return d;
+    })
+    console.log(filteredData);
     let csv = dataf;
+    dataf = filteredData;
     var j = -1;
     let data = d3.nest()
       .key(function(d) { return d.D1E2_BEZEICHNUNG; })
@@ -68,12 +76,20 @@ function createSidebar(){
     d1e2
       .append("circle")
       .attr("r", 10)
-    d1e2.on("click", function(){
-      createThemeBlocks(csv);
+
+    d1e2.on("click", function(d){
+      d3.selectAll("#pollsG").remove();
+      console.log(d.key)
+      createThemeBlocks(csv, d.key);
     });
   }
 
-  function createThemeBlocks(data){
+  function createThemeBlocks(dataf, d1e2){
+    console.log(d1e2)
+    var data = dataf.filter(function (d){
+      if(d["D1E2_BEZEICHNUNG"] == d1e2) return d;
+    })
+    console.log(data)
     d3.select("#tree")
       .append("g")
       .attr("id", "pollsG")
