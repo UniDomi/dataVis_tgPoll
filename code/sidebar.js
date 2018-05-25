@@ -12,6 +12,7 @@ function createSidebar(){
     var j = -1
     let data = d3.nest()
       .key(function(d) { return d.D1E1_BEZEICHNUNG; })
+      .rollup(function(v) { return d3.mean(v, function(d) { return d.JA_STIMMEN_PROZENT; }); })
       .entries(dataf);
       console.log(data);
       console.log(data[0].key);
@@ -24,24 +25,38 @@ function createSidebar(){
       .enter()
       .append("g")
       .attr("class", "d1E1")
-      .attr("transform", (d, i) => "translate(50, "+ (i* 30) + " ) ")
-      .append("text")
-      .attr("x", 60)
-      .text(function (){
-        j++;
-        return data[j].key;})
-    var d1e1 = d3.selectAll("g.d1E1");
-      d1e1
-      .append("circle")
-      .attr("r", 10)
+      .attr("transform", (d, i) => "translate(0, "+ (i* 60) + " ) ")
 
-      d1e1.on("click", function(d){
-        d3.selectAll("#d1E2").remove();
-        console.log(d.key)
-        createD1E2(csv, d.key);
-      });
+    var d1e1 = drawBlocks("d1E1");
+
+    d1e1.on("click", function(d){
+      d3.selectAll("#d1E2").remove();
+      d3.selectAll("#pollsG").remove();
+      console.log(d.key)
+      createD1E2(csv, d.key);
+    });
   }
 
+  function drawBlocks(blockId){
+    var block = d3.selectAll("g."+blockId);
+      block
+      .append("rect")
+      .attr("width", 250)
+      .attr("height", 40)
+      .attr("fill", function(d){ return d.value <= 222 ? 'red' : 'green' })
+      .attr("border", "solid black 1px")
+
+      block
+      .append("text")
+      .style("text-anchor", "start")
+      .attr("x", 0)
+      .attr("y", 25)
+
+      .text(d => d.key)
+      .style("font-size", "20px")
+      .style("font-weight", "bold")
+      return block
+    }
 
   function createD1E2(dataf, d1e1){
     console.log(d1e1);
@@ -54,6 +69,7 @@ function createSidebar(){
     var j = -1;
     let data = d3.nest()
       .key(function(d) { return d.D1E2_BEZEICHNUNG; })
+      .rollup(function(v) { return d3.mean(v, function(d) { return d.JA_STIMMEN_PROZENT; }); })
       .entries(dataf);
       console.log(data);
       console.log(data[0].key);
@@ -66,16 +82,9 @@ function createSidebar(){
       .enter()
       .append("g")
       .attr("class", "d1E2")
-      .attr("transform", (d, i) => "translate(300, "+ (i* 30) + " ) ")
-      .append("text")
-      .attr("x", 250)
-      .text(function (){
-        j++;
-        return data[j].key;})
-    var d1e2 = d3.selectAll("g.d1E2");
-    d1e2
-      .append("circle")
-      .attr("r", 10)
+      .attr("transform", (d, i) => "translate(300, "+ (i* 60) + " ) ")
+
+    var d1e2 = drawBlocks("d1E2");
 
     d1e2.on("click", function(d){
       d3.selectAll("#pollsG").remove();
