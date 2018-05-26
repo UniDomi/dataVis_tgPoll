@@ -21,7 +21,8 @@ function drawMap(){
     //load data files
 	d3.queue()
 		.defer(d3.json, "map-TG.json")
-    .defer(d3.csv, "data/gemeinden/"+poll+".csv")
+    .defer(d3.csv, "data/gemeinden/auslagerung.csv")
+    //.defer(d3.csv, "data/gemeinden/"+poll+".csv")
 		//.defer(d3.csv, "data/gemeinden/multipoll.csv")
         .defer(d3.csv, "Parteien_2016.csv")
 		.await(ready)
@@ -30,6 +31,9 @@ function ready (error, data, csvAbstimmung, csvParteien){
 
 	if(error){console.log("Error: "+ error)};
 
+  var abstimmung = csvAbstimmung.filter(function (d){
+    if(d["VORLAGE_BEZEICHNUNG"] == poll) return d;
+  })
     dataset = data;
 
     //legend
@@ -56,7 +60,7 @@ function ready (error, data, csvAbstimmung, csvParteien){
 
 	//match id (topojson) & BFS_NR_GEMEINDE (csvAbstimmung)
 	Gemeinden.forEach(function(gemeinde){
-	csvAbstimmung.some(function(csvrow){
+	abstimmung.some(function(csvrow){
 		if (gemeinde.id == csvrow.BFS_NR_GEMEINDE) {
             gemeinde.properties.data=csvrow;
 			return true;

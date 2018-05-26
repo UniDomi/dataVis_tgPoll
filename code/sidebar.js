@@ -1,6 +1,8 @@
 createSidebar();
 
-poll = 2;
+poll = 1;
+datum = 2018;
+indikator = 1;
 
 function createSidebar(){
   d3.csv("data/Eidg_Abstimmungen_2000_2017_Kanton_inkl_Themen.csv", data =>{
@@ -149,8 +151,12 @@ function createSidebar(){
     pollsG.on("click", function(d){
       //d3.select("#map").select("svg").destroy();
       d3.selectAll("#map").select("svg").remove()
+
       poll = d.VORLAGE_NR;
+      datum = d.DATUM_ABSTIMMUNG;
+      indikator = d.INDIKATOREN;
       drawMap();
+      selectIndikator();
       console.log(poll)
       w3_close()
     });
