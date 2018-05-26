@@ -40,10 +40,9 @@ function drawMap(){
     //.defer(d3.csv, "data/gemeinden/"+poll+".csv")
 		//.defer(d3.csv, "data/gemeinden/multipoll.csv")
         .defer(d3.csv, "Parteien_2016.csv")
-	.defer(d3.csv, "Steuerfuss.csv")
 		.await(ready)
 
-function ready (error, data, csvAbstimmung, csvParteien, csvSteuerfuss){
+function ready (error, data, csvAbstimmung, csvParteien){
 
 	if(error){console.log("Error: "+ error)};
 
