@@ -5,6 +5,7 @@ function drawMap(){
 	var width = 960,
 		height = 500;
 	
+	//#piechart
 	  var width2 = 360;
 	var height2 = 480;
 
@@ -21,12 +22,6 @@ function drawMap(){
     var div = d3.select("body").append("div")
         .attr("class","tooltip")
         .style("opacity",0);
-
- 	var r = Math.min(width2, height2) / 2; //var r = 180;
-	
-    	//Farbskala Pie Chart
-	var colorpie = d3.scaleOrdinal()
-		.range(["#6a51a3", "#08306b", "green", "red", "orange", "#2171b5", "#67000d", "#c7e9c0", "#ffff00"])	
 	
     //map colour scale
     var mapColour = d3.scaleThreshold()
@@ -147,8 +142,8 @@ function ready (error, data, csvAbstimmung, csvParteien){
 		var filteredDataGemeinde = d.properties.data2; //Daten von angeklickter Gemeinde
 		console.log(filteredDataGemeinde);
 		
-		
-		// d3.select('#piechart').selectAll('svg').remove();
+	/*	
+	// d3.select('#piechart').selectAll('svg').remove();
         
          //Filter & push labels -> ersetzen 
 	    csvParteien.forEach(function(d) {
@@ -179,7 +174,12 @@ function ready (error, data, csvAbstimmung, csvParteien){
                     piedata.push({party: 'glp', votes: d.glp})
                     piedata.push({party: 'BDP', votes: d.BDP})
             })
-    
+    		
+	 var r = Math.min(width2, height2) / 2; //var r = 180; 
+	
+    	//Farbskala Pie Chart
+	var colorpie = d3.scaleOrdinal()
+		.range(["#6a51a3", "#08306b", "green", "red", "orange", "#2171b5", "#67000d", "#c7e9c0", "#ffff00"])		
 		
             var arc = d3.arc()
 		.innerRadius(80) //if inner radius is 0 then it becomes a pie chart
@@ -216,7 +216,7 @@ function ready (error, data, csvAbstimmung, csvParteien){
                 
                 .attr("fill", function (d) {return colorpie (d.value);});
 	})
-	
+	*/
 		.attr("d", path);
 	
 	
