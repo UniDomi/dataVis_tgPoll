@@ -26,7 +26,7 @@ function drawMap(){
     //map colour scale
     var mapColour = d3.scaleThreshold()
         .domain([0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.51, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85])
-        .range(['#4c0000', '#99000d', '#cb181d', '#ef3b2c', '#fb6a4a', '#fc9272', '#fcbba1', '#fee5d9', '#edf8e9','#c7e9c0','#a1d99b','#74c476','#41ab5d','#238b45','#005a32', '#002600']);
+        .range(['#4c0000', '#99000d', '#cb181d', '#ef3b2c', '#fb6a4a', '#fc9272', '#fcbba1', '#fee5d9', '#ccccff','#9999ff','#6666ff','#3232ff','#0000e5','#0000b2','#00007f', '#00004c']);
 
     //load data files
 	d3.queue()
