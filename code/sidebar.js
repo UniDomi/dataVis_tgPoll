@@ -115,7 +115,7 @@ function createSidebar(){
         .append("rect")
         .attr("width", 1500)
         .attr("height", 40)
-        .attr("fill", function(d){ return d.JA_STIMMEN_PROZENT <= 50 ? 'red' : 'green' })
+        .attr("fill", function(d){ return d.JA_STIMMEN_PROZENT <= 50 ? 'red' : '#0066cc' })
         .attr("border", "solid black 1px")
     pollsG
       .append("text")
