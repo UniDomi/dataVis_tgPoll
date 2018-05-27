@@ -215,8 +215,9 @@ function ready (error, data, csvAbstimmung, csvParteien){
                     })
                 
                 .attr("fill", function (d) {return colorpie (d.value);});
-	})
 	*/
+	
+	})
 		.attr("d", path);
 	
 	
@@ -267,4 +268,4 @@ function ready (error, data, csvAbstimmung, csvParteien){
 
 };
 }
-}
+
