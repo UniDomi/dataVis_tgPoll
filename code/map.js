@@ -145,19 +145,7 @@ function ready (error, data, csvAbstimmung, csvParteien){
 	
 	// d3.select('#piechart').selectAll('svg').remove();
         
-         //Filter & push labels -> ersetzen 
-	    csvParteien.forEach(function(d) {
-                    d.EDU = +d.EDU;
-                   d.EVP = +d.EVP;
-                   d.GP = +d.GP;
-                   d.SP = +d.SP;
-                   d.CVP = +d.CVP;
-                   d.FDP = +d.FDP;
-                   d.SVP = +d.SVP;
-                   d.glp = +d.glp;
-                   d.BDP = +d.BDP;
-		});	
-		
+         //Filter & push labels -> ersetzen 	
 	var piefilteredData = csvParteien.filter(function(d) {
                 return d.BFS_NR_GEMEINDE === "4551";
                 });
