@@ -222,22 +222,12 @@ function ready (error, data, csvAbstimmung, csvParteien){
 	
 /*	
 	//Histogramm
-            csvSteuerfuss.forEach(function(d) {
-                    d.Gemeindesteuerfuss = +d.Gemeindesteuerfuss;
-               });
               
               //filter nach Jahr -> ersetzen
               var filteredhistoData = csvSteuerfuss.filter(function(d) {
                   return d.Jahr === "2017";
               });
               
-              //Daten in passende Form bringen -> ersetzen
-              var newhistodata = []
-                filteredhistoData.forEach(function(d) {
-                  newhistodata.push({Gemeindesteuerfuss: d.Gemeindesteuerfuss})
-            })
-                  
-                    
               //histogram
                 var xScale = d3.scaleLinear().domain([0, 100]).range([0, 330]);
                 var yScale = d3.scaleLinear().domain([0, 80]).range([330,0]);
@@ -249,7 +239,7 @@ function ready (error, data, csvAbstimmung, csvParteien){
                     .thresholds([5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95])
                     .value(function (d) {return d.Gemeindesteuerfuss;})
                 
-                histoData = histoChart(newhistodata);
+                histoData = histoChart(filteredhistoData);
                 
                 //console.log(histoData);
                 
