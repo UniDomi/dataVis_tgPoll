@@ -267,3 +267,4 @@ function ready (error, data, csvAbstimmung, csvParteien){
 
 };
 }
+}
