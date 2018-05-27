@@ -142,7 +142,7 @@ function ready (error, data, csvAbstimmung, csvParteien){
 		var filteredDataGemeinde = d.properties.data2; //Daten von angeklickter Gemeinde
 		console.log(filteredDataGemeinde);
 		
-	/*	
+	
 	// d3.select('#piechart').selectAll('svg').remove();
         
          //Filter & push labels -> ersetzen 
@@ -215,9 +215,8 @@ function ready (error, data, csvAbstimmung, csvParteien){
                     })
                 
                 .attr("fill", function (d) {return colorpie (d.value);});
-	*/
-	
 	})
+	
 		.attr("d", path);
 	
 	
