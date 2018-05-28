@@ -25,8 +25,8 @@ function drawMap(){
 	
     //map colour scale
     var mapColour = d3.scaleThreshold()
-        .domain([0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.51, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85])
-        .range(['#4c0000', '#99000d', '#cb181d', '#ef3b2c', '#fb6a4a', '#fc9272', '#fcbba1', '#fee5d9', '#edf8e9','#c7e9c0','#a1d99b','#74c476','#41ab5d','#238b45','#005a32', '#002600']);
+        .domain([0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.51, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85])
+        .range(['#4c0000', '#99000d', '#cb181d', '#ef3b2c', '#fb6a4a', '#fc9272', '#fcbba1', '#fee5d9', '#99ccff','#66b2ff','#3299ff','#0080ff','#0066cc','#004c99','#003366', '#001933']); 
 
     //load data files
 	d3.queue()
@@ -142,22 +142,10 @@ function ready (error, data, csvAbstimmung, csvParteien){
 		var filteredDataGemeinde = d.properties.data2; //Daten von angeklickter Gemeinde
 		console.log(filteredDataGemeinde);
 		
-	/*	
+	
 	// d3.select('#piechart').selectAll('svg').remove();
         
-         //Filter & push labels -> ersetzen 
-	    csvParteien.forEach(function(d) {
-                    d.EDU = +d.EDU;
-                   d.EVP = +d.EVP;
-                   d.GP = +d.GP;
-                   d.SP = +d.SP;
-                   d.CVP = +d.CVP;
-                   d.FDP = +d.FDP;
-                   d.SVP = +d.SVP;
-                   d.glp = +d.glp;
-                   d.BDP = +d.BDP;
-		});	
-		
+         //Filter & push labels -> ersetzen 	
 	var piefilteredData = csvParteien.filter(function(d) {
                 return d.BFS_NR_GEMEINDE === "4551";
                 });
@@ -216,28 +204,18 @@ function ready (error, data, csvAbstimmung, csvParteien){
                 
                 .attr("fill", function (d) {return colorpie (d.value);});
 	})
-	*/
+	
 		.attr("d", path);
 	
 	
 /*	
 	//Histogramm
-            csvSteuerfuss.forEach(function(d) {
-                    d.Gemeindesteuerfuss = +d.Gemeindesteuerfuss;
-               });
               
               //filter nach Jahr -> ersetzen
               var filteredhistoData = csvSteuerfuss.filter(function(d) {
                   return d.Jahr === "2017";
               });
               
-              //Daten in passende Form bringen -> ersetzen
-              var newhistodata = []
-                filteredhistoData.forEach(function(d) {
-                  newhistodata.push({Gemeindesteuerfuss: d.Gemeindesteuerfuss})
-            })
-                  
-                    
               //histogram
                 var xScale = d3.scaleLinear().domain([0, 100]).range([0, 330]);
                 var yScale = d3.scaleLinear().domain([0, 80]).range([330,0]);
@@ -249,7 +227,7 @@ function ready (error, data, csvAbstimmung, csvParteien){
                     .thresholds([5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95])
                     .value(function (d) {return d.Gemeindesteuerfuss;})
                 
-                histoData = histoChart(newhistodata);
+                histoData = histoChart(filteredhistoData);
                 
                 //console.log(histoData);
                 
@@ -277,3 +255,4 @@ function ready (error, data, csvAbstimmung, csvParteien){
 
 };
 }
+
