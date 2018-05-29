@@ -178,7 +178,7 @@ function drawMap() {
 
       console.log(piedata)
 
-      var r = Math.min(width2, height2) / 4; //var r = 180;
+      var r = Math.min(width2, height2) / 3; //var r = 180;
       var pie = d3.pie()
         .value(function(d) {
           return d.votes;
