@@ -226,7 +226,7 @@ function drawMap() {
           div.html("<strong>" + "Partei: " + "</strong>" + piedata[i].party + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata[i].votes + "%")
             .style("left", (d3.event.pageX) + "px")
             .style("top", (d3.event.pageY - 28) + "px");
-        });
+        })
       
           .on("mouseout", function(d, i) {
             d3.select(this)
