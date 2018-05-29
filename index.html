@@ -11,13 +11,14 @@
 	<script src="code/w3_helpers.js"></script>
 	<script src="codebase/d3.v4.min.js"></script>
 	<script src="code/indikatoren.js"></script>
+	<script src="code/partyKanton.js"></script>
 	<script src="code/map.js" charset="utf-8"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </head>
 
-<body onload="drawMap()">
+<body onload="drawMap(), createPie()">
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 		<a class="navbar-brand" href="#">Home</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -54,6 +55,7 @@
 			<div class="col-sm-6">
 				<div id="piechart" style="float:right">
 					<h4 BFS-Nr="000">Kanton Thurgau</h4>
+					<svg style="width:500px;height:500px;border:1px lightgray solid;" />
 				</div>
 			</div>
 		</div>
