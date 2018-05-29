@@ -148,7 +148,6 @@ function drawMap() {
         d3.select('#piechart').select('h4').html(d.properties.data.GEMEINDE_NAME);
         d3.selectAll("#piechart").select("g").remove()
 
-        canvas.selectAll('g').remove();
         //console.log(d.properties.data2);
         drawPiechart(d.properties.data2);
       })
