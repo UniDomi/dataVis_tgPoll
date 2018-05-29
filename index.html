@@ -7,6 +7,8 @@
 	<link rel="stylesheet" href="css/bootswatch.css" type="text/css">
 	<title>Abstimmungsdaten Kanton Thurgau</title>
 	<script src="codebase/d3.js"></script>
+	<script src="code\IndikatorenPieCharts.js"></script>
+	<script src="code\piechart.js"></script>
 	<script src="codebase/topojson.v1.min.js"></script>
 	<script src="code/w3_helpers.js"></script>
 	<script src="codebase/d3.v4.min.js"></script>
@@ -17,7 +19,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </head>
 
-<body onload="drawMap()">
+<body onload="drawMap(), initPie()">
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 		<a class="navbar-brand" href="#">Home</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -49,11 +51,10 @@
 				<div id="legend" style="width:100%">
 					<h3>Anteil Ja-Stimmen</h3>
 				</div>
-				<div id="map" style="float:left;border:1px black"></div>
+				<div id="map"></div>
 			</div>
 			<div class="col-sm-6">
-				<div id="piechart" style="float:right">
-					<h4 BFS-Nr="000">Kanton Thurgau</h4>
+				<div id="piechart">
 				</div>
 			</div>
 		</div>
