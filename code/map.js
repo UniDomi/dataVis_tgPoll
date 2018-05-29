@@ -132,7 +132,7 @@ function drawMap() {
           .duration(200)
           .style("opacity", .9);
         div
-          .html("<strong>" + d.properties.data.GEMEINDE_NAME + "</strong>" + "<br/>" + "Ja-Stimmen: " + Math.round(parseInt(d.properties.data.JA_STIMMEN) / parseInt(d.properties.data.GUELTIGE_STIMMEN) * 100) * 100 / 100 + "%" + "<br/>" + "Stimmbeteiligung: " + d.properties.data.STIMMBETEILIGUNG + "%" + "<br/>" + "Anteil SVP: " + parseInt(d.properties.data2.SVP) + "%")
+          .html("<strong>" + d.properties.data.GEMEINDE_NAME + "</strong>" + "<br/>" + "Ja-Stimmen: " + Math.round(parseInt(d.properties.data.JA_STIMMEN) / parseInt(d.properties.data.GUELTIGE_STIMMEN) * 100) * 100 / 100 + "%" + "<br/>" + "Stimmbeteiligung: " + d.properties.data.STIMMBETEILIGUNG + "%")
           .style("left", (d3.event.pageX) + "px")
           .style("top", (d3.event.pageY - 28) + "px");
       })
