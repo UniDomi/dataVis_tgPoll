@@ -150,14 +150,6 @@ function createSidebar() {
       .append("button")
       .on("click", buttonClick)
       .html(d => d);
-
-    pollsG.on("mouseover", highlightRegion);
-
-    function highlightRegion(d) {
-      d3.selectAll("g.overallG").select("circle")
-        .attr("class", p => p.D1E1_CODE === d.D1E1_CODE ? "active" : "inactive")
-    }
-
     pollsG.on("mouseout", function() {
       d3.selectAll("g.overallG")
         .select("circle")
@@ -165,13 +157,10 @@ function createSidebar() {
     })
 
     pollsG.on("click", function(d) {
-      //d3.select("#map").select("svg").destroy();
-      d3.selectAll("#map").select("svg").remove()
-
       poll = d.VORLAGE_NR;
       datum = d.DATUM_ABSTIMMUNG;
       indikator = d.INDIKATOREN;
-      drawMap();
+      drawMap(d.VORLAGE_BEZEICHNUNG);
       selectIndikator();
       console.log(poll)
       w3_close()

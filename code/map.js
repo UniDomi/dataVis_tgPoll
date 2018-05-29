@@ -1,4 +1,7 @@
-function drawMap() {
+function drawMap(title) {
+  d3.selectAll("#map").select("svg").remove();
+
+  d3.select("h2").html("<h1>"+title+"</h1>");
 
   var dataset;
 
@@ -12,12 +15,13 @@ function drawMap() {
   var svg = d3.select("#map").append("svg")
     .attr("width", width)
     .attr("height", height);
-
+/*
   var canvas = d3.select("#piechart")
     .append("svg")
     .append("g")
     .attr("width", width2)
     .attr("height", height2)
+    */
   //.attr("transform", "translate(" + width2 / 2 + "," + 200 + ")")
 
   var div = d3.select("body").append("div")
@@ -157,6 +161,7 @@ function drawMap() {
 
 
     function drawPiechart(data2) {
+      d3.selectAll("#piechart").select("svg").selectAll("g").remove();
       //canvas.selectAll('path').remove();
 
       var filteredData = data2;
@@ -193,9 +198,6 @@ function drawMap() {
 
 
       d3.selectAll("#piechart")
-        //.append("svg")
-        //.attr("width", "500")
-        //.attr("height", "500")
         .select("svg")
         .append("g")
         .attr("transform", "translate(250,250)")
@@ -204,13 +206,9 @@ function drawMap() {
         .enter()
         .append("path")
         .attr("d", arc)
-        .style("stroke", "black")
-        .style("stroke-width", "2px")
         .attr("fill", function(d, i) {
           return colorpie(piedata[i].party);
         })
-
-
         .on("mouseover", function(d, i) {
 
           d3.select(this)
@@ -227,16 +225,77 @@ function drawMap() {
             .style("left", (d3.event.pageX) + "px")
             .style("top", (d3.event.pageY - 28) + "px");
         });
+        var colorpie = d3.scaleOrdinal()
+          .range(["#6a51a3", "#08306b", "green", "red", "orange", "#2171b5", "#67000d", "#c7e9c0", "#ffff00"])
+        //prepare Legend
+        var legendRectSize = 12,
+          legendSpacing = 4;
+          d3.selectAll("#piechart")
+          .select("svg")
+          .append("g")
+          .append("circle")
+          .attr("r", "50")
 
+        d3.selectAll('#piechart').select("svg")
+          .append('g')
+          .attr("id", "legend")
+          .data(colorpie.domain())
+          .enter()
+          .attr('class', 'legend')
+          .attr('transform', function(d, i) {
+            var height = legendRectSize + legendSpacing;
+            var offset = height * colorpie.domain().length / 2;
+            var horz, vert;
+            if (i < 4) {
+              horz = (i * legendRectSize * 5.4) - 155; // -2 * legendRectSize;
+              vert = 205; // i * height - offset;
+            } else {
+              horz = ((i - 4) * legendRectSize * 5.4) - 155;
+              vert = height + 215;
+            }
 
+            return 'translate(' + horz + ',' + vert + ')';
+
+          })
+
+          .append('rect')
+          .attr('width', legendRectSize)
+          .style('display', function(d, i) {
+            return (i == 0) ? 'none' : 'initial';
+          })
+
+          .attr('height', legendRectSize)
+          .style('fill', colorpie)
+          .style('stroke', colorpie)
+          .style("stroke-width", 2)
+          .append('text')
+          .attr('x', legendRectSize + legendSpacing)
+          .attr('y', legendRectSize - legendSpacing)
+          .text(function(d, i) {
+            return piedata[i].party;
+          })
+          .style("fill", "#00")
+          .style('font-family', 'sans-serif').style("display", function(d) {
+            return (d == 'root') ? 'none' : 'initial';
+          });
+      }
+
+      var colorpie = d3.scaleOrdinal()
+        .range(["#6a51a3", "#08306b", "green", "red", "orange", "#2171b5", "#67000d", "#c7e9c0", "#ffff00"])
       //prepare Legend
       var legendRectSize = 12,
         legendSpacing = 4;
+        d3.selectAll("#piechart")
+        .select("svg")
+        .append("g")
+        .append("circle")
+        .attr("r", "50")
 
-      var legend = canvas.selectAll('.legend')
+      d3.selectAll('#piechart').select("svg")
+        .append('g')
+        .attr("id", "legend")
         .data(colorpie.domain())
         .enter()
-        .append('g')
         .attr('class', 'legend')
         .attr('transform', function(d, i) {
           var height = legendRectSize + legendSpacing;
@@ -252,29 +311,29 @@ function drawMap() {
 
           return 'translate(' + horz + ',' + vert + ')';
 
-        });
+        })
 
-      legend.append('rect')
+        .append('rect')
         .attr('width', legendRectSize)
         .style('display', function(d, i) {
           return (i == 0) ? 'none' : 'initial';
         })
+
         .attr('height', legendRectSize)
         .style('fill', colorpie)
         .style('stroke', colorpie)
-        .style("stroke-width", 2);
-
-      legend.append('text')
+        .style("stroke-width", 2)
+        .append('text')
         .attr('x', legendRectSize + legendSpacing)
         .attr('y', legendRectSize - legendSpacing)
         .text(function(d, i) {
           return piedata[i].party;
-        }).style("fill", "#00")
+        })
+        .style("fill", "#00")
         .style('font-family', 'sans-serif').style("display", function(d) {
           return (d == 'root') ? 'none' : 'initial';
         });
 
-    }
 
 
 
