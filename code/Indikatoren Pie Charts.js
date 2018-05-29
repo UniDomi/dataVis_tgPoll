@@ -217,6 +217,109 @@ function drawPiechartParteien2008() {
 
 
 
+// Pie Chart Ausländer 2005-2013
+function drawPiechartAuslaender2005_2013() {
+     
+            //Farbskala Pie Chart
+			var colorpie = d3.scaleOrdinal()
+				.range(["#ff0000", "#0059b2"])
+     
+      canvas.selectAll('path').remove();
+    
+    		//streichen/ersetzen, wird dann durch on.click gefiltert
+            var piefilteredData = csvAusland.filter(function(d) {
+                return d.BFS_NR_GEMEINDE === "4551";
+                }); 
+    
+           var piedata = []
+                piefilteredData.forEach(function(d) {
+                    piedata.push({Herkunft: 'Schweiz', Anteil: 100 - d.Auslaenderanteil_Prozent_2014}) //Wechsel Jahr noch umsetzen
+                    piedata.push({Herkunft: 'Ausland', Anteil: d.Auslaenderanteil_Prozent_2014})
+            })
+    
+    console.log(piedata);
+   
+            var arc = d3.arc()
+				.innerRadius(80) //if inner radius is 0 then it becomes a pie chart
+				.outerRadius(r);
+				
+			var pie = d3.pie()
+				.value(function (d) {return d.Anteil;});
+            
+            var arcs = canvas.selectAll(".arc")
+				.data(pie(piedata))
+				.enter()
+				.append("g")
+                .attr("class", "arc");  
+				
+			arcs.append("path")
+				.attr("d", arc)
+        
+                  .on("mouseover", function(d) {
+                     d3.select(this)
+                        .style('stroke', function (d) {
+                            return '#a0a0a0';
+                        })
+                        .style('stroke-width', function (d) {
+                            return '1';
+                        });  
+
+                        div.transition()
+                            .duration(200)
+                            .style("opacity", .9);
+                        div
+                            .html("<strong>" + "Herkunft: " + "</strong>" + piedata.Herkunft + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata.Anteil + "%")
+                            .style("left", (d3.event.pageX) + "px")
+                            .style("top", (d3.event.pageY - 28) + "px");
+                    })
+                   
+                .attr("fill", function (d) {return colorpie (d.value);}); 
+    
+    //prepare Legend
+
+    var legendRectSize = 12,
+        legendSpacing = 4;
+    
+    var legend = canvas.selectAll('.legend')
+        .data(colorpie.domain())
+        .enter()
+        .append('g')
+        .attr('class', 'legend')
+        .attr('transform', function(d, i) {        
+            var height = legendRectSize + legendSpacing;
+            var offset =  height * colorpie.domain().length / 2;
+            var horz, vert;
+            if(i>0){
+                horz = -80;
+                vert = 215;
+           
+            }else{
+                horz = 40;
+                vert = 215;      
+            }
+            return 'translate(' + horz + ',' + vert + ')';  
+        });
+    
+    legend.append('rect')
+        .attr('width', legendRectSize)
+        .attr('height', legendRectSize)
+        .style('fill', colorpie)
+        .style('stroke', colorpie)
+        .style("stroke-width", 2);
+    
+    legend.append('text')
+        .attr('x', legendRectSize + legendSpacing)
+        .attr('y', legendRectSize - legendSpacing)
+        .text(function(d) { return d; }).style("fill","#00")
+        .style('font-family','sans-serif').style("display",function(d){
+            return (d=='root')? 'none':'initial';
+        });
+    
+}
+
+
+
+
 
 //Pie Chart Auslaender 2015-2017
 function drawPiechartAuslaender() {
