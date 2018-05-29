@@ -16,7 +16,7 @@ function createSidebar() {
       .attr("width", 230)
       .attr("height", 40)
       .attr("fill", function(d) {
-        return d.value <= 50 ? 'red' : '#0066cc'
+        return d.value <= 50 ? "#e50000" : '#0066cc'
       })
       .attr("border", "solid black 1px")
 
@@ -130,7 +130,7 @@ function createSidebar() {
       .attr("width", 1500)
       .attr("height", 40)
       .attr("fill", function(d) {
-        return d.JA_STIMMEN_PROZENT <= 50 ? 'red' : '#0066cc'
+        return d.JA_STIMMEN_PROZENT <= 50 ? "#e50000" : '#0066cc'
       })
       .attr("border", "solid black 1px")
     pollsG
