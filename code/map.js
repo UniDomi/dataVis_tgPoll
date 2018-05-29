@@ -212,7 +212,6 @@ function drawMap() {
 
 
         .on("mouseover", function(d, i) {
-
           d3.select(this)
             .style('stroke', function(d) {
               return '#a0a0a0';
