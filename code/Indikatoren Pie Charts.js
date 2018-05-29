@@ -57,7 +57,7 @@ console.log(piedata)
                             .style("left", (d3.event.pageX) + "px")
                             .style("top", (d3.event.pageY - 28) + "px");
                     })
-                .attr("fill", function (d) {return colorpie (piedata[i].party);}); 
+                .attr("fill", function (d, i) {return colorpie (piedata[i].party);}); 
     
     //prepare Legend
     var legendRectSize = 12,
@@ -150,7 +150,7 @@ function drawPiechartAuslaender(data2) {
 			arcs.append("path")
 				.attr("d", arc)
         
-                  .on("mouseover", function(d) {
+                  .on("mouseover", function(d, i) {
                      d3.select(this)
                         .style('stroke', function (d) {
                             return '#a0a0a0';
@@ -169,7 +169,7 @@ function drawPiechartAuslaender(data2) {
                     })
                     
                 
-                .attr("fill", function (d) {return colorpie (piedata[i].Herkunft);}); 
+                .attr("fill", function (d, i) {return colorpie (piedata[i].Herkunft);}); 
     
     
     //prepare Legend
@@ -210,7 +210,7 @@ function drawPiechartAuslaender(data2) {
     legend.append('text')
         .attr('x', legendRectSize + legendSpacing)
         .attr('y', legendRectSize - legendSpacing)
-        .text(function(d) { return piedata[i].Herkunft; }).style("fill","#00")
+        .text(function(d, i) { return piedata[i].Herkunft; }).style("fill","#00")
         .style('font-family','sans-serif').style("display",function(d){
             return (d=='root')? 'none':'initial';
         });
@@ -257,7 +257,7 @@ function drawPiechartHaushalt(data2) {
 			arcs.append("path")
 				.attr("d", arc)
         
-                  .on("mouseover", function(d) {
+                  .on("mouseover", function(d, i) {
                      d3.select(this)
                         .style('stroke', function (d) {
                             return '#a0a0a0';
@@ -276,7 +276,7 @@ function drawPiechartHaushalt(data2) {
                     })
                     
                 
-                .attr("fill", function (d) {return colorpie (piedata[i].Haushaltstyp);}); 
+                .attr("fill", function (d, i) {return colorpie (piedata[i].Haushaltstyp);}); 
     
     
     //prepare Legend
@@ -315,7 +315,7 @@ function drawPiechartHaushalt(data2) {
     legend.append('text')
         .attr('x', legendRectSize + legendSpacing)
         .attr('y', legendRectSize - legendSpacing)
-        .text(function(d) { return piedata[i].Haushaltstyp; }).style("fill","#00")
+        .text(function(d, i) { return piedata[i].Haushaltstyp; }).style("fill","#00")
         .style('font-family','sans-serif').style("display",function(d){
             return (d=='root')? 'none':'initial';
         });
@@ -365,7 +365,7 @@ function drawPiechartAlter(data2) {
 			arcs.append("path")
 				.attr("d", arc)
         
-                  .on("mouseover", function(d) {
+                  .on("mouseover", function(d, i) {
                      d3.select(this)
                         .style('stroke', function (d) {
                             return '#a0a0a0';
@@ -384,7 +384,7 @@ function drawPiechartAlter(data2) {
                     })
                     
                 
-                .attr("fill", function (d) {return colorpie (piedata[i].Altersgruppe);}); 
+                .attr("fill", function (d, i) {return colorpie (piedata[i].Altersgruppe);}); 
     
     
     //prepare Legend
@@ -423,7 +423,7 @@ function drawPiechartAlter(data2) {
     legend.append('text')
         .attr('x', legendRectSize + legendSpacing)
         .attr('y', legendRectSize - legendSpacing)
-        .text(function(d) { return piedata[i].Altersgruppe; }).style("fill","#00")
+        .text(function(d, i) { return piedata[i].Altersgruppe; }).style("fill","#00")
         .style('font-family','sans-serif').style("display",function(d){
             return (d=='root')? 'none':'initial';
         });
