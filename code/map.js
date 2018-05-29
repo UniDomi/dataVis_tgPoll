@@ -122,8 +122,8 @@ function drawMap() {
           ;
           return mapColour((percentage)); //Ja-Stimmen in Prozent
         } else if (d.id == "9329") {
-          return "#2299ee"
-        } //if lake fill blue
+          return "white"//"#2299ee"
+        } //if lake fill white/blue
       })
 
       .on("mouseover", function(d) {
