@@ -207,7 +207,7 @@ function drawMap() {
         .style("stroke", "black")
         .style("stroke-width", "2px")
         .attr("fill", function(d) {
-          return colorpie(d.value);
+          return colorpie(piedata[i].party);
         })
 
 
