@@ -436,7 +436,7 @@ function drawPiechartAlter(data2) {
 
 
 
-
+/* Diese Funktionen stimmen noch nicht, sind noch nicht auf Wechsel zwischen Gemeinden angepasst
 
 //Pie Chart Beschäftigte Sektoren 2000-2014
 function drawPiechartSektoren() {
@@ -643,5 +643,5 @@ function drawPiechartAuslaender2005_2013(data2) {
     
 }
 
-
+*/
 
