@@ -250,7 +250,7 @@ function drawMap() {
             var height = legendRectSize + legendSpacing;
             var offset = height * colorpie.domain().length / 2;
             var horz, vert;
-            if (i < 5) {
+            if (i < 4) {
               horz = (i * legendRectSize * 5.4) - 155; // -2 * legendRectSize;
               vert = 205; // i * height - offset;
             } else {
