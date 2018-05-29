@@ -6,7 +6,7 @@ function drawMap() {
     height = 500;
 
   //#piechart
-  var width2 = 2000;
+  var width2 = 360;
   var height2 = 480;
 
   var svg = d3.select("#map").append("svg")
