@@ -148,41 +148,36 @@ function drawMap() {
       .on("click", function(d) { //function(e,f){
         d3.select('#piechart').select('h4').html(d.properties.data.GEMEINDE_NAME);
       
-        //var filteredDataGemeinde = d.properties.data2; //Daten von angeklickter Gemeinde
-        console.log(d.properties.data2);
-        //drawPiechart(d.properties.data2);
-      
+        //console.log(d.properties.data2);
+        drawPiechart(d.properties.data2);
       })
 
       .attr("d", path);
 
     
     
-//function drawPiechart(data2){
-          //var filteredData = data2;
-        //console.log(filteredData);
+function drawPiechart(data2){
+  //canvas.selectAll('path').remove();
   
-          // d3.select('#piechart').selectAll('svg').remove();
+          var filteredData = data2;
+        console.log(filteredData);
   
-        //Filter -> streiechen/ersetzen, wird bei on.click gefiltert
-        var piefilteredData = csvParteien.filter(function(d) {
-          return d.BFS_NR_GEMEINDE === "4551";
-        });
-  
-      //Push labels für Pie Chart -> ersetzen/anpassen, muss für data2 (siehe drawPiechart Funktion) gemacht werden, dies ist aber ein Objekt und kein Array -> forEach geht nicht
-        var piedata = []
-        piefilteredData.forEach(function(d) {
-          piedata.push({party: 'EDU',votes: d.EDU})
-          piedata.push({party: 'EVP',votes: d.EVP})
-          piedata.push({party: 'GP',votes: d.GP})
-          piedata.push({party: 'SP',votes: d.SP})
-          piedata.push({party: 'CVP',votes: d.CVP})
-          piedata.push({party: 'FDP',votes: d.FDP})
-          piedata.push({party: 'SVP',votes: d.SVP})
-          piedata.push({party: 'glp',votes: d.glp})
-          piedata.push({party: 'BDP',votes: d.BDP})
-        })
-  
+        delete filteredData.BEZIRK_NAME;
+        delete filteredData.BEZIRK_NR;
+        delete filteredData.BFS_NR_GEMEINDE;
+        delete filteredData.GEMEINDE_NAME;
+        delete filteredData.Wahljahr;
+          
+      var piedata = [];
+        for (var key in filteredData) {
+          piedata.push({
+            party: key,
+            votes: filteredData[key]
+          })
+        };
+    
+  console.log(piedata)
+        
         var r = Math.min(width2, height2) / 4; //var r = 180;
 
         //Farbskala Pie Chart
@@ -273,7 +268,7 @@ function drawMap() {
             return (d == 'root') ? 'none' : 'initial';
           });
   
-//}
+}
     
     
 
