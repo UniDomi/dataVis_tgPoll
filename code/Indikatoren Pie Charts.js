@@ -57,7 +57,7 @@ console.log(piedata)
                             .style("left", (d3.event.pageX) + "px")
                             .style("top", (d3.event.pageY - 28) + "px");
                     })
-                .attr("fill", function (d) {return colorpie (d.value);}); 
+                .attr("fill", function (d) {return colorpie (piedata[i].party);}); 
     
     //prepare Legend
     var legendRectSize = 12,
@@ -169,7 +169,7 @@ function drawPiechartAuslaender(data2) {
                     })
                     
                 
-                .attr("fill", function (d) {return colorpie (d.value);}); 
+                .attr("fill", function (d) {return colorpie (piedata[i].Herkunft);}); 
     
     
     //prepare Legend
@@ -270,13 +270,13 @@ function drawPiechartHaushalt(data2) {
                             .duration(200)
                             .style("opacity", .9);
                         div
-                            .html("<strong>" + "Haushaltstyp: " + "</strong>" + piedata[i].Herkunft + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata[i].Anteil + "%")
+                            .html("<strong>" + "Haushaltstyp: " + "</strong>" + piedata[i].Haushaltstyp + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata[i].Anteil + "%")
                             .style("left", (d3.event.pageX) + "px")
                             .style("top", (d3.event.pageY - 28) + "px");
                     })
                     
                 
-                .attr("fill", function (d) {return colorpie (d.value);}); 
+                .attr("fill", function (d) {return colorpie (piedata[i].Haushaltstyp);}); 
     
     
     //prepare Legend
@@ -384,7 +384,7 @@ function drawPiechartAlter(data2) {
                     })
                     
                 
-                .attr("fill", function (d) {return colorpie (d.value);}); 
+                .attr("fill", function (d) {return colorpie (piedata[i].Altersgruppe);}); 
     
     
     //prepare Legend
