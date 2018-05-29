@@ -178,7 +178,7 @@ function drawMap() {
 
       console.log(piedata)
 
-      var r = Math.min(width2, height2) / 3; //var r = 180;
+      var r = Math.min(width2, height2) / 2.5; //var r = 180;
       var pie = d3.pie()
         .value(function(d) {
           return d.votes;
@@ -205,7 +205,7 @@ function drawMap() {
         .append("path")
         .attr("d", arc)
         .style("stroke", "black")
-        .style("stroke-width", "2px")
+        .style("stroke-width", "1px")
         .attr("fill", function(d, i) {
           return colorpie(piedata[i].party);
         })
@@ -227,6 +227,16 @@ function drawMap() {
             .style("left", (d3.event.pageX) + "px")
             .style("top", (d3.event.pageY - 28) + "px");
         });
+      
+          .on("mouseout", function(d, i) {
+            d3.select(this)
+              .style('stroke', function(d) {
+                return 'black';
+              })
+              .style('stroke-width', function(d) {
+                return '1';
+              });
+      });
 
 
       //prepare Legend
@@ -242,12 +252,12 @@ function drawMap() {
           var height = legendRectSize + legendSpacing;
           var offset = height * colorpie.domain().length / 2;
           var horz, vert;
-          if (i < 4) {
-            horz = (i * legendRectSize * 5.4) - 155; // -2 * legendRectSize;
-            vert = 205; // i * height - offset;
+          if (i < 5) {
+            horz = (i * legendRectSize * 5.4) + 30; // -2 * legendRectSize;
+            vert = 0; // i * height - offset;
           } else {
-            horz = ((i - 4) * legendRectSize * 5.4) - 155;
-            vert = height + 215;
+            horz = ((i - 5) * legendRectSize * 5.4) + 30;
+            vert = height + 10;
           }
 
           return 'translate(' + horz + ',' + vert + ')';
