@@ -202,7 +202,7 @@ function drawPiechart(data2){
   
         arcs.append("path")
           .attr("d", arc)
-          .on("mouseover", function(d) {
+          .on("mouseover", function(d, i) {
 
             d3.select(this)
               .style('stroke', function(d) {
@@ -214,7 +214,7 @@ function drawPiechart(data2){
             div.transition()
               .duration(200)
               .style("opacity", .9);
-            div.html("<strong>" + "Partei: " + "</strong>" + piedata.party + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata.votes + "%")
+            div.html("<strong>" + "Partei: " + "</strong>" + piedata[i].party + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata[i].votes + "%")
               .style("left", (d3.event.pageX) + "px")
               .style("top", (d3.event.pageY - 28) + "px");
           })
@@ -261,8 +261,8 @@ function drawPiechart(data2){
         legend.append('text')
           .attr('x', legendRectSize + legendSpacing)
           .attr('y', legendRectSize - legendSpacing)
-          .text(function(d) {
-            return d;
+          .text(function(d, i) {
+            return piedata[i].party;
           }).style("fill", "#00")
           .style('font-family', 'sans-serif').style("display", function(d) {
             return (d == 'root') ? 'none' : 'initial';
