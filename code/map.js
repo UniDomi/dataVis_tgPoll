@@ -206,7 +206,7 @@ function drawMap() {
         .attr("d", arc)
         .style("stroke", "black")
         .style("stroke-width", "2px")
-        .attr("fill", function(d) {
+        .attr("fill", function(d, i) {
           return colorpie(piedata[i].party);
         })
 
