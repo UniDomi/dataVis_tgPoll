@@ -1,29 +1,28 @@
-// Pie Chart Parteien 2012&2016
-function drawPiechartParteien2012_2016() {
-     
-      canvas.selectAll('path').remove();
-            
+// Pie Chart Parteien 2008, 2012, 2016
+function drawPiechartParteien2012_2016(data2) {
+        var filteredData = data2;
+        
+        console.log(filteredData);
+    
             //Farbskala Pie Chart
 			var colorpie = d3.scaleOrdinal()
-				.range(["#6a51a3", "#08306b", "green", "red", "orange", "#2171b5", "#67000d", "#c7e9c0", "#ffff00"])
-           
-		//streichen/ersetzen, wird dann durch on.click gefiltert	
-            var piefilteredData = csvParteien.filter(function(d) {
-                return d.BFS_NR_GEMEINDE === "4551";
-                });
+				.range(["#6a51a3", "#08306b", "green", "red", "orange", "#2171b5", "#67000d", "#c7e9c0", "#ffff00", "#ff69b4"])
+            
+        delete filteredData.BEZIRK_NAME;
+        delete filteredData.BEZIRK_NR;
+        delete filteredData.BFS_NR_GEMEINDE;
+        delete filteredData.GEMEINDE_NAME;
+        delete filteredData.Wahljahr;       
+          
+      var piedata = [];
+        for (var key in filteredData) {
+          piedata.push({
+            party: key,
+            votes: filteredData[key]
+          })
+        };
     
-            var piedata = []
-                piefilteredData.forEach(function(d) {
-                  piedata.push({party: 'EDU', votes: d.EDU})
-                    piedata.push({party: 'EVP', votes: d.EVP})
-                    piedata.push({party: 'GP', votes: d.GP})
-                    piedata.push({party: 'SP', votes: d.SP})
-                    piedata.push({party: 'CVP', votes: d.CVP})
-                    piedata.push({party: 'FDP', votes: d.FDP})
-                    piedata.push({party: 'SVP', votes: d.SVP})
-                    piedata.push({party: 'glp', votes: d.glp})
-                    piedata.push({party: 'BDP', votes: d.BDP})
-            })
+console.log(piedata)     
     
             var arc = d3.arc()
 				.innerRadius(80) //if inner radius is 0 then it becomes a pie chart
@@ -41,7 +40,7 @@ function drawPiechartParteien2012_2016() {
 			arcs.append("path")
 				.attr("d", arc)
         
-                  .on("mouseover", function(d) {
+                  .on("mouseover", function(d, i) {
                      d3.select(this)
                         .style('stroke', function (d) {
                             return '#a0a0a0';
@@ -54,17 +53,13 @@ function drawPiechartParteien2012_2016() {
                             .duration(200)
                             .style("opacity", .9);
                         div
-                            .html("<strong>" + "Partei: " + "</strong>" + piedata.party + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata.votes + "%")
+                            .html("<strong>" + "Partei: " + "</strong>" + piedata[i].party + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata[i].votes + "%")
                             .style("left", (d3.event.pageX) + "px")
                             .style("top", (d3.event.pageY - 28) + "px");
                     })
-                    
-                
                 .attr("fill", function (d) {return colorpie (d.value);}); 
     
-    
     //prepare Legend
-
     var legendRectSize = 12,
         legendSpacing = 4;
     
@@ -77,11 +72,11 @@ function drawPiechartParteien2012_2016() {
             var height = legendRectSize + legendSpacing;
             var offset =  height * colorpie.domain().length / 2;
             var horz, vert;
-            if(i<4){
+            if(i<5){
                 horz = (i * legendRectSize*5.4)-155; // -2 * legendRectSize;
                 vert = 205;// i * height - offset;
             }else{
-                horz = ((i-4) * legendRectSize*5.4)-155;
+                horz = ((i-5) * legendRectSize*5.4)-155;
                 vert = height +215;      
             }
             
@@ -99,146 +94,46 @@ function drawPiechartParteien2012_2016() {
     legend.append('text')
         .attr('x', legendRectSize + legendSpacing)
         .attr('y', legendRectSize - legendSpacing)
-        .text(function(d) { return d; }).style("fill","#00")
+        .text(function(d, i) { return piedata[i].party; }).style("fill","#00")
         .style('font-family','sans-serif').style("display",function(d){
             return (d=='root')? 'none':'initial';
         });
-    
+       
 }
 
-
-// Pie Chart Parteien 2008
-function drawPiechartParteien2008() {
-     
-            //Farbskala Pie Chart
-			var colorpie = d3.scaleOrdinal()
-				.range(["#6a51a3", "#08306b", "green", "red", "orange", "#2171b5", "#67000d", "#c7e9c0", "#ffff00"])
-     
-      canvas.selectAll('path').remove();
-    		
-	//streichen/ersetzen, wird dann durch on.click gefiltert
-            var piefilteredData = csvParteien.filter(function(d) {
-                return d.BFS_NR_GEMEINDE === "4551";
-                }); 
-    
-            var piedata = []
-                piefilteredData.forEach(function(d) {
-                  piedata.push({party: 'EDU', votes: d.EDU})
-                    piedata.push({party: 'EVP', votes: d.EVP})
-                    piedata.push({party: 'GP', votes: d.GP})
-                    piedata.push({party: 'SP', votes: d.SP})
-                    piedata.push({party: 'CVP', votes: d.CVP})
-                    piedata.push({party: 'FDP', votes: d.FDP})
-                    piedata.push({party: 'SVP', votes: d.SVP})
-                    piedata.push({party: 'glp', votes: d.glp})
-                    piedata.push({party: 'ALGP', votes: d.ALGP})
-            })
-   
-            var arc = d3.arc()
-				.innerRadius(80) //if inner radius is 0 then it becomes a pie chart
-				.outerRadius(r);
-				
-			var pie = d3.pie()
-				.value(function (d) {return d.votes;});
-            
-            var arcs = canvas.selectAll(".arc")
-				.data(pie(piedata))
-				.enter()
-				.append("g")
-                .attr("class", "arc");  
-				
-			arcs.append("path")
-				.attr("d", arc)
-        
-                  .on("mouseover", function(d) {
-                     d3.select(this)
-                        .style('stroke', function (d) {
-                            return '#a0a0a0';
-                        })
-                        .style('stroke-width', function (d) {
-                            return '1';
-                        });  
-
-                        div.transition()
-                            .duration(200)
-                            .style("opacity", .9);
-                        div
-                            .html("<strong>" + "Partei: " + "</strong>" + piedata.party + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata.votes + "%")
-                            .style("left", (d3.event.pageX) + "px")
-                            .style("top", (d3.event.pageY - 28) + "px");
-                    })
-                    
-                
-                .attr("fill", function (d) {return colorpie (d.value);}); 
-    
-    
-    //prepare Legend
-
-    var legendRectSize = 12,
-        legendSpacing = 4;
-    
-    var legend = canvas.selectAll('.legend')
-        .data(colorpie.domain())
-        .enter()
-        .append('g')
-        .attr('class', 'legend')
-       .attr('transform', function(d, i) {        
-            var height = legendRectSize + legendSpacing;
-            var offset =  height * colorpie.domain().length / 2;
-            var horz, vert;
-            if(i<4){
-                horz = (i * legendRectSize*5.4)-155; // -2 * legendRectSize;
-                vert = 215;// i * height - offset;
-            }else{
-                horz = ((i-4) * legendRectSize*5.4)-155;
-                vert = height +225;      
-            }
-            
-            return 'translate(' + horz + ',' + vert + ')';
-            
-        });
-    
-    legend.append('rect')
-        .attr('width', legendRectSize)
-        .attr('height', legendRectSize)
-        .style('fill', colorpie)
-        .style('stroke', colorpie)
-        .style("stroke-width", 2);
-    
-    legend.append('text')
-        .attr('x', legendRectSize + legendSpacing)
-        .attr('y', legendRectSize - legendSpacing)
-        .text(function(d) { return d; }).style("fill","#00")
-        .style('font-family','sans-serif').style("display",function(d){
-            return (d=='root')? 'none':'initial';
-        });
-    
-}
+          
 
 
-
-// Pie Chart Ausländer 2005-2013
-function drawPiechartAuslaender2005_2013() {
-     
+//Pie Chart Auslaender 2015-2017
+function drawPiechartAuslaender(data2) {
+     var filteredData = data2;
+    
             //Farbskala Pie Chart
 			var colorpie = d3.scaleOrdinal()
 				.range(["#ff0000", "#0059b2"])
+    /*
+            var filteredAusland = csvAusland.filter(function(d) {
+                return d.Jahr === "2017";
+                });
+      */     
+    delete filteredData.Auslaender_Prozent;
+            delete filteredData.Total;
+            delete filteredData.BFS_NR_GEMEINDE;
+            delete filteredData.GEMEINDE_NAME;
+            delete filteredData.Jahr;
+
+
+          var piedata = [];
+            for (var key in filteredData) {
+              piedata.push({
+                Herkunft: key,
+                Anteil: filteredData[key]
+              })
+            };
+
+    console.log(piedata)
      
-      canvas.selectAll('path').remove();
     
-    		//streichen/ersetzen, wird dann durch on.click gefiltert
-            var piefilteredData = csvAusland.filter(function(d) {
-                return d.BFS_NR_GEMEINDE === "4551";
-                }); 
-    
-           var piedata = []
-                piefilteredData.forEach(function(d) {
-                    piedata.push({Herkunft: 'Schweiz', Anteil: 100 - d.Auslaenderanteil_Prozent_2014}) //Wechsel Jahr noch umsetzen
-                    piedata.push({Herkunft: 'Ausland', Anteil: d.Auslaenderanteil_Prozent_2014})
-            })
-    
-    console.log(piedata);
-   
             var arc = d3.arc()
 				.innerRadius(80) //if inner radius is 0 then it becomes a pie chart
 				.outerRadius(r);
@@ -268,114 +163,7 @@ function drawPiechartAuslaender2005_2013() {
                             .duration(200)
                             .style("opacity", .9);
                         div
-                            .html("<strong>" + "Herkunft: " + "</strong>" + piedata.Herkunft + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata.Anteil + "%")
-                            .style("left", (d3.event.pageX) + "px")
-                            .style("top", (d3.event.pageY - 28) + "px");
-                    })
-                   
-                .attr("fill", function (d) {return colorpie (d.value);}); 
-    
-    //prepare Legend
-
-    var legendRectSize = 12,
-        legendSpacing = 4;
-    
-    var legend = canvas.selectAll('.legend')
-        .data(colorpie.domain())
-        .enter()
-        .append('g')
-        .attr('class', 'legend')
-        .attr('transform', function(d, i) {        
-            var height = legendRectSize + legendSpacing;
-            var offset =  height * colorpie.domain().length / 2;
-            var horz, vert;
-            if(i>0){
-                horz = -80;
-                vert = 215;
-           
-            }else{
-                horz = 40;
-                vert = 215;      
-            }
-            return 'translate(' + horz + ',' + vert + ')';  
-        });
-    
-    legend.append('rect')
-        .attr('width', legendRectSize)
-        .attr('height', legendRectSize)
-        .style('fill', colorpie)
-        .style('stroke', colorpie)
-        .style("stroke-width", 2);
-    
-    legend.append('text')
-        .attr('x', legendRectSize + legendSpacing)
-        .attr('y', legendRectSize - legendSpacing)
-        .text(function(d) { return d; }).style("fill","#00")
-        .style('font-family','sans-serif').style("display",function(d){
-            return (d=='root')? 'none':'initial';
-        });
-    
-}
-
-
-
-
-
-//Pie Chart Auslaender 2015-2017
-function drawPiechartAuslaender() {
-     
-            //Farbskala Pie Chart
-			var colorpie = d3.scaleOrdinal()
-				.range(["#ff0000", "#0059b2"])
-     
-      canvas.selectAll('path').remove();
-	
-    		//streichen/ersetzen, wird beim einlesen gefiltert
-            var filteredAusland = csvAusland.filter(function(d) {
-                return d.Jahr === "2017";
-                });
-           //streichen/ersetzen, wird dann durch on.click gefiltert
-            var piefilteredData = filteredAusland.filter(function(d) {
-                return d.BFS_NR_GEMEINDE === "4566";
-                }); 
-    
-            var piedata = []
-                piefilteredData.forEach(function(d) {
-                    piedata.push({Herkunft: 'Schweiz', Anzahl: d.Schweiz})
-                    piedata.push({Herkunft: 'Ausland', Anzahl: d.Ausland})
-            })
-     
-    
-            var arc = d3.arc()
-				.innerRadius(80) //if inner radius is 0 then it becomes a pie chart
-				.outerRadius(r);
-				
-			var pie = d3.pie()
-				.value(function (d) {return d.Anzahl;});
-            
-            var arcs = canvas.selectAll(".arc")
-				.data(pie(piedata))
-				.enter()
-				.append("g")
-                .attr("class", "arc");  
-				
-			arcs.append("path")
-				.attr("d", arc)
-        
-                  .on("mouseover", function(d) {
-                     d3.select(this)
-                        .style('stroke', function (d) {
-                            return '#a0a0a0';
-                        })
-                        .style('stroke-width', function (d) {
-                            return '1';
-                        });  
-
-                        div.transition()
-                            .duration(200)
-                            .style("opacity", .9);
-                        div
-                            .html("<strong>" + "Herkunft: " + "</strong>" + piedata.Herkunft + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata.Anzahl + "%")
+                            .html("<strong>" + "Herkunft: " + "</strong>" + piedata[i].Herkunft + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata[i].Anteil + "%")
                             .style("left", (d3.event.pageX) + "px")
                             .style("top", (d3.event.pageY - 28) + "px");
                     })
@@ -422,7 +210,7 @@ function drawPiechartAuslaender() {
     legend.append('text')
         .attr('x', legendRectSize + legendSpacing)
         .attr('y', legendRectSize - legendSpacing)
-        .text(function(d) { return d; }).style("fill","#00")
+        .text(function(d) { return piedata[i].Herkunft; }).style("fill","#00")
         .style('font-family','sans-serif').style("display",function(d){
             return (d=='root')? 'none':'initial';
         });
@@ -432,29 +220,27 @@ function drawPiechartAuslaender() {
 
 
 //Pie Chart Haushaltstyp
-function drawPiechartHaushalt() {
-     
+function drawPiechartHaushalt(data2) {
+     var filteredData = data2;
+    
             //Farbskala Pie Chart
 			var colorpie = d3.scaleOrdinal()
 				.range(["#ff0000", "#0059b2", "#6a51a3", "green", "orange"])
-     
-      canvas.selectAll('path').remove();
-    		
-	//streichen/ersetzen, wird dann durch on.click gefiltert
-            var piefilteredData = csvHaushalt.filter(function(d) {
-                return d.BFS_NR_GEMEINDE === "4566";
-                }); 
     
+        delete filteredData.Total;
+        delete filteredData.BFS_NR_GEMEINDE;
+        delete filteredData.GEMEINDE_NAME;       
+          
+      var piedata = [];
+        for (var key in filteredData) {
+          piedata.push({
+            Haushaltstyp: key,
+            Anteil: filteredData[key]
+          })
+        };
     
-            var piedata = []
-                piefilteredData.forEach(function(d) {
-                    piedata.push({Haushalt: 'Einpersonenhaushalte', Anzahl: d.Einpersonenhaushalte})
-                    piedata.push({Haushalt: 'Paare ohne Kinder', Anzahl: d.Paare_ohne_Kinder})
-                    piedata.push({Haushalt: 'Paare mit Kinder', Anzahl: d.Paare_mit_Kinder})
-                    piedata.push({Haushalt: 'Einelternhaushalte', Anzahl: d.Einelternhaushalte})
-                    piedata.push({Haushalt: 'Andere Haushalte', Anzahl: d.Andere_Haushalte})
-            })
-
+    console.log(piedata)
+    
             var arc = d3.arc()
 				.innerRadius(80) //if inner radius is 0 then it becomes a pie chart
 				.outerRadius(r);
@@ -484,7 +270,7 @@ function drawPiechartHaushalt() {
                             .duration(200)
                             .style("opacity", .9);
                         div
-                            .html("<strong>" + "Haushaltstyp: " + "</strong>" + piedata.Herkunft + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata.Anzahl + "%")
+                            .html("<strong>" + "Haushaltstyp: " + "</strong>" + piedata[i].Herkunft + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata[i].Anteil + "%")
                             .style("left", (d3.event.pageX) + "px")
                             .style("top", (d3.event.pageY - 28) + "px");
                     })
@@ -529,12 +315,126 @@ function drawPiechartHaushalt() {
     legend.append('text')
         .attr('x', legendRectSize + legendSpacing)
         .attr('y', legendRectSize - legendSpacing)
-        .text(function(d) { return d; }).style("fill","#00")
+        .text(function(d) { return piedata[i].Haushaltstyp; }).style("fill","#00")
         .style('font-family','sans-serif').style("display",function(d){
             return (d=='root')? 'none':'initial';
         });
     
-    //}
+}
+
+
+
+
+
+// Pie Chart Altersgruppen 2004-2017
+function drawPiechartAlter(data2) {
+     var filteredData = data2;
+    
+            //Farbskala Pie Chart
+			var colorpie = d3.scaleOrdinal()
+				.range(["#ff0000", "#0059b2", "#6a51a3", "green", "orange"])
+     
+        delete filteredData.Total;
+        delete filteredData.BFS_NR_GEMEINDE;
+        delete filteredData.Gemeinde;
+        delete filteredData.Statistikjahr;       
+          
+      var piedata = [];
+        for (var key in filteredData) {
+          piedata.push({
+            Altersgruppe: key,
+            Anteil: filteredData[key]
+          })
+        };
+    
+    console.log(piedata)  
+   
+            var arc = d3.arc()
+				.innerRadius(80) //if inner radius is 0 then it becomes a pie chart
+				.outerRadius(r);
+				
+			var pie = d3.pie()
+				.value(function (d) {return d.Anteil;});
+            
+            var arcs = canvas.selectAll(".arc")
+				.data(pie(piedata))
+				.enter()
+				.append("g")
+                .attr("class", "arc");  
+				
+			arcs.append("path")
+				.attr("d", arc)
+        
+                  .on("mouseover", function(d) {
+                     d3.select(this)
+                        .style('stroke', function (d) {
+                            return '#a0a0a0';
+                        })
+                        .style('stroke-width', function (d) {
+                            return '1';
+                        });  
+
+                        div.transition()
+                            .duration(200)
+                            .style("opacity", .9);
+                        div
+                            .html("<strong>" + "Altersgruppe: " + "</strong>" + piedata[i].Altersgruppe + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata[i].Anteil + "%")
+                            .style("left", (d3.event.pageX) + "px")
+                            .style("top", (d3.event.pageY - 28) + "px");
+                    })
+                    
+                
+                .attr("fill", function (d) {return colorpie (d.value);}); 
+    
+    
+    //prepare Legend
+
+    var legendRectSize = 12,
+        legendSpacing = 4;
+    
+    var legend = canvas.selectAll('.legend')
+        .data(colorpie.domain())
+        .enter()
+        .append('g')
+        .attr('class', 'legend')
+       .attr('transform', function(d, i) {        
+            var height = legendRectSize + legendSpacing;
+            var offset =  height * colorpie.domain().length / 2;
+            var horz, vert;
+            if(i<5){
+                horz = (i * legendRectSize*5.4)-155; // -2 * legendRectSize;
+                vert = 215;// i * height - offset;
+            }else{
+                horz = ((i-4) * legendRectSize*5.4)-155;
+                vert = height +225;      
+            }
+            
+            return 'translate(' + horz + ',' + vert + ')';
+            
+        });
+    
+    legend.append('rect')
+        .attr('width', legendRectSize)
+        .attr('height', legendRectSize)
+        .style('fill', colorpie)
+        .style('stroke', colorpie)
+        .style("stroke-width", 2);
+    
+    legend.append('text')
+        .attr('x', legendRectSize + legendSpacing)
+        .attr('y', legendRectSize - legendSpacing)
+        .text(function(d) { return piedata[i].Altersgruppe; }).style("fill","#00")
+        .style('font-family','sans-serif').style("display",function(d){
+            return (d=='root')? 'none':'initial';
+        });
+    
+}
+
+
+
+
+
+
 
 
 
@@ -547,7 +447,6 @@ function drawPiechartSektoren() {
      
       canvas.selectAll('path').remove();
     
-	//streichen/ersetzen, wird dann durch on.click gefiltert
             var piefilteredData = csvSektoren.filter(function(d) {
                 return d.BFS_NR_GEMEINDE === "4551";
                 }); 
@@ -555,7 +454,7 @@ function drawPiechartSektoren() {
     
             var piedata = []
                 piefilteredData.forEach(function(d) {
-                    piedata.push({Sektor: '1. Sektor', Anteil: d.Anteil_Sektor1_2014}) //Wechsel Jahr noch einbauen
+                    piedata.push({Sektor: '1. Sektor', Anteil: d.Anteil_Sektor1_2014})
                     piedata.push({Sektor: '2. Sektor', Anteil: d.Anteil_Sektor2_2014})
                     piedata.push({Sektor: '3. Sektor', Anteil: d.Anteil_Sektor3_2014})
                    
@@ -645,35 +544,24 @@ function drawPiechartSektoren() {
 
 
 
-
-// Pie Chart Altersgruppen 2004-2017
-function drawPiechartAlter() {
+// Pie Chart Ausländer 2005-2013
+function drawPiechartAuslaender2005_2013(data2) {
      
             //Farbskala Pie Chart
 			var colorpie = d3.scaleOrdinal()
-				.range(["#ff0000", "#0059b2", "#6a51a3", "green", "orange"])
+				.range(["#ff0000", "#0059b2"])
      
-      canvas.selectAll('path').remove();
-    
-		//streichen/ersetzen, wird beim einlesen gefiltert
-            var filteredAlter = csvAlter.filter(function(d) {
-                return d.Statistikjahr === "2017";
+            var piefilteredData = csvAusland.filter(function(d) {
+                return d.BFS_NR_GEMEINDE === "4551";
                 }); 
     
-		//streichen/ersetzen, wird dann durch on.click gefiltert
-            var piefilteredData = filteredAlter.filter(function(d) {
-                return d.BFS_NR_GEMEINDE === "4421";
-                }); 
-    
-            var piedata = []
+           var piedata = []
                 piefilteredData.forEach(function(d) {
-                    piedata.push({Altersgruppe: '0-19', Anteil: d["0-19"]})
-                    piedata.push({Altersgruppe: '20-39', Anteil: d["20-39"]})
-                    piedata.push({Altersgruppe: '40-64', Anteil: d["40-64"]})
-                    piedata.push({Altersgruppe: '65-79', Anteil: d["65-79"]})
-                    piedata.push({Altersgruppe: '80+', Anteil: d["80+"]})
-                   
+                    piedata.push({Herkunft: 'Schweiz', Anteil: 100 - d.Auslaenderanteil_Prozent_2014})
+                    piedata.push({Herkunft: 'Ausland', Anteil: d.Auslaenderanteil_Prozent_2014})
             })
+    
+    console.log(piedata);
    
             var arc = d3.arc()
 				.innerRadius(80) //if inner radius is 0 then it becomes a pie chart
@@ -704,7 +592,7 @@ function drawPiechartAlter() {
                             .duration(200)
                             .style("opacity", .9);
                         div
-                            .html("<strong>" + "Altersgruppe: " + "</strong>" + piedata.Altersgruppe + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata.Anteil + "%")
+                            .html("<strong>" + "Herkunft: " + "</strong>" + piedata.Herkunft + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata.Anteil + "%")
                             .style("left", (d3.event.pageX) + "px")
                             .style("top", (d3.event.pageY - 28) + "px");
                     })
@@ -723,20 +611,19 @@ function drawPiechartAlter() {
         .enter()
         .append('g')
         .attr('class', 'legend')
-       .attr('transform', function(d, i) {        
+        .attr('transform', function(d, i) {        
             var height = legendRectSize + legendSpacing;
             var offset =  height * colorpie.domain().length / 2;
             var horz, vert;
-            if(i<5){
-                horz = (i * legendRectSize*5.4)-155; // -2 * legendRectSize;
-                vert = 215;// i * height - offset;
+            if(i>0){
+                horz = -80;
+                vert = 215;
+           
             }else{
-                horz = ((i-4) * legendRectSize*5.4)-155;
-                vert = height +225;      
+                horz = 40;
+                vert = 215;      
             }
-            
-            return 'translate(' + horz + ',' + vert + ')';
-            
+            return 'translate(' + horz + ',' + vert + ')';  
         });
     
     legend.append('rect')
@@ -755,3 +642,6 @@ function drawPiechartAlter() {
         });
     
 }
+
+
+
