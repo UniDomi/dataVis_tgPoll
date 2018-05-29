@@ -23,6 +23,8 @@ function drawMap() {
   var div = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
+  
+   var r = Math.min(width2, height2) / 2.5; //var r = 180;
 
   //map colour scale
   var mapColour = d3.scaleThreshold()
@@ -178,7 +180,6 @@ function drawMap() {
 
       console.log(piedata)
 
-      var r = Math.min(width2, height2) / 2.5; //var r = 180;
       var pie = d3.pie()
         .value(function(d) {
           return d.votes;
@@ -252,10 +253,10 @@ function drawMap() {
           var offset = height * colorpie.domain().length / 2;
           var horz, vert;
           if (i < 5) {
-            horz = (i * legendRectSize * 5.4) + 30; // -2 * legendRectSize;
+            horz = (i * legendRectSize * 5.4) + 25; // -2 * legendRectSize;
             vert = 0; // i * height - offset;
           } else {
-            horz = ((i - 5) * legendRectSize * 5.4) + 30;
+            horz = ((i - 5) * legendRectSize * 5.4) + 25;
             vert = height + 10;
           }
 
@@ -272,8 +273,8 @@ function drawMap() {
         .style("stroke-width", 2);
 
       legend.append('text')
-        .attr('x', legendRectSize + legendSpacing)
-        .attr('y', legendRectSize - legendSpacing)
+        .attr('x', legendRectSize + legendSpacing +10)
+        .attr('y', legendRectSize - legendSpacing +2)
         .text(function(d, i) {
           return piedata[i].party;
         }).style("fill", "#00")
