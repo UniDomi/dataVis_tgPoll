@@ -18,7 +18,7 @@ function drawMap() {
     .append("g")
     .attr("width", width2)
     .attr("height", height2)
-  .attr("transform", "translate(" + width2 / 2 + "," + 200 + ")")
+  //.attr("transform", "translate(" + width2 / 2 + "," + 200 + ")")
 
   var div = d3.select("body").append("div")
     .attr("class", "tooltip")
