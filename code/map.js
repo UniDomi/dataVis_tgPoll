@@ -6,8 +6,8 @@ function drawMap() {
     height = 500;
 
   //#piechart
-  var width2 = 500;
-  var height2 = 500;
+  var width2 = 360;
+  var height2 = 480;
 
   var svg = d3.select("#map").append("svg")
     .attr("width", width)
@@ -198,7 +198,7 @@ function drawMap() {
         //.attr("height", "500")
         .select("svg")
         .append("g")
-        .attr("transform", "translate(250,250)")
+        .attr("transform", "translate(180,160)")
         .selectAll("path")
         .data(pie(piedata))
         .enter()
@@ -256,9 +256,7 @@ function drawMap() {
 
       legend.append('rect')
         .attr('width', legendRectSize)
-        .style('display', function(d, i) {
-          return (i == 0) ? 'none' : 'initial';
-        })
+        //.style('display', function(d, i) {return (i == 0) ? 'none' : 'initial';})
         .attr('height', legendRectSize)
         .style('fill', colorpie)
         .style('stroke', colorpie)
