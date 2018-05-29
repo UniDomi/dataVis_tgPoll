@@ -7,6 +7,7 @@ function drawPiechartParteien2012_2016() {
 			var colorpie = d3.scaleOrdinal()
 				.range(["#6a51a3", "#08306b", "green", "red", "orange", "#2171b5", "#67000d", "#c7e9c0", "#ffff00"])
            
+		//streichen/ersetzen, wird dann durch on.click gefiltert	
             var piefilteredData = csvParteien.filter(function(d) {
                 return d.BFS_NR_GEMEINDE === "4551";
                 });
@@ -114,7 +115,8 @@ function drawPiechartParteien2008() {
 				.range(["#6a51a3", "#08306b", "green", "red", "orange", "#2171b5", "#67000d", "#c7e9c0", "#ffff00"])
      
       canvas.selectAll('path').remove();
-    
+    		
+	//streichen/ersetzen, wird dann durch on.click gefiltert
             var piefilteredData = csvParteien.filter(function(d) {
                 return d.BFS_NR_GEMEINDE === "4551";
                 }); 
@@ -224,11 +226,12 @@ function drawPiechartAuslaender() {
 				.range(["#ff0000", "#0059b2"])
      
       canvas.selectAll('path').remove();
-    
+	
+    		//streichen/ersetzen, wird beim einlesen gefiltert
             var filteredAusland = csvAusland.filter(function(d) {
                 return d.Jahr === "2017";
                 });
-           
+           //streichen/ersetzen, wird dann durch on.click gefiltert
             var piefilteredData = filteredAusland.filter(function(d) {
                 return d.BFS_NR_GEMEINDE === "4566";
                 }); 
@@ -333,7 +336,8 @@ function drawPiechartHaushalt() {
 				.range(["#ff0000", "#0059b2", "#6a51a3", "green", "orange"])
      
       canvas.selectAll('path').remove();
-    
+    		
+	//streichen/ersetzen, wird dann durch on.click gefiltert
             var piefilteredData = csvHaushalt.filter(function(d) {
                 return d.BFS_NR_GEMEINDE === "4566";
                 }); 
@@ -440,6 +444,7 @@ function drawPiechartSektoren() {
      
       canvas.selectAll('path').remove();
     
+	//streichen/ersetzen, wird dann durch on.click gefiltert
             var piefilteredData = csvSektoren.filter(function(d) {
                 return d.BFS_NR_GEMEINDE === "4551";
                 }); 
@@ -447,7 +452,7 @@ function drawPiechartSektoren() {
     
             var piedata = []
                 piefilteredData.forEach(function(d) {
-                    piedata.push({Sektor: '1. Sektor', Anteil: d.Anteil_Sektor1_2014})
+                    piedata.push({Sektor: '1. Sektor', Anteil: d.Anteil_Sektor1_2014}) //Wechsel Jahr noch einbauen
                     piedata.push({Sektor: '2. Sektor', Anteil: d.Anteil_Sektor2_2014})
                     piedata.push({Sektor: '3. Sektor', Anteil: d.Anteil_Sektor3_2014})
                    
@@ -537,106 +542,6 @@ function drawPiechartSektoren() {
 
 
 
-// Pie Chart Konfession 2015-2017
-function drawPiechartKonfession() {
-     
-            //Farbskala Pie Chart
-			var colorpie = d3.scaleOrdinal()
-				.range(["green", "#ff0000", "#0059b2"])
-     
-      canvas.selectAll('path').remove();
-    
-            var filteredKonfession = csvKonfession.filter(function(d) {
-                return d.JAHR === "2017";
-                }); 
-    
-            var piedata = filteredKonfession.filter(function(d) {
-                return d.BFS_NR_GEMEINDE === "4421";
-                }); 
-
-            var arc = d3.arc()
-				.innerRadius(80) //if inner radius is 0 then it becomes a pie chart
-				.outerRadius(r);
-				
-			var pie = d3.pie()
-				.value(function (d) {return d.ANZAHL_PERSONEN;});
-            
-            var arcs = canvas.selectAll(".arc")
-				.data(pie(piedata))
-				.enter()
-				.append("g")
-                .attr("class", "arc");  
-				
-			arcs.append("path")
-				.attr("d", arc)
-        
-                  .on("mouseover", function(d) {
-                     d3.select(this)
-                        .style('stroke', function (d) {
-                            return '#a0a0a0';
-                        })
-                        .style('stroke-width', function (d) {
-                            return '1';
-                        });  
-
-                        div.transition()
-                            .duration(200)
-                            .style("opacity", .9);
-                        div
-                            .html("<strong>" + "Konfession: " + "</strong>" + piedata.KONFESSION_BEZEICHNUNG + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata.ANZAHL_PERSONEN + "%")
-                            .style("left", (d3.event.pageX) + "px")
-                            .style("top", (d3.event.pageY - 28) + "px");
-                    })
-                    
-                
-                .attr("fill", function (d) {return colorpie (d.value);}); 
-    
-    
-    //prepare Legend
-
-    var legendRectSize = 12,
-        legendSpacing = 4;
-    
-    var legend = canvas.selectAll('.legend')
-        .data(colorpie.domain())
-        .enter()
-        .append('g')
-        .attr('class', 'legend')
-       .attr('transform', function(d, i) {        
-            var height = legendRectSize + legendSpacing;
-            var offset =  height * colorpie.domain().length / 2;
-            var horz, vert;
-            if(i<5){
-                horz = (i * legendRectSize*5.4)-75; // -2 * legendRectSize;
-                vert = 215;// i * height - offset;
-            }else{
-                horz = ((i-4) * legendRectSize*5.4)-75;
-                vert = height +225;      
-            }
-            
-            return 'translate(' + horz + ',' + vert + ')';
-            
-        });
-    
-    legend.append('rect')
-        .attr('width', legendRectSize)
-        .attr('height', legendRectSize)
-        .style('fill', colorpie)
-        .style('stroke', colorpie)
-        .style("stroke-width", 2);
-    
-    legend.append('text')
-        .attr('x', legendRectSize + legendSpacing)
-        .attr('y', legendRectSize - legendSpacing)
-        .text(function(d) { return d; }).style("fill","#00")
-        .style('font-family','sans-serif').style("display",function(d){
-            return (d=='root')? 'none':'initial';
-        });
-    
-}
-
-
-
 
 // Pie Chart Altersgruppen 2004-2017
 function drawPiechartAlter() {
@@ -647,10 +552,12 @@ function drawPiechartAlter() {
      
       canvas.selectAll('path').remove();
     
+		//streichen/ersetzen, wird beim einlesen gefiltert
             var filteredAlter = csvAlter.filter(function(d) {
                 return d.Statistikjahr === "2017";
                 }); 
     
+		//streichen/ersetzen, wird dann durch on.click gefiltert
             var piefilteredData = filteredAlter.filter(function(d) {
                 return d.BFS_NR_GEMEINDE === "4421";
                 }); 
