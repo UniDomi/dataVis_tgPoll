@@ -108,6 +108,12 @@ function drawMap() {
       .attr("id", function(d) {
         return d.id
       })
+    .style('stroke', function (d){if (d.id == "9329") {
+            return "white"
+        }else {
+            return '#000';
+        }
+        })
       //.property("data",function(d){return d.properties.data})
       .style("fill", function(d) {
         if (d.properties.data) {
@@ -122,8 +128,11 @@ function drawMap() {
 
       .on("mouseover", function(d) {
         d3.select(this)
-          .style('stroke', function(d) {
+          .style('stroke', function(d) {if (d.id == "9329") {
+            return "white"
+        }else {
             return '#a0a0a0';
+            }
           })
           .style('stroke-width', function(d) {
             return '1';
@@ -140,7 +149,12 @@ function drawMap() {
 
       .on("mouseout", function(d) {
         d3.select(this)
-          .style('stroke', '#000')
+           .style('stroke', function (d){if (d.id == "9329") {
+            return "white"
+        }else {
+            return '#000';
+        }
+        })
           .style('stroke-width', '0.5');
         div.transition()
           .duration(500)
