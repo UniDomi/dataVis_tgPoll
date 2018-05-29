@@ -12,7 +12,7 @@ function drawMap() {
   var svg = d3.select("#map").append("svg")
     .attr("width", width)
     .attr("height", height)
-    .attr("transform", "translate(-50, 0)");
+    .attr("transform", "translate(-30, 0)");
 
   var canvas = d3.select("#piechart")
     .append("svg")
