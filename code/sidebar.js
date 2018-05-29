@@ -13,7 +13,7 @@ function createSidebar() {
     var block = d3.selectAll("g." + blockId);
     block
       .append("rect")
-      .attr("width", 250)
+      .attr("width", 230)
       .attr("height", 40)
       .attr("fill", function(d) {
         return d.value <= 50 ? 'red' : '#0066cc'
@@ -23,11 +23,11 @@ function createSidebar() {
     block
       .append("text")
       .style("text-anchor", "start")
-      .attr("x", 0)
+      .attr("x", 7)
       .attr("y", 25)
 
       .text(d => d.key)
-      .style("font-size", "20px")
+      .style("font-size", "15px")
       .style("font-weight", "bold")
     return block
   }
@@ -136,11 +136,11 @@ function createSidebar() {
     pollsG
       .append("text")
       .style("text-anchor", "start")
-      .attr("x", 0)
+      .attr("x", 7)
       .attr("y", 25)
       .attr("content-area", "10px, 10px")
       .text(d => d.VORLAGE_BEZEICHNUNG)
-      .style("font-size", "20px")
+      .style("font-size", "15px")
       .style("font-weight", "bold")
 
     const dataKeys = Object.keys(data[0])
