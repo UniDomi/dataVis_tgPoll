@@ -1,7 +1,5 @@
 function drawMap() {
   
-  d3.select("h1").html("<h1>"+title+"</h1>");
-
   var dataset;
 
   var width = 960,
