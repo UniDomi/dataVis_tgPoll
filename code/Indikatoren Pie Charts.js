@@ -167,7 +167,10 @@ function drawPiechartAuslaender(data2, r) {
     .value(function(d) {
       return d.Anteil;
     });
-
+  var sum = 0;
+  piedata.forEach(function(k){
+    sum += parseInt(k.Anteil);
+  })
   d3.selectAll("#piechart")
     .select("svg")
     .append("g")
@@ -197,7 +200,7 @@ function drawPiechartAuslaender(data2, r) {
         .duration(200)
         .style("opacity", .9);
       div
-        .html("<strong>" + "Herkunft: " + "</strong>" + piedata[i].Herkunft + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata[i].Anteil + "%")
+        .html("<strong>" + "Herkunft: " + "</strong>" + piedata[i].Herkunft + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + Math.round(piedata[i].Anteil/sum*100, 2) + "%")
         .style("left", (d3.event.pageX) + "px")
         .style("top", (d3.event.pageY - 28) + "px");
     })
@@ -289,12 +292,15 @@ function drawPiechartHaushalt(data2, r) {
   var arc = d3.arc()
     .innerRadius(80) //if inner radius is 0 then it becomes a pie chart
     .outerRadius(r);
-
+  var sum = 0;
   var pie = d3.pie()
     .value(function(d) {
       return d.Anteil;
     });
 
+  piedata.forEach(function(k){
+    sum += parseInt(k.Anteil);
+  })
   d3.selectAll("#piechart")
     .select("svg")
     .append("g")
@@ -324,7 +330,7 @@ function drawPiechartHaushalt(data2, r) {
         .duration(200)
         .style("opacity", .9);
       div
-        .html("<strong>" + "Haushaltstyp: " + "</strong>" + piedata[i].Haushaltstyp + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata[i].Anteil + "%")
+        .html("<strong>" + "Haushaltstyp: " + "</strong>" + piedata[i].Haushaltstyp + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + Math.round((piedata[i].Anteil/sum)*100,0) + "%")
         .style("left", (d3.event.pageX) + "px")
         .style("top", (d3.event.pageY - 28) + "px");
     })
