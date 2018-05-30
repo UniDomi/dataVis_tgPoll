@@ -275,7 +275,7 @@ function drawPiechartHaushalt(data2, r) {
 				.outerRadius(r);
 
 			var pie = d3.pie()
-				.value(function (d) {return d.Anzahl;});
+				.value(function (d) {return d.Anteil;});
 
 	d3.selectAll("#piechart")
 		.select("svg")
