@@ -237,12 +237,12 @@ function drawPiechartAuslaender(data2, r) {
       var height = legendRectSize + legendSpacing;
       var offset = height * colorpie.domain().length / 2;
       var horz, vert;
-      if (i < 5) {
-        horz = (i * legendRectSize * 5.4) + 35; // -2 * legendRectSize;
+      if (i > 0) {
+        horz = 100; // -2 * legendRectSize;
         vert = 360; // i * height - offset;
       } else {
-        horz = ((i - 5) * legendRectSize * 5.4) + 35;
-        vert = height + 370;
+        horz = 220;
+        vert = 360;
       }
       return 'translate(' + horz + ',' + vert + ')';
     });
@@ -255,14 +255,15 @@ function drawPiechartAuslaender(data2, r) {
     .style("stroke-width", 2);
 
   legend.append('text')
-    .attr('x', legendRectSize + legendSpacing)
-    .attr('y', legendRectSize - legendSpacing)
+    .attr('x', legendRectSize + legendSpacing +25)
+    .attr('y', legendRectSize - legendSpacing +2)
     .text(function(d, i) {
       return piedata[i].Herkunft;
     }).style("fill", "#00")
     .style('font-family', 'sans-serif').style("display", function(d) {
       return (d == 'root') ? 'none' : 'initial';
-    });
+    })
+	.style("font-size", "13px");
 
 }
 
