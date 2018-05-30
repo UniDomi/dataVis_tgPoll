@@ -29,8 +29,8 @@ function drawMap() {
 
   //map colour scale
   var mapColour = d3.scaleThreshold()
-    .domain([0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.51, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85])
-    .range(['#4c0000', '#99000d', '#cb181d', '#ef3b2c', '#fb6a4a', '#fc9272', '#fcbba1', '#fee5d9', '#99ccff', '#66b2ff', '#3299ff', '#0080ff', '#0066cc', '#004c99', '#003366']);
+    .domain([0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.51, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 1])
+    .range(['#4c0000', '#99000d', '#cb181d', '#ef3b2c', '#fb6a4a', '#fc9272', '#fcbba1', '#fee5d9', "#cce5ff", '#99ccff', '#66b2ff', '#3299ff', '#0080ff', '#0066cc', '#004c99', '#003366', "#00264c"]);
 
   //load data files
   d3.queue()
@@ -68,7 +68,7 @@ function drawMap() {
         .style('border-top-color', String)
         .text(function(d) {
           var r = scale.invertExtent(d);
-          return Math.round(r[1] * 1000) / 10 + '%';
+          return Math.round(r[0] * 1000) / 10 + '%';
         });
     }
 
