@@ -22,7 +22,7 @@ function drawMap() {
     .attr("height", height2)
   //.attr("transform", "translate(" + width2 / 2 + "," + 200 + ")")
 
-  var div = d3.select("body").append("div")
+  div = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
 

@@ -60,8 +60,7 @@ console.log(piedata)
                         div.transition()
                             .duration(200)
                             .style("opacity", .9);
-                        div
-                            .html("<strong>" + "Partei: " + "</strong>" + piedata[i].party + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata[i].votes + "%")
+                        div.html("<strong>" + "Partei: " + "</strong>" + piedata[i].party + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata[i].votes + "%")
                             .style("left", (d3.event.pageX) + "px")
                             .style("top", (d3.event.pageY - 28) + "px");
                     })
@@ -74,6 +73,7 @@ console.log(piedata)
 			return '1';
 		      });
 	})
+
 
     //prepare Legend
     var legendRectSize = 12,
