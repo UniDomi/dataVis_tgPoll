@@ -1,5 +1,8 @@
-function drawMap(title) {
-  d3.select("h2").html("<h2>" + title + "</h2>");
+function drawMap() {
+  d3.selectAll("#map").select("svg").remove()
+  d3.selectAll(".legend").remove()
+  d3.selectAll("#piechart").select("g").remove()
+  d3.select("h2").html("<h2>" + bezeichnung + "</h2>");
   var dataset;
 
   var width = 960,
@@ -162,7 +165,6 @@ function drawMap(title) {
 
       .on("click", function(d) { //function(e,f){
         d3.select('#piechart').select('h3').html(d.properties.data.GEMEINDE_NAME);
-        d3.selectAll("#piechart").select("g").remove()
         switch (indikator){
           case 1:
             drawPiechartParteien(d.properties.data2, r);
@@ -177,7 +179,7 @@ function drawMap(title) {
             drawPiechartAuslaender(d.properties.data2, r);
             break;
         }
-    
+
         //console.log(d.properties.data2);
         //drawPiechart(d.properties.data2, r);
         //drawPiechartAuslaender(d.properties.data2);
