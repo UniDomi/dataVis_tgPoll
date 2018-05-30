@@ -166,7 +166,7 @@ function drawMap(title) {
 
         //console.log(d.properties.data2);
         //drawPiechart(d.properties.data2);
-        drawPiechartAuslaender(d.properties.data2);
+        //drawPiechartAuslaender(d.properties.data2);
       })
 
       .attr("d", path);
