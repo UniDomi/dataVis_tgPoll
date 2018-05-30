@@ -368,11 +368,11 @@ function drawPiechartHaushalt(data2, r) {
       var height = legendRectSize + legendSpacing;
       var offset = height * colorpie.domain().length / 2;
       var horz, vert;
-      if (i < 5) {
-        horz = (i * legendRectSize * 5.4) + 35; // -2 * legendRectSize;
+      if (i < 3) {
+        horz = (i * legendRectSize * 10.4) + 5; // -2 * legendRectSize;
         vert = 360; // i * height - offset;
       } else {
-        horz = ((i - 4) * legendRectSize * 5.4) + 35;
+        horz = ((i - 2) * legendRectSize * 10.4) - 35;
         vert = height + 370;
       }
       return 'translate(' + horz + ',' + vert + ')';
@@ -386,14 +386,15 @@ function drawPiechartHaushalt(data2, r) {
     .style("stroke-width", 2);
 
   legend.append('text')
-    .attr('x', legendRectSize + legendSpacing)
-    .attr('y', legendRectSize - legendSpacing)
+    .attr('x', legendRectSize + legendSpacing +50)
+    .attr('y', legendRectSize - legendSpacing +2)
     .text(function(d, i) {
       return piedata[i].Haushaltstyp;
     }).style("fill", "#00")
     .style('font-family', 'sans-serif').style("display", function(d) {
       return (d == 'root') ? 'none' : 'initial';
-    });
+    })
+	.style("font-size", "10px");
 
 }
 
