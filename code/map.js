@@ -258,21 +258,26 @@ function drawMap() {
       var legendRectSize = 12,
         legendSpacing = 4;
 
-      var legend = canvas.selectAll('.legend')
+     
+      var legend =  d3.selectAll("#piechart")
+        .select("svg")
+        .append("g")
+        .selectAll('.legend')
         .data(colorpie.domain())
         .enter()
         .append('g')
         .attr('class', 'legend')
+      
         .attr('transform', function(d, i) {
           var height = legendRectSize + legendSpacing;
           var offset = height * colorpie.domain().length / 2;
           var horz, vert;
           if (i < 5) {
-            horz = (i * legendRectSize * 5.4) + 25; // -2 * legendRectSize;
-            vert = 0; // i * height - offset;
+            horz = (i * legendRectSize * 5.4) + 35; // -2 * legendRectSize;
+            vert = 360; // i * height - offset;
           } else {
-            horz = ((i - 5) * legendRectSize * 5.4) + 25;
-            vert = height + 10;
+            horz = ((i - 5) * legendRectSize * 5.4) + 35;
+            vert = height + 370;
           }
 
           return 'translate(' + horz + ',' + vert + ')';
