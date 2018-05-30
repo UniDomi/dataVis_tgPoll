@@ -1,8 +1,9 @@
 function cleanup(){
   d3.selectAll("#map").select("svg").remove()
   d3.selectAll(".legend").remove()
-  d3.selectAll("#piechart").select("g").remove()
   d3.selectAll("#piechart").selectAll(".arcs").remove()
+  d3.selectAll("#piechart").select("g").remove()
+  d3.selectAll("#piechart").selectAll("#pie").remove()
 }
 
 function w3_open() {
