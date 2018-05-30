@@ -1,7 +1,5 @@
 function drawMap() {
-  d3.selectAll("#map").select("svg").remove()
-  d3.selectAll(".legend").remove()
-  d3.selectAll("#piechart").select("g").remove()
+  cleanup();
   d3.select("h2").html("<h2>" + bezeichnung + "</h2>");
   var dataset;
 

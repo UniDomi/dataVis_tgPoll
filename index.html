@@ -8,7 +8,7 @@
 	<title>Abstimmungsdaten Kanton Thurgau</title>
 	<script src="codebase/d3.js"></script>
 	<script src="codebase/topojson.v1.min.js"></script>
-	<script src="code/w3_helpers.js"></script>
+	<script src="code/helpers.js"></script>
 	<script src="codebase/d3.v4.min.js"></script>
 	<script src="code/indikatoren.js"></script>
 	<script src="code/partyKanton.js"></script>
@@ -31,16 +31,16 @@
 					<a class="nav-link" onclick="w3_open()">Abstimmungen</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" onclick="selectIndikator(1)">Parteistärke</a>
+					<a class="nav-link" onclick="selectIndikator(1),w3_close()">Parteistärke</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" onclick="selectIndikator(2)">Haushaltstyp</a>
+					<a class="nav-link" onclick="selectIndikator(2),w3_close()">Haushaltstyp</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" onclick="selectIndikator(3)">Altersstruktur</a>
+					<a class="nav-link" onclick="selectIndikator(3),w3_close()">Altersstruktur</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" onclick="selectIndikator(4)">Ausländeranteil</a>
+					<a class="nav-link" onclick="selectIndikator(4),w3_close()">Ausländeranteil</a>
 				</li>
 			</ul>
 		</div>
