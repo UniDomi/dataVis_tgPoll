@@ -163,6 +163,20 @@ function drawMap(title) {
       .on("click", function(d) { //function(e,f){
         d3.select('#piechart').select('h3').html(d.properties.data.GEMEINDE_NAME);
         d3.selectAll("#piechart").select("g").remove()
+        switch (indikator){
+          case 1:
+            drawPiechartParteien(d.properties.data2, r);
+            break;
+          case 2:
+            drawPiechartHaushalt(d.properties.data2, r);
+            break;
+          case 3:
+            drawPiechartAlter(d.properties.data2, r);
+            break;
+          case 4:
+            drawPiechartAuslaender(d.properties.data2, r);
+            break;
+        }
         drawPiechartAuslaender(d.properties.data2, r);
         //console.log(d.properties.data2);
         //drawPiechart(d.properties.data2, r);

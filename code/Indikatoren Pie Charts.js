@@ -1,5 +1,5 @@
 // Pie Chart Parteien 2008, 2012, 2016
-function drawPiechartParteien() {
+function drawPiechartParteien(data2, r) {
         var filteredData = data2;
 
         console.log(filteredData);
@@ -247,7 +247,7 @@ function drawPiechartAuslaender(data2, r) {
 
 
 //Pie Chart Haushaltstyp
-function drawPiechartHaushalt(data2) {
+function drawPiechartHaushalt(data2, r) {
      var filteredData = data2;
 
             //Farbskala Pie Chart
@@ -365,7 +365,7 @@ function drawPiechartHaushalt(data2) {
 
 
 // Pie Chart Altersgruppen 2004-2017
-function drawPiechartAlter() {
+function drawPiechartAlter(data2, r) {
      var filteredData = data2;
 
             //Farbskala Pie Chart
