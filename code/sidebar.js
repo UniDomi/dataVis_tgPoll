@@ -1,7 +1,7 @@
 createSidebar();
 
 poll = 1;
-datum = 2018;
+datum = 2000;
 indikator = 1;
 indikatorpath = "Parteien_2016.csv"
 bezeichnung = 'Bundesbeschluss über die Reform der Justiz'
@@ -152,7 +152,7 @@ function createSidebar() {
       .attr("x", 7)
       .attr("y", 25)
       .attr("content-area", "10px, 10px")
-      .text(d => d.VORLAGE_BEZEICHNUNG)
+      .text(d => d.VORLAGE_BEZEICHNUNG+" "+d.DATUM_ABSTIMMUNG)
       .style("font-size", "15px")
       .style("font-weight", "bold")
 
