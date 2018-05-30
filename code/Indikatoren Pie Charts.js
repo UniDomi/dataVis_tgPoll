@@ -116,14 +116,15 @@ function drawPiechartParteien(data2, r) {
     .style("stroke-width", 2);
 
   legend.append('text')
-    .attr('x', legendRectSize + legendSpacing)
-    .attr('y', legendRectSize - legendSpacing)
+    .attr('x', legendRectSize + legendSpacing +15)
+    .attr('y', legendRectSize - legendSpacing +2)
     .text(function(d, i) {
       return piedata[i].party;
     }).style("fill", "#00")
     .style('font-family', 'sans-serif').style("display", function(d) {
       return (d == 'root') ? 'none' : 'initial';
-    });
+    })
+	.style("font-size", "13px");
 
 }
 
