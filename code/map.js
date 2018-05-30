@@ -1,5 +1,5 @@
-function drawMap() {
-  
+function drawMap(title) {
+  d3.select("h2").html("<h2>" + title + "</h2>");
   var dataset;
 
   var width = 960,
@@ -24,7 +24,7 @@ function drawMap() {
   var div = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
-  
+
    var r = Math.min(width2, height2) / 2.5; //var r = 180;
 
   //map colour scale
@@ -62,7 +62,7 @@ function drawMap() {
 
       var keys = legend.selectAll('li.key')
         .data(scale.range());
-      
+
       var legendLabels = ["0%", "15%","20%","25%","30%","35%","40%","45%","51%","55%","60%","65%","70%","75%","80%","85%","100%",];
 
       keys.enter().append('li')
@@ -241,7 +241,7 @@ function drawMap() {
             .style("left", (d3.event.pageX) + "px")
             .style("top", (d3.event.pageY - 28) + "px");
         })
-      
+
           .on("mouseout", function(d, i) {
             d3.select(this)
               .style('stroke', function(d) {
@@ -257,7 +257,7 @@ function drawMap() {
       var legendRectSize = 12,
         legendSpacing = 4;
 
-     
+
       var legend =  d3.selectAll("#piechart")
         .select("svg")
         .append("g")
@@ -266,7 +266,7 @@ function drawMap() {
         .enter()
         .append('g')
         .attr('class', 'legend')
-      
+
         .attr('transform', function(d, i) {
           var height = legendRectSize + legendSpacing;
           var offset = height * colorpie.domain().length / 2;

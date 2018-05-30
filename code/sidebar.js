@@ -171,7 +171,7 @@ function createSidebar() {
       poll = d.VORLAGE_NR;
       datum = d.DATUM_ABSTIMMUNG;
       indikator = d.INDIKATOREN;
-      drawMap();
+      drawMap(d.VORLAGE_BEZEICHNUNG);
       selectIndikator();
       console.log(poll)
       w3_close()
