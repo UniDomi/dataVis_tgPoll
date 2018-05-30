@@ -12,6 +12,7 @@
 	<script src="codebase/d3.v4.min.js"></script>
 	<script src="code/indikatoren.js"></script>
 	<script src="code/partyKanton.js"></script>
+	<script src="code/Indikatoren Pie Charts.js"></script>
 	<script src="code/map.js" charset="utf-8"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
@@ -30,7 +31,16 @@
 					<a class="nav-link" onclick="w3_open()">Abstimmungen</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">Indikatoren</a>
+					<a class="nav-link" onclick="selectIndikator(1)">Parteistärke</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" onclick="selectIndikator(2)">Haushaltstyp</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" onclick="selectIndikator(3)">Altersstruktur</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" onclick="selectIndikator(4)">Ausländeranteil</a>
 				</li>
 			</ul>
 		</div>

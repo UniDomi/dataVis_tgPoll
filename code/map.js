@@ -14,7 +14,7 @@ function drawMap(title) {
     .attr("height", height)
     .attr("transform", "translate(-30, 0)");
 
-  var canvas = d3.select("#piechart")
+  canvas = d3.select("#piechart")
     .append("svg")
     .append("g")
     .attr("width", width2)
@@ -165,7 +165,8 @@ function drawMap(title) {
         d3.selectAll("#piechart").select("g").remove()
 
         //console.log(d.properties.data2);
-        drawPiechart(d.properties.data2);
+        //drawPiechart(d.properties.data2);
+        drawPiechartAuslaender(d.properties.data2);
       })
 
       .attr("d", path);

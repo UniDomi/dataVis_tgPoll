@@ -169,11 +169,12 @@ function createSidebar() {
       d3.selectAll("#map").select("svg").remove()
 
       poll = d.VORLAGE_NR;
-      datum = d.DATUM_ABSTIMMUNG;
-      indikator = d.INDIKATOREN;
+      datum = d.DATUM_ABSTIMMUNG.substring(6);
       drawMap(d.VORLAGE_BEZEICHNUNG);
-      selectIndikator();
+      console.log("Poll & Indikator")
       console.log(poll)
+      console.log(indikator)
+      console.log(datum)
       w3_close()
     });
 

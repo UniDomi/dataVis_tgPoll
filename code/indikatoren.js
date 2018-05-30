@@ -1,10 +1,4 @@
-function selectIndikator(){
-  switch (indikator) {
-    case 1:
-        console.log("Take Indikator 1")
-      break;
-    default:
-      console.log("No indikator found!")
-
+function selectIndikator(selection){
+  indikator = selection;
+  console.log(indikator);
   }
-}

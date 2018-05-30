@@ -1,19 +1,19 @@
 // Pie Chart Parteien 2008, 2012, 2016
 function drawPiechartParteien2012_2016(data2) {
         var filteredData = data2;
-        
+
         console.log(filteredData);
-    
+
             //Farbskala Pie Chart
 			var colorpie = d3.scaleOrdinal()
 				.range(["#6a51a3", "#08306b", "green", "red", "orange", "#2171b5", "#67000d", "#c7e9c0", "#ffff00", "#ff69b4"])
-            
+
         delete filteredData.BEZIRK_NAME;
         delete filteredData.BEZIRK_NR;
         delete filteredData.BFS_NR_GEMEINDE;
         delete filteredData.GEMEINDE_NAME;
-        delete filteredData.Wahljahr;       
-          
+        delete filteredData.Wahljahr;
+
       var piedata = [];
         for (var key in filteredData) {
           piedata.push({
@@ -21,25 +21,25 @@ function drawPiechartParteien2012_2016(data2) {
             votes: filteredData[key]
           })
         };
-    
-console.log(piedata)     
-    
+
+console.log(piedata)
+
             var arc = d3.arc()
 				.innerRadius(80) //if inner radius is 0 then it becomes a pie chart
 				.outerRadius(r);
-				
+
 			var pie = d3.pie()
 				.value(function (d) {return d.votes;});
-            
+
             var arcs = canvas.selectAll(".arc")
 				.data(pie(piedata))
 				.enter()
 				.append("g")
-                .attr("class", "arc");  
-				
+                .attr("class", "arc");
+
 			arcs.append("path")
 				.attr("d", arc)
-        
+
                   .on("mouseover", function(d, i) {
                      d3.select(this)
                         .style('stroke', function (d) {
@@ -47,7 +47,7 @@ console.log(piedata)
                         })
                         .style('stroke-width', function (d) {
                             return '1';
-                        });  
+                        });
 
                         div.transition()
                             .duration(200)
@@ -57,18 +57,18 @@ console.log(piedata)
                             .style("left", (d3.event.pageX) + "px")
                             .style("top", (d3.event.pageY - 28) + "px");
                     })
-                .attr("fill", function (d, i) {return colorpie (piedata[i].party);}); 
-    
+                .attr("fill", function (d, i) {return colorpie (piedata[i].party);});
+
     //prepare Legend
     var legendRectSize = 12,
         legendSpacing = 4;
-    
+
     var legend = canvas.selectAll('.legend')
         .data(colorpie.domain())
         .enter()
         .append('g')
         .attr('class', 'legend')
-        .attr('transform', function(d, i) {        
+        .attr('transform', function(d, i) {
             var height = legendRectSize + legendSpacing;
             var offset =  height * colorpie.domain().length / 2;
             var horz, vert;
@@ -77,20 +77,20 @@ console.log(piedata)
                 vert = 205;// i * height - offset;
             }else{
                 horz = ((i-5) * legendRectSize*5.4)-155;
-                vert = height +215;      
+                vert = height +215;
             }
-            
+
             return 'translate(' + horz + ',' + vert + ')';
-            
+
         });
-    
+
     legend.append('rect')
         .attr('width', legendRectSize)
         .attr('height', legendRectSize)
         .style('fill', colorpie)
         .style('stroke', colorpie)
         .style("stroke-width", 2);
-    
+
     legend.append('text')
         .attr('x', legendRectSize + legendSpacing)
         .attr('y', legendRectSize - legendSpacing)
@@ -98,16 +98,16 @@ console.log(piedata)
         .style('font-family','sans-serif').style("display",function(d){
             return (d=='root')? 'none':'initial';
         });
-       
+
 }
 
-          
+
 
 
 //Pie Chart Auslaender 2015-2017
 function drawPiechartAuslaender(data2) {
      var filteredData = data2;
-    
+    var r = 250;
             //Farbskala Pie Chart
 			var colorpie = d3.scaleOrdinal()
 				.range(["#ff0000", "#0059b2"])
@@ -115,7 +115,7 @@ function drawPiechartAuslaender(data2) {
             var filteredAusland = csvAusland.filter(function(d) {
                 return d.Jahr === "2017";
                 });
-      */     
+      */
     delete filteredData.Auslaender_Prozent;
             delete filteredData.Total;
             delete filteredData.BFS_NR_GEMEINDE;
@@ -132,24 +132,24 @@ function drawPiechartAuslaender(data2) {
             };
 
     console.log(piedata)
-     
-    
+
+
             var arc = d3.arc()
 				.innerRadius(80) //if inner radius is 0 then it becomes a pie chart
 				.outerRadius(r);
-				
+
 			var pie = d3.pie()
 				.value(function (d) {return d.Anteil;});
-            
+
             var arcs = canvas.selectAll(".arc")
 				.data(pie(piedata))
 				.enter()
 				.append("g")
-                .attr("class", "arc");  
-				
+                .attr("class", "arc");
+
 			arcs.append("path")
 				.attr("d", arc)
-        
+
                   .on("mouseover", function(d, i) {
                      d3.select(this)
                         .style('stroke', function (d) {
@@ -157,7 +157,7 @@ function drawPiechartAuslaender(data2) {
                         })
                         .style('stroke-width', function (d) {
                             return '1';
-                        });  
+                        });
 
                         div.transition()
                             .duration(200)
@@ -167,46 +167,46 @@ function drawPiechartAuslaender(data2) {
                             .style("left", (d3.event.pageX) + "px")
                             .style("top", (d3.event.pageY - 28) + "px");
                     })
-                    
-                
-                .attr("fill", function (d, i) {return colorpie (piedata[i].Herkunft);}); 
-    
-    
+
+
+                .attr("fill", function (d, i) {return colorpie (piedata[i].Herkunft);});
+
+
     //prepare Legend
 
     var legendRectSize = 12,
         legendSpacing = 4;
-    
+
     var legend = canvas.selectAll('.legend')
         .data(colorpie.domain())
         .enter()
         .append('g')
         .attr('class', 'legend')
-    
+
        // .attr('transform', 'translate(20, 215)');
-        
-        .attr('transform', function(d, i) {        
+
+        .attr('transform', function(d, i) {
             var height = legendRectSize + legendSpacing;
             var offset =  height * colorpie.domain().length / 2;
             var horz, vert;
             if(i>0){
                 horz = -80;
                 vert = 215;
-           
+
             }else{
                 horz = 40;
-                vert = 215;      
+                vert = 215;
             }
-            return 'translate(' + horz + ',' + vert + ')';  
+            return 'translate(' + horz + ',' + vert + ')';
         });
-    
+
     legend.append('rect')
         .attr('width', legendRectSize)
         .attr('height', legendRectSize)
         .style('fill', colorpie)
         .style('stroke', colorpie)
         .style("stroke-width", 2);
-    
+
     legend.append('text')
         .attr('x', legendRectSize + legendSpacing)
         .attr('y', legendRectSize - legendSpacing)
@@ -214,7 +214,7 @@ function drawPiechartAuslaender(data2) {
         .style('font-family','sans-serif').style("display",function(d){
             return (d=='root')? 'none':'initial';
         });
-    
+
 }
 
 
@@ -222,15 +222,15 @@ function drawPiechartAuslaender(data2) {
 //Pie Chart Haushaltstyp
 function drawPiechartHaushalt(data2) {
      var filteredData = data2;
-    
+
             //Farbskala Pie Chart
 			var colorpie = d3.scaleOrdinal()
 				.range(["#ff0000", "#0059b2", "#6a51a3", "green", "orange"])
-    
+
         delete filteredData.Total;
         delete filteredData.BFS_NR_GEMEINDE;
-        delete filteredData.GEMEINDE_NAME;       
-          
+        delete filteredData.GEMEINDE_NAME;
+
       var piedata = [];
         for (var key in filteredData) {
           piedata.push({
@@ -238,25 +238,25 @@ function drawPiechartHaushalt(data2) {
             Anteil: filteredData[key]
           })
         };
-    
+
     console.log(piedata)
-    
+
             var arc = d3.arc()
 				.innerRadius(80) //if inner radius is 0 then it becomes a pie chart
 				.outerRadius(r);
-				
+
 			var pie = d3.pie()
 				.value(function (d) {return d.Anzahl;});
-            
+
             var arcs = canvas.selectAll(".arc")
 				.data(pie(piedata))
 				.enter()
 				.append("g")
-                .attr("class", "arc");  
-				
+                .attr("class", "arc");
+
 			arcs.append("path")
 				.attr("d", arc)
-        
+
                   .on("mouseover", function(d, i) {
                      d3.select(this)
                         .style('stroke', function (d) {
@@ -264,7 +264,7 @@ function drawPiechartHaushalt(data2) {
                         })
                         .style('stroke-width', function (d) {
                             return '1';
-                        });  
+                        });
 
                         div.transition()
                             .duration(200)
@@ -274,22 +274,22 @@ function drawPiechartHaushalt(data2) {
                             .style("left", (d3.event.pageX) + "px")
                             .style("top", (d3.event.pageY - 28) + "px");
                     })
-                    
-                
-                .attr("fill", function (d, i) {return colorpie (piedata[i].Haushaltstyp);}); 
-    
-    
+
+
+                .attr("fill", function (d, i) {return colorpie (piedata[i].Haushaltstyp);});
+
+
     //prepare Legend
 
     var legendRectSize = 12,
         legendSpacing = 4;
-    
+
     var legend = canvas.selectAll('.legend')
         .data(colorpie.domain())
         .enter()
         .append('g')
         .attr('class', 'legend')
-       .attr('transform', function(d, i) {        
+       .attr('transform', function(d, i) {
             var height = legendRectSize + legendSpacing;
             var offset =  height * colorpie.domain().length / 2;
             var horz, vert;
@@ -298,20 +298,20 @@ function drawPiechartHaushalt(data2) {
                 vert = 205;// i * height - offset;
             }else{
                 horz = ((i-4) * legendRectSize*5.4)-155;
-                vert = height +215;      
+                vert = height +215;
             }
-            
+
             return 'translate(' + horz + ',' + vert + ')';
-            
+
         });
-    
+
     legend.append('rect')
         .attr('width', legendRectSize)
         .attr('height', legendRectSize)
         .style('fill', colorpie)
         .style('stroke', colorpie)
         .style("stroke-width", 2);
-    
+
     legend.append('text')
         .attr('x', legendRectSize + legendSpacing)
         .attr('y', legendRectSize - legendSpacing)
@@ -319,7 +319,7 @@ function drawPiechartHaushalt(data2) {
         .style('font-family','sans-serif').style("display",function(d){
             return (d=='root')? 'none':'initial';
         });
-    
+
 }
 
 
@@ -329,16 +329,16 @@ function drawPiechartHaushalt(data2) {
 // Pie Chart Altersgruppen 2004-2017
 function drawPiechartAlter(data2) {
      var filteredData = data2;
-    
+
             //Farbskala Pie Chart
 			var colorpie = d3.scaleOrdinal()
 				.range(["#ff0000", "#0059b2", "#6a51a3", "green", "orange"])
-     
+
         delete filteredData.Total;
         delete filteredData.BFS_NR_GEMEINDE;
         delete filteredData.Gemeinde;
-        delete filteredData.Statistikjahr;       
-          
+        delete filteredData.Statistikjahr;
+
       var piedata = [];
         for (var key in filteredData) {
           piedata.push({
@@ -346,25 +346,25 @@ function drawPiechartAlter(data2) {
             Anteil: filteredData[key]
           })
         };
-    
-    console.log(piedata)  
-   
+
+    console.log(piedata)
+
             var arc = d3.arc()
 				.innerRadius(80) //if inner radius is 0 then it becomes a pie chart
 				.outerRadius(r);
-				
+
 			var pie = d3.pie()
 				.value(function (d) {return d.Anteil;});
-            
+
             var arcs = canvas.selectAll(".arc")
 				.data(pie(piedata))
 				.enter()
 				.append("g")
-                .attr("class", "arc");  
-				
+                .attr("class", "arc");
+
 			arcs.append("path")
 				.attr("d", arc)
-        
+
                   .on("mouseover", function(d, i) {
                      d3.select(this)
                         .style('stroke', function (d) {
@@ -372,7 +372,7 @@ function drawPiechartAlter(data2) {
                         })
                         .style('stroke-width', function (d) {
                             return '1';
-                        });  
+                        });
 
                         div.transition()
                             .duration(200)
@@ -382,22 +382,22 @@ function drawPiechartAlter(data2) {
                             .style("left", (d3.event.pageX) + "px")
                             .style("top", (d3.event.pageY - 28) + "px");
                     })
-                    
-                
-                .attr("fill", function (d, i) {return colorpie (piedata[i].Altersgruppe);}); 
-    
-    
+
+
+                .attr("fill", function (d, i) {return colorpie (piedata[i].Altersgruppe);});
+
+
     //prepare Legend
 
     var legendRectSize = 12,
         legendSpacing = 4;
-    
+
     var legend = canvas.selectAll('.legend')
         .data(colorpie.domain())
         .enter()
         .append('g')
         .attr('class', 'legend')
-       .attr('transform', function(d, i) {        
+       .attr('transform', function(d, i) {
             var height = legendRectSize + legendSpacing;
             var offset =  height * colorpie.domain().length / 2;
             var horz, vert;
@@ -406,20 +406,20 @@ function drawPiechartAlter(data2) {
                 vert = 215;// i * height - offset;
             }else{
                 horz = ((i-4) * legendRectSize*5.4)-155;
-                vert = height +225;      
+                vert = height +225;
             }
-            
+
             return 'translate(' + horz + ',' + vert + ')';
-            
+
         });
-    
+
     legend.append('rect')
         .attr('width', legendRectSize)
         .attr('height', legendRectSize)
         .style('fill', colorpie)
         .style('stroke', colorpie)
         .style("stroke-width", 2);
-    
+
     legend.append('text')
         .attr('x', legendRectSize + legendSpacing)
         .attr('y', legendRectSize - legendSpacing)
@@ -427,7 +427,7 @@ function drawPiechartAlter(data2) {
         .style('font-family','sans-serif').style("display",function(d){
             return (d=='root')? 'none':'initial';
         });
-    
+
 }
 
 
@@ -440,42 +440,42 @@ function drawPiechartAlter(data2) {
 
 //Pie Chart Beschäftigte Sektoren 2000-2014
 function drawPiechartSektoren() {
-     
+
             //Farbskala Pie Chart
 			var colorpie = d3.scaleOrdinal()
 				.range(["green", "#ff0000", "#0059b2"])
-     
+
       canvas.selectAll('path').remove();
-    
+
             var piefilteredData = csvSektoren.filter(function(d) {
                 return d.BFS_NR_GEMEINDE === "4551";
-                }); 
-    
-    
+                });
+
+
             var piedata = []
                 piefilteredData.forEach(function(d) {
                     piedata.push({Sektor: '1. Sektor', Anteil: d.Anteil_Sektor1_2014})
                     piedata.push({Sektor: '2. Sektor', Anteil: d.Anteil_Sektor2_2014})
                     piedata.push({Sektor: '3. Sektor', Anteil: d.Anteil_Sektor3_2014})
-                   
+
             })
-    
+
             var arc = d3.arc()
 				.innerRadius(80) //if inner radius is 0 then it becomes a pie chart
 				.outerRadius(r);
-				
+
 			var pie = d3.pie()
 				.value(function (d) {return d.Anteil;});
-            
+
             var arcs = canvas.selectAll(".arc")
 				.data(pie(piedata))
 				.enter()
 				.append("g")
-                .attr("class", "arc");  
-				
+                .attr("class", "arc");
+
 			arcs.append("path")
 				.attr("d", arc)
-        
+
                   .on("mouseover", function(d) {
                      d3.select(this)
                         .style('stroke', function (d) {
@@ -483,7 +483,7 @@ function drawPiechartSektoren() {
                         })
                         .style('stroke-width', function (d) {
                             return '1';
-                        });  
+                        });
 
                         div.transition()
                             .duration(200)
@@ -493,22 +493,22 @@ function drawPiechartSektoren() {
                             .style("left", (d3.event.pageX) + "px")
                             .style("top", (d3.event.pageY - 28) + "px");
                     })
-                    
-                
-                .attr("fill", function (d) {return colorpie (d.value);}); 
-    
-    
+
+
+                .attr("fill", function (d) {return colorpie (d.value);});
+
+
     //prepare Legend
 
     var legendRectSize = 12,
         legendSpacing = 4;
-    
+
     var legend = canvas.selectAll('.legend')
         .data(colorpie.domain())
         .enter()
         .append('g')
         .attr('class', 'legend')
-       .attr('transform', function(d, i) {        
+       .attr('transform', function(d, i) {
             var height = legendRectSize + legendSpacing;
             var offset =  height * colorpie.domain().length / 2;
             var horz, vert;
@@ -517,20 +517,20 @@ function drawPiechartSektoren() {
                 vert = 215;// i * height - offset;
             }else{
                 horz = ((i-4) * legendRectSize*5.4)-75;
-                vert = height +225;      
+                vert = height +225;
             }
-            
+
             return 'translate(' + horz + ',' + vert + ')';
-            
+
         });
-    
+
     legend.append('rect')
         .attr('width', legendRectSize)
         .attr('height', legendRectSize)
         .style('fill', colorpie)
         .style('stroke', colorpie)
         .style("stroke-width", 2);
-    
+
     legend.append('text')
         .attr('x', legendRectSize + legendSpacing)
         .attr('y', legendRectSize - legendSpacing)
@@ -538,7 +538,7 @@ function drawPiechartSektoren() {
         .style('font-family','sans-serif').style("display",function(d){
             return (d=='root')? 'none':'initial';
         });
-    
+
 }
 
 
@@ -546,39 +546,39 @@ function drawPiechartSektoren() {
 
 // Pie Chart Ausländer 2005-2013
 function drawPiechartAuslaender2005_2013(data2) {
-     
+
             //Farbskala Pie Chart
 			var colorpie = d3.scaleOrdinal()
 				.range(["#ff0000", "#0059b2"])
-     
+
             var piefilteredData = csvAusland.filter(function(d) {
                 return d.BFS_NR_GEMEINDE === "4551";
-                }); 
-    
+                });
+
            var piedata = []
                 piefilteredData.forEach(function(d) {
                     piedata.push({Herkunft: 'Schweiz', Anteil: 100 - d.Auslaenderanteil_Prozent_2014})
                     piedata.push({Herkunft: 'Ausland', Anteil: d.Auslaenderanteil_Prozent_2014})
             })
-    
+
     console.log(piedata);
-   
+
             var arc = d3.arc()
 				.innerRadius(80) //if inner radius is 0 then it becomes a pie chart
 				.outerRadius(r);
-				
+
 			var pie = d3.pie()
 				.value(function (d) {return d.Anteil;});
-            
+
             var arcs = canvas.selectAll(".arc")
 				.data(pie(piedata))
 				.enter()
 				.append("g")
-                .attr("class", "arc");  
-				
+                .attr("class", "arc");
+
 			arcs.append("path")
 				.attr("d", arc)
-        
+
                   .on("mouseover", function(d) {
                      d3.select(this)
                         .style('stroke', function (d) {
@@ -586,7 +586,7 @@ function drawPiechartAuslaender2005_2013(data2) {
                         })
                         .style('stroke-width', function (d) {
                             return '1';
-                        });  
+                        });
 
                         div.transition()
                             .duration(200)
@@ -596,43 +596,43 @@ function drawPiechartAuslaender2005_2013(data2) {
                             .style("left", (d3.event.pageX) + "px")
                             .style("top", (d3.event.pageY - 28) + "px");
                     })
-                    
-                
-                .attr("fill", function (d) {return colorpie (d.value);}); 
-    
-    
+
+
+                .attr("fill", function (d) {return colorpie (d.value);});
+
+
     //prepare Legend
 
     var legendRectSize = 12,
         legendSpacing = 4;
-    
+
     var legend = canvas.selectAll('.legend')
         .data(colorpie.domain())
         .enter()
         .append('g')
         .attr('class', 'legend')
-        .attr('transform', function(d, i) {        
+        .attr('transform', function(d, i) {
             var height = legendRectSize + legendSpacing;
             var offset =  height * colorpie.domain().length / 2;
             var horz, vert;
             if(i>0){
                 horz = -80;
                 vert = 215;
-           
+
             }else{
                 horz = 40;
-                vert = 215;      
+                vert = 215;
             }
-            return 'translate(' + horz + ',' + vert + ')';  
+            return 'translate(' + horz + ',' + vert + ')';
         });
-    
+
     legend.append('rect')
         .attr('width', legendRectSize)
         .attr('height', legendRectSize)
         .style('fill', colorpie)
         .style('stroke', colorpie)
         .style("stroke-width", 2);
-    
+
     legend.append('text')
         .attr('x', legendRectSize + legendSpacing)
         .attr('y', legendRectSize - legendSpacing)
@@ -640,8 +640,7 @@ function drawPiechartAuslaender2005_2013(data2) {
         .style('font-family','sans-serif').style("display",function(d){
             return (d=='root')? 'none':'initial';
         });
-    
+
 }
 
 */
-
