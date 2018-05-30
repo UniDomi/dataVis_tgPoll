@@ -1,121 +1,129 @@
 // Pie Chart Parteien 2008, 2012, 2016
 function drawPiechartParteien(data2, r) {
-        var filteredData = data2;
+  var filteredData = data2;
 
-        console.log(filteredData);
+  console.log(filteredData);
 
-            //Farbskala Pie Chart
-			var colorpie = d3.scaleOrdinal()
-				.range(["#6a51a3", "#08306b", "green", "red", "orange", "#2171b5", "#67000d", "#c7e9c0", "#ffff00", "#ff69b4"])
+  //Farbskala Pie Chart
+  var colorpie = d3.scaleOrdinal()
+    .range(["#6a51a3", "#08306b", "green", "red", "orange", "#2171b5", "#67000d", "#c7e9c0", "#ffff00", "#ff69b4"])
 
-        delete filteredData.BEZIRK_NAME;
-        delete filteredData.BEZIRK_NR;
-        delete filteredData.BFS_NR_GEMEINDE;
-        delete filteredData.GEMEINDE_NAME;
-        delete filteredData.Wahljahr;
+  delete filteredData.BEZIRK_NAME;
+  delete filteredData.BEZIRK_NR;
+  delete filteredData.BFS_NR_GEMEINDE;
+  delete filteredData.GEMEINDE_NAME;
+  delete filteredData.Wahljahr;
 
-      var piedata = [];
-        for (var key in filteredData) {
-          piedata.push({
-            party: key,
-            votes: filteredData[key]
-          })
-        };
+  var piedata = [];
+  for (var key in filteredData) {
+    piedata.push({
+      party: key,
+      votes: filteredData[key]
+    })
+  };
 
-console.log(piedata)
+  console.log(piedata)
 
-            var arc = d3.arc()
-		.innerRadius(80) //if inner radius is 0 then it becomes a pie chart
-		.outerRadius(r);
+  var arc = d3.arc()
+    .innerRadius(80) //if inner radius is 0 then it becomes a pie chart
+    .outerRadius(r);
 
-	var pie = d3.pie()
-		.value(function (d) {return d.votes;});
+  var pie = d3.pie()
+    .value(function(d) {
+      return d.votes;
+    });
 
 
-	d3.selectAll("#piechart")
-		.select("svg")
-		.append("g")
+  d3.selectAll("#piechart")
+    .select("svg")
+    .append("g")
     .attr("id", "pie")
-		.attr("transform", "translate(180,160)")
-		.selectAll("path")
-		.data(pie(piedata))
-		.enter()
-		.append("path")
-		.attr("d", arc)
-		.style("stroke", "black")
-		.style("stroke-width", "1px")
-		.attr("fill", function(d, i) {
-		  return colorpie(piedata[i].party);
-	})
+    .attr("transform", "translate(180,160)")
+    .selectAll("path")
+    .data(pie(piedata))
+    .enter()
+    .append("path")
+    .attr("d", arc)
+    .style("stroke", "black")
+    .style("stroke-width", "1px")
+    .attr("fill", function(d, i) {
+      return colorpie(piedata[i].party);
+    })
 
-                  .on("mouseover", function(d, i) {
-                     d3.select(this)
-                        .style('stroke', function (d) {
-                            return '#a0a0a0';
-                        })
-                        .style('stroke-width', function (d) {
-                            return '1';
-                        });
-
-                        div.transition()
-                            .duration(200)
-                            .style("opacity", .9);
-                        div.html("<strong>" + "Partei: " + "</strong>" + piedata[i].party + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata[i].votes + "%")
-                            .style("left", (d3.event.pageX) + "px")
-                            .style("top", (d3.event.pageY - 28) + "px");
-                    })
-                .on("mouseout", function(d, i) {
-		    d3.select(this)
-		      .style('stroke', function(d) {
-			return 'black';
-		      })
-		      .style('stroke-width', function(d) {
-			return '1';
-		      });
-	})
-
-
-    //prepare Legend
-    var legendRectSize = 12,
-        legendSpacing = 4;
-
-var legend =  d3.selectAll("#piechart")
-        .select("svg")
-        .append("g")
-        .selectAll('.legend')
-        .data(colorpie.domain())
-        .enter()
-        .append('g')
-	.attr('class', 'legend')
-
-	 .attr('transform', function(d, i) {
-		  var height = legendRectSize + legendSpacing;
-		  var offset = height * colorpie.domain().length / 2;
-		  var horz, vert;
-		  if (i < 5) {
-		    horz = (i * legendRectSize * 5.4) + 35; // -2 * legendRectSize;
-		    vert = 360; // i * height - offset;
-		  } else {
-		    horz = ((i - 5) * legendRectSize * 5.4) + 35;
-		    vert = height + 370;
-		  }
-          return 'translate(' + horz + ',' + vert + ')';
-	});
-
-    legend.append('rect')
-        .attr('width', legendRectSize)
-        .attr('height', legendRectSize)
-        .style('fill', colorpie)
-        .style('stroke', colorpie)
-        .style("stroke-width", 2);
-
-    legend.append('text')
-        .attr('x', legendRectSize + legendSpacing)
-        .attr('y', legendRectSize - legendSpacing)
-        .text(function(d, i) { return piedata[i].party; }).style("fill","#00")
-        .style('font-family','sans-serif').style("display",function(d){
-            return (d=='root')? 'none':'initial';
+    .on("mouseover", function(d, i) {
+      d3.select(this)
+        .style('stroke', function(d) {
+          return '#a0a0a0';
+        })
+        .style('stroke-width', function(d) {
+          return '1';
         });
+
+      div.transition()
+        .duration(200)
+        .style("opacity", .9);
+      div.html("<strong>" + "Partei: " + "</strong>" + piedata[i].party + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata[i].votes + "%")
+        .style("left", (d3.event.pageX) + "px")
+        .style("top", (d3.event.pageY - 28) + "px");
+    })
+    .on("mouseout", function(d) {
+      d3.select(this)
+         .style('stroke', function (d){if (d.id == "9329") {
+          return "white"
+      }else {
+          return '#000';
+      }
+      })
+        .style('stroke-width', '0.5');
+      div.transition()
+        .duration(500)
+        .style("opacity", 0);
+    })
+
+
+  //prepare Legend
+  var legendRectSize = 12,
+    legendSpacing = 4;
+
+  var legend = d3.selectAll("#piechart")
+    .select("svg")
+    .append("g")
+    .selectAll('.legend')
+    .data(colorpie.domain())
+    .enter()
+    .append('g')
+    .attr('class', 'legend')
+
+    .attr('transform', function(d, i) {
+      var height = legendRectSize + legendSpacing;
+      var offset = height * colorpie.domain().length / 2;
+      var horz, vert;
+      if (i < 5) {
+        horz = (i * legendRectSize * 5.4) + 35; // -2 * legendRectSize;
+        vert = 360; // i * height - offset;
+      } else {
+        horz = ((i - 5) * legendRectSize * 5.4) + 35;
+        vert = height + 370;
+      }
+      return 'translate(' + horz + ',' + vert + ')';
+    });
+
+  legend.append('rect')
+    .attr('width', legendRectSize)
+    .attr('height', legendRectSize)
+    .style('fill', colorpie)
+    .style('stroke', colorpie)
+    .style("stroke-width", 2);
+
+  legend.append('text')
+    .attr('x', legendRectSize + legendSpacing)
+    .attr('y', legendRectSize - legendSpacing)
+    .text(function(d, i) {
+      return piedata[i].party;
+    }).style("fill", "#00")
+    .style('font-family', 'sans-serif').style("display", function(d) {
+      return (d == 'root') ? 'none' : 'initial';
+    });
 
 }
 
@@ -124,125 +132,133 @@ var legend =  d3.selectAll("#piechart")
 
 //Pie Chart Auslaender 2015-2017
 function drawPiechartAuslaender(data2, r) {
-     var filteredData = data2;
-            //Farbskala Pie Chart
-			var colorpie = d3.scaleOrdinal()
-				.range(["#ff0000", "#0059b2"])
-    /*
-            var filteredAusland = csvAusland.filter(function(d) {
-                return d.Jahr === "2017";
-                });
-      */
-    	delete filteredData.Auslaender_Prozent;
-            delete filteredData.Total;
-            delete filteredData.BFS_NR_GEMEINDE;
-            delete filteredData.GEMEINDE_NAME;
-            delete filteredData.Jahr;
+  var filteredData = data2;
+  //Farbskala Pie Chart
+  var colorpie = d3.scaleOrdinal()
+    .range(["#ff0000", "#0059b2"])
+  /*
+          var filteredAusland = csvAusland.filter(function(d) {
+              return d.Jahr === "2017";
+              });
+    */
+  delete filteredData.Auslaender_Prozent;
+  delete filteredData.Total;
+  delete filteredData.BFS_NR_GEMEINDE;
+  delete filteredData.GEMEINDE_NAME;
+  delete filteredData.Jahr;
 
 
-         var piedata = [];
-            for (var key in filteredData) {
-              piedata.push({
-                Herkunft: key,
-                Anteil: filteredData[key]
-              })
-            };
+  var piedata = [];
+  for (var key in filteredData) {
+    piedata.push({
+      Herkunft: key,
+      Anteil: filteredData[key]
+    })
+  };
 
-    console.log(piedata)
+  console.log(piedata)
 
 
-            var arc = d3.arc()
-		.innerRadius(80) //if inner radius is 0 then it becomes a pie chart
-		.outerRadius(r);
+  var arc = d3.arc()
+    .innerRadius(80) //if inner radius is 0 then it becomes a pie chart
+    .outerRadius(r);
 
-	var pie = d3.pie()
-		.value(function (d) {return d.Anteil;});
+  var pie = d3.pie()
+    .value(function(d) {
+      return d.Anteil;
+    });
 
-	d3.selectAll("#piechart")
-        .select("svg")
-        .append("g")
-        .attr("id", "pie")
-        .attr("transform", "translate(180,160)")
-        .selectAll("path")
-        .data(pie(piedata))
-        .enter()
-        .append("path")
-        .attr("d", arc)
-        .style("stroke", "black")
-        .style("stroke-width", "1px")
-        .attr("fill", function(d, i) {
-          return colorpie(piedata[i].Herkunft);
-	})
+  d3.selectAll("#piechart")
+    .select("svg")
+    .append("g")
+    .attr("id", "pie")
+    .attr("transform", "translate(180,160)")
+    .selectAll("path")
+    .data(pie(piedata))
+    .enter()
+    .append("path")
+    .attr("d", arc)
+    .style("stroke", "black")
+    .style("stroke-width", "1px")
+    .attr("fill", function(d, i) {
+      return colorpie(piedata[i].Herkunft);
+    })
 
-                  .on("mouseover", function(d, i) {
-                     d3.select(this)
-                        .style('stroke', function (d) {
-                            return '#a0a0a0';
-                        })
-                        .style('stroke-width', function (d) {
-                            return '1';
-                        });
-
-                        div.transition()
-                            .duration(200)
-                            .style("opacity", .9);
-                        div
-                            .html("<strong>" + "Herkunft: " + "</strong>" + piedata[i].Herkunft + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata[i].Anteil + "%")
-                            .style("left", (d3.event.pageX) + "px")
-                            .style("top", (d3.event.pageY - 28) + "px");
-                    })
-                    .on("mouseout", function(d, i) {
-			    d3.select(this)
-			      .style('stroke', function(d) {
-				return 'black';
-			      })
-			      .style('stroke-width', function(d) {
-				return '1';
-			      });
-	});
-
-    //prepare Legend
-
-    var legendRectSize = 12,
-        legendSpacing = 4;
-
- var legend =  d3.selectAll("#piechart")
-        .select("svg")
-        .append("g")
-        .selectAll('.legend')
-        .data(colorpie.domain())
-        .enter()
-        .append('g')
-	.attr('class', 'legend')
-
-  	.attr('transform', function(d, i) {
-          var height = legendRectSize + legendSpacing;
-          var offset = height * colorpie.domain().length / 2;
-          var horz, vert;
-          if (i < 5) {
-            horz = (i * legendRectSize * 5.4) + 35; // -2 * legendRectSize;
-            vert = 360; // i * height - offset;
-          } else {
-            horz = ((i - 5) * legendRectSize * 5.4) + 35;
-            vert = height + 370;
-          }
-          return 'translate(' + horz + ',' + vert + ')';
-});
-
-    legend.append('rect')
-        .attr('width', legendRectSize)
-        .attr('height', legendRectSize)
-        .style('fill', colorpie)
-        .style('stroke', colorpie)
-        .style("stroke-width", 2);
-
-    legend.append('text')
-        .attr('x', legendRectSize + legendSpacing)
-        .attr('y', legendRectSize - legendSpacing)
-        .text(function(d, i) { return piedata[i].Herkunft; }).style("fill","#00")
-        .style('font-family','sans-serif').style("display",function(d){
-            return (d=='root')? 'none':'initial';
+    .on("mouseover", function(d, i) {
+      d3.select(this)
+        .style('stroke', function(d) {
+          return '#a0a0a0';
+        })
+        .style('stroke-width', function(d) {
+          return '1';
         });
+
+      div.transition()
+        .duration(200)
+        .style("opacity", .9);
+      div
+        .html("<strong>" + "Herkunft: " + "</strong>" + piedata[i].Herkunft + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata[i].Anteil + "%")
+        .style("left", (d3.event.pageX) + "px")
+        .style("top", (d3.event.pageY - 28) + "px");
+    })
+    .on("mouseout", function(d) {
+      d3.select(this)
+         .style('stroke', function (d){if (d.id == "9329") {
+          return "white"
+      }else {
+          return '#000';
+      }
+      })
+        .style('stroke-width', '0.5');
+      div.transition()
+        .duration(500)
+        .style("opacity", 0);
+    });
+
+  //prepare Legend
+
+  var legendRectSize = 12,
+    legendSpacing = 4;
+
+  var legend = d3.selectAll("#piechart")
+    .select("svg")
+    .append("g")
+    .selectAll('.legend')
+    .data(colorpie.domain())
+    .enter()
+    .append('g')
+    .attr('class', 'legend')
+
+    .attr('transform', function(d, i) {
+      var height = legendRectSize + legendSpacing;
+      var offset = height * colorpie.domain().length / 2;
+      var horz, vert;
+      if (i < 5) {
+        horz = (i * legendRectSize * 5.4) + 35; // -2 * legendRectSize;
+        vert = 360; // i * height - offset;
+      } else {
+        horz = ((i - 5) * legendRectSize * 5.4) + 35;
+        vert = height + 370;
+      }
+      return 'translate(' + horz + ',' + vert + ')';
+    });
+
+  legend.append('rect')
+    .attr('width', legendRectSize)
+    .attr('height', legendRectSize)
+    .style('fill', colorpie)
+    .style('stroke', colorpie)
+    .style("stroke-width", 2);
+
+  legend.append('text')
+    .attr('x', legendRectSize + legendSpacing)
+    .attr('y', legendRectSize - legendSpacing)
+    .text(function(d, i) {
+      return piedata[i].Herkunft;
+    }).style("fill", "#00")
+    .style('font-family', 'sans-serif').style("display", function(d) {
+      return (d == 'root') ? 'none' : 'initial';
+    });
 
 }
 
@@ -250,118 +266,126 @@ function drawPiechartAuslaender(data2, r) {
 
 //Pie Chart Haushaltstyp
 function drawPiechartHaushalt(data2, r) {
-     var filteredData = data2;
+  var filteredData = data2;
 
-            //Farbskala Pie Chart
-			var colorpie = d3.scaleOrdinal()
-				.range(["#ff0000", "#0059b2", "#6a51a3", "green", "orange"])
+  //Farbskala Pie Chart
+  var colorpie = d3.scaleOrdinal()
+    .range(["#ff0000", "#0059b2", "#6a51a3", "green", "orange"])
 
-        delete filteredData.Total;
-        delete filteredData.BFS_NR_GEMEINDE;
-        delete filteredData.GEMEINDE_NAME;
+  delete filteredData.Total;
+  delete filteredData.BFS_NR_GEMEINDE;
+  delete filteredData.GEMEINDE_NAME;
 
-      var piedata = [];
-        for (var key in filteredData) {
-          piedata.push({
-            Haushaltstyp: key,
-            Anteil: filteredData[key]
-          })
-        };
+  var piedata = [];
+  for (var key in filteredData) {
+    piedata.push({
+      Haushaltstyp: key,
+      Anteil: filteredData[key]
+    })
+  };
 
-    console.log(piedata)
+  console.log(piedata)
 
-            var arc = d3.arc()
-				.innerRadius(80) //if inner radius is 0 then it becomes a pie chart
-				.outerRadius(r);
+  var arc = d3.arc()
+    .innerRadius(80) //if inner radius is 0 then it becomes a pie chart
+    .outerRadius(r);
 
-			var pie = d3.pie()
-				.value(function (d) {return d.Anteil;});
+  var pie = d3.pie()
+    .value(function(d) {
+      return d.Anteil;
+    });
 
-	d3.selectAll("#piechart")
-		.select("svg")
-		.append("g")
+  d3.selectAll("#piechart")
+    .select("svg")
+    .append("g")
     .attr("id", "pie")
-		.attr("transform", "translate(180,160)")
-		.selectAll("path")
-		.data(pie(piedata))
-		.enter()
-		.append("path")
-		.attr("d", arc)
-		.style("stroke", "black")
-		.style("stroke-width", "1px")
-		.attr("fill", function(d, i) {
-		  return colorpie(piedata[i].Haushaltstyp);
-		})
+    .attr("transform", "translate(180,160)")
+    .selectAll("path")
+    .data(pie(piedata))
+    .enter()
+    .append("path")
+    .attr("d", arc)
+    .style("stroke", "black")
+    .style("stroke-width", "1px")
+    .attr("fill", function(d, i) {
+      return colorpie(piedata[i].Haushaltstyp);
+    })
 
-                  .on("mouseover", function(d, i) {
-                     d3.select(this)
-                        .style('stroke', function (d) {
-                            return '#a0a0a0';
-                        })
-                        .style('stroke-width', function (d) {
-                            return '1';
-                        });
-
-                        div.transition()
-                            .duration(200)
-                            .style("opacity", .9);
-                        div
-                            .html("<strong>" + "Haushaltstyp: " + "</strong>" + piedata[i].Haushaltstyp + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata[i].Anteil + "%")
-                            .style("left", (d3.event.pageX) + "px")
-                            .style("top", (d3.event.pageY - 28) + "px");
-                    })
-                  .on("mouseout", function(d, i) {
-			    d3.select(this)
-			      .style('stroke', function(d) {
-				return 'black';
-			      })
-			      .style('stroke-width', function(d) {
-				return '1';
-			      });
-		});
-
-    //prepare Legend
-
-    var legendRectSize = 12,
-        legendSpacing = 4;
-
-    var legend =  d3.selectAll("#piechart")
-        .select("svg")
-        .append("g")
-        .selectAll('.legend')
-        .data(colorpie.domain())
-        .enter()
-        .append('g')
-	.attr('class', 'legend')
-
-	.attr('transform', function(d, i) {
-		  var height = legendRectSize + legendSpacing;
-		  var offset = height * colorpie.domain().length / 2;
-		  var horz, vert;
-		  if (i < 5) {
-		    horz = (i * legendRectSize * 5.4) + 35; // -2 * legendRectSize;
-		    vert = 360; // i * height - offset;
-		  } else {
-		    horz = ((i - 4) * legendRectSize * 5.4) + 35;
-		    vert = height + 370;
-		  }
-		  return 'translate(' + horz + ',' + vert + ')';
-	});
-
-    legend.append('rect')
-        .attr('width', legendRectSize)
-        .attr('height', legendRectSize)
-        .style('fill', colorpie)
-        .style('stroke', colorpie)
-        .style("stroke-width", 2);
-
-    legend.append('text')
-        .attr('x', legendRectSize + legendSpacing)
-        .attr('y', legendRectSize - legendSpacing)
-        .text(function(d, i) { return piedata[i].Haushaltstyp; }).style("fill","#00")
-        .style('font-family','sans-serif').style("display",function(d){
-            return (d=='root')? 'none':'initial';
+    .on("mouseover", function(d, i) {
+      d3.select(this)
+        .style('stroke', function(d) {
+          return '#a0a0a0';
+        })
+        .style('stroke-width', function(d) {
+          return '1';
         });
+
+      div.transition()
+        .duration(200)
+        .style("opacity", .9);
+      div
+        .html("<strong>" + "Haushaltstyp: " + "</strong>" + piedata[i].Haushaltstyp + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata[i].Anteil + "%")
+        .style("left", (d3.event.pageX) + "px")
+        .style("top", (d3.event.pageY - 28) + "px");
+    })
+    .on("mouseout", function(d) {
+      d3.select(this)
+         .style('stroke', function (d){if (d.id == "9329") {
+          return "white"
+      }else {
+          return '#000';
+      }
+      })
+        .style('stroke-width', '0.5');
+      div.transition()
+        .duration(500)
+        .style("opacity", 0);
+    });
+
+  //prepare Legend
+
+  var legendRectSize = 12,
+    legendSpacing = 4;
+
+  var legend = d3.selectAll("#piechart")
+    .select("svg")
+    .append("g")
+    .selectAll('.legend')
+    .data(colorpie.domain())
+    .enter()
+    .append('g')
+    .attr('class', 'legend')
+
+    .attr('transform', function(d, i) {
+      var height = legendRectSize + legendSpacing;
+      var offset = height * colorpie.domain().length / 2;
+      var horz, vert;
+      if (i < 5) {
+        horz = (i * legendRectSize * 5.4) + 35; // -2 * legendRectSize;
+        vert = 360; // i * height - offset;
+      } else {
+        horz = ((i - 4) * legendRectSize * 5.4) + 35;
+        vert = height + 370;
+      }
+      return 'translate(' + horz + ',' + vert + ')';
+    });
+
+  legend.append('rect')
+    .attr('width', legendRectSize)
+    .attr('height', legendRectSize)
+    .style('fill', colorpie)
+    .style('stroke', colorpie)
+    .style("stroke-width", 2);
+
+  legend.append('text')
+    .attr('x', legendRectSize + legendSpacing)
+    .attr('y', legendRectSize - legendSpacing)
+    .text(function(d, i) {
+      return piedata[i].Haushaltstyp;
+    }).style("fill", "#00")
+    .style('font-family', 'sans-serif').style("display", function(d) {
+      return (d == 'root') ? 'none' : 'initial';
+    });
 
 }
 
@@ -369,119 +393,127 @@ function drawPiechartHaushalt(data2, r) {
 
 // Pie Chart Altersgruppen 2004-2017
 function drawPiechartAlter(data2, r) {
-     var filteredData = data2;
+  var filteredData = data2;
 
-            //Farbskala Pie Chart
-			var colorpie = d3.scaleOrdinal()
-				.range(["#ff0000", "#0059b2", "#6a51a3", "green", "orange"])
+  //Farbskala Pie Chart
+  var colorpie = d3.scaleOrdinal()
+    .range(["#ff0000", "#0059b2", "#6a51a3", "green", "orange"])
 
-        delete filteredData.Total;
-        delete filteredData.BFS_NR_GEMEINDE;
-        delete filteredData.Gemeinde;
-        delete filteredData.Statistikjahr;
+  delete filteredData.Total;
+  delete filteredData.BFS_NR_GEMEINDE;
+  delete filteredData.Gemeinde;
+  delete filteredData.Statistikjahr;
 
-      var piedata = [];
-        for (var key in filteredData) {
-          piedata.push({
-            Altersgruppe: key,
-            Anteil: filteredData[key]
-          })
-        };
+  var piedata = [];
+  for (var key in filteredData) {
+    piedata.push({
+      Altersgruppe: key,
+      Anteil: filteredData[key]
+    })
+  };
 
-    console.log(piedata)
+  console.log(piedata)
 
-            var arc = d3.arc()
-				.innerRadius(80) //if inner radius is 0 then it becomes a pie chart
-				.outerRadius(r);
+  var arc = d3.arc()
+    .innerRadius(80) //if inner radius is 0 then it becomes a pie chart
+    .outerRadius(r);
 
-			var pie = d3.pie()
-				.value(function (d) {return d.Anteil;});
+  var pie = d3.pie()
+    .value(function(d) {
+      return d.Anteil;
+    });
 
-            d3.selectAll("#piechart")
-		.select("svg")
-		.append("g")
+  d3.selectAll("#piechart")
+    .select("svg")
+    .append("g")
     .attr("id", "pie")
-		.attr("transform", "translate(180,160)")
-		.selectAll("path")
-		.data(pie(piedata))
-		.enter()
-		.append("path")
-		.attr("d", arc)
-		.style("stroke", "black")
-		.style("stroke-width", "1px")
-		.attr("fill", function(d, i) {
-		  return colorpie(piedata[i].Altersgruppe);
-		})
+    .attr("transform", "translate(180,160)")
+    .selectAll("path")
+    .data(pie(piedata))
+    .enter()
+    .append("path")
+    .attr("d", arc)
+    .style("stroke", "black")
+    .style("stroke-width", "1px")
+    .attr("fill", function(d, i) {
+      return colorpie(piedata[i].Altersgruppe);
+    })
 
-                  .on("mouseover", function(d, i) {
-                     d3.select(this)
-                        .style('stroke', function (d) {
-                            return '#a0a0a0';
-                        })
-                        .style('stroke-width', function (d) {
-                            return '1';
-                        });
-
-                        div.transition()
-                            .duration(200)
-                            .style("opacity", .9);
-                        div
-                            .html("<strong>" + "Altersgruppe: " + "</strong>" + piedata[i].Altersgruppe + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata[i].Anteil + "%")
-                            .style("left", (d3.event.pageX) + "px")
-                            .style("top", (d3.event.pageY - 28) + "px");
-                    })
-                     .on("mouseout", function(d, i) {
-			    d3.select(this)
-			      .style('stroke', function(d) {
-				return 'black';
-			      })
-			      .style('stroke-width', function(d) {
-				return '1';
-			      });
-			});
-
-    //prepare Legend
-
-    var legendRectSize = 12,
-        legendSpacing = 4;
-
-   var legend =  d3.selectAll("#piechart")
-        .select("svg")
-        .append("g")
-        .selectAll('.legend')
-        .data(colorpie.domain())
-        .enter()
-        .append('g')
-	.attr('class', 'legend')
-
-	 .attr('transform', function(d, i) {
-		  var height = legendRectSize + legendSpacing;
-		  var offset = height * colorpie.domain().length / 2;
-		  var horz, vert;
-		  if (i < 5) {
-		    horz = (i * legendRectSize * 5.4) + 35; // -2 * legendRectSize;
-		    vert = 360; // i * height - offset;
-		  } else {
-		    horz = ((i - 4) * legendRectSize * 5.4) + 35;
-		    vert = height + 370;
-		  }
-		  return 'translate(' + horz + ',' + vert + ')';
-	});
-
-    legend.append('rect')
-        .attr('width', legendRectSize)
-        .attr('height', legendRectSize)
-        .style('fill', colorpie)
-        .style('stroke', colorpie)
-        .style("stroke-width", 2);
-
-    legend.append('text')
-        .attr('x', legendRectSize + legendSpacing)
-        .attr('y', legendRectSize - legendSpacing)
-        .text(function(d, i) { return piedata[i].Altersgruppe; }).style("fill","#00")
-        .style('font-family','sans-serif').style("display",function(d){
-            return (d=='root')? 'none':'initial';
+    .on("mouseover", function(d, i) {
+      d3.select(this)
+        .style('stroke', function(d) {
+          return '#a0a0a0';
+        })
+        .style('stroke-width', function(d) {
+          return '1';
         });
+
+      div.transition()
+        .duration(200)
+        .style("opacity", .9);
+      div
+        .html("<strong>" + "Altersgruppe: " + "</strong>" + piedata[i].Altersgruppe + "<br/>" + "<strong>" + "Anteil: " + "</strong>" + piedata[i].Anteil + "%")
+        .style("left", (d3.event.pageX) + "px")
+        .style("top", (d3.event.pageY - 28) + "px");
+    })
+    .on("mouseout", function(d) {
+      d3.select(this)
+         .style('stroke', function (d){if (d.id == "9329") {
+          return "white"
+      }else {
+          return '#000';
+      }
+      })
+        .style('stroke-width', '0.5');
+      div.transition()
+        .duration(500)
+        .style("opacity", 0);
+    });
+
+  //prepare Legend
+
+  var legendRectSize = 12,
+    legendSpacing = 4;
+
+  var legend = d3.selectAll("#piechart")
+    .select("svg")
+    .append("g")
+    .selectAll('.legend')
+    .data(colorpie.domain())
+    .enter()
+    .append('g')
+    .attr('class', 'legend')
+
+    .attr('transform', function(d, i) {
+      var height = legendRectSize + legendSpacing;
+      var offset = height * colorpie.domain().length / 2;
+      var horz, vert;
+      if (i < 5) {
+        horz = (i * legendRectSize * 5.4) + 35; // -2 * legendRectSize;
+        vert = 360; // i * height - offset;
+      } else {
+        horz = ((i - 4) * legendRectSize * 5.4) + 35;
+        vert = height + 370;
+      }
+      return 'translate(' + horz + ',' + vert + ')';
+    });
+
+  legend.append('rect')
+    .attr('width', legendRectSize)
+    .attr('height', legendRectSize)
+    .style('fill', colorpie)
+    .style('stroke', colorpie)
+    .style("stroke-width", 2);
+
+  legend.append('text')
+    .attr('x', legendRectSize + legendSpacing)
+    .attr('y', legendRectSize - legendSpacing)
+    .text(function(d, i) {
+      return piedata[i].Altersgruppe;
+    }).style("fill", "#00")
+    .style('font-family', 'sans-serif').style("display", function(d) {
+      return (d == 'root') ? 'none' : 'initial';
+    });
 
 }
 
