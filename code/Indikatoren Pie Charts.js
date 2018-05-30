@@ -244,10 +244,10 @@ function drawPiechartAuslaender(data2, r) {
       var horz, vert;
       if (i > 0) {
         horz = 100; // -2 * legendRectSize;
-        vert = 360; // i * height - offset;
+        vert = 350; // i * height - offset;
       } else {
         horz = 220;
-        vert = 360;
+        vert = 350;
       }
       return 'translate(' + horz + ',' + vert + ')';
     });
@@ -375,10 +375,10 @@ function drawPiechartHaushalt(data2, r) {
       var horz, vert;
       if (i < 3) {
         horz = (i * legendRectSize * 10.4) + 5; // -2 * legendRectSize;
-        vert = 360; // i * height - offset;
+        vert = 340; // i * height - offset;
       } else {
         horz = ((i - 2) * legendRectSize * 10.4) - 35;
-        vert = height + 370;
+        vert = height + 350;
       }
       return 'translate(' + horz + ',' + vert + ')';
     });
@@ -504,10 +504,10 @@ function drawPiechartAlter(data2, r) {
       var horz, vert;
       if (i < 5) {
         horz = (i * legendRectSize * 5.4) + 35; // -2 * legendRectSize;
-        vert = 360; // i * height - offset;
+        vert = 350; // i * height - offset;
       } else {
         horz = ((i - 4) * legendRectSize * 5.4) + 35;
-        vert = height + 370;
+        vert = height + 350;
       }
       return 'translate(' + horz + ',' + vert + ')';
     });
