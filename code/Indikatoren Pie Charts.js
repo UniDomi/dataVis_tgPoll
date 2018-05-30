@@ -103,10 +103,10 @@ function drawPiechartParteien(data2, r) {
       var horz, vert;
       if (i < 5) {
         horz = (i * legendRectSize * 5.4) + 35; // -2 * legendRectSize;
-        vert = 360; // i * height - offset;
+        vert = 340; // i * height - offset;
       } else {
         horz = ((i - 5) * legendRectSize * 5.4) + 35;
-        vert = height + 370;
+        vert = height + 350;
       }
       return 'translate(' + horz + ',' + vert + ')';
     });
