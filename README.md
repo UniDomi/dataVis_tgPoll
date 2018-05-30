@@ -18,6 +18,7 @@ Dominic Schweizer, domi@hilotec.com
 
 
 
+
 Daten
 
 Die verwendeten Daten können beim Portal OGD Thurgau oder der Dienststelle für Statistik des Kantons Thurgau bezogen werden Die aufbereiteten Datensätze werden unter den untenstehenden Links zur Verfügung gestellt:
