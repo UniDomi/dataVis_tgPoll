@@ -177,7 +177,7 @@ function drawMap(title) {
             drawPiechartAuslaender(d.properties.data2, r);
             break;
         }
-        drawPiechartAuslaender(d.properties.data2, r);
+    
         //console.log(d.properties.data2);
         //drawPiechart(d.properties.data2, r);
         //drawPiechartAuslaender(d.properties.data2);
