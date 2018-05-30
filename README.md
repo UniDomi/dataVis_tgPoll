@@ -1,4 +1,4 @@
-# Visualisierung-TG-Test
+# Abstimmungsdaten Kanton Thurgau
 
 Abstimmungsdaten Kanton Thurgau - Open Data Visualisierung, Universität Bern FS 2018
 
