@@ -6,7 +6,7 @@ function drawPiechartParteien(data2, r) {
 
   //Farbskala Pie Chart
   var colorpie = d3.scaleOrdinal()
-    .range(["#6a51a3", "#08306b", "green", "red", "orange", "#2171b5", "#67000d", "#c7e9c0", "#ffff00", "#ff69b4"])
+  .range(["#6a51a3", "#08306b", "#00b200", "red", "orange", "#2171b5", "#005900", "#cce5cc", "#ffff00", "#ff69b4"])
 
   delete filteredData.BEZIRK_NAME;
   delete filteredData.BEZIRK_NR;
