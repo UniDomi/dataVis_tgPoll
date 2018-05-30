@@ -174,6 +174,7 @@ function createSidebar() {
       drawMap(d.VORLAGE_BEZEICHNUNG);
       console.log("Poll & Indikator")
       console.log(poll)
+      console.log(indikatorpath)
       console.log(indikator)
       console.log(datum)
       w3_close()

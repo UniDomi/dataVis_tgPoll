@@ -4,16 +4,19 @@ function selectIndikator(selection) {
   switch (selection) {
     case 1:
       title = "Parteistärke";
+      indikatorpath = "Parteien_2016.csv"
       break;
     case 2:
       title = "Haushaltstyp";
+      indikatorpath = "Haushaltstyp_2010_2012.csv"
       break;
     case 3:
       title = "Altersstruktur";
+      indikatorpath = "Altersstruktur_2004-2017.csv"
       break;
     case 4:
       title = "Ausländeranteil";
-      console.log(title);
+      indikatorpath = "Ausländeranteil_2015-2017.csv"
       break;
     default:
   }
