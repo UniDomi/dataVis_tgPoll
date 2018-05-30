@@ -3,6 +3,7 @@ createSidebar();
 poll = 1;
 datum = 2018;
 indikator = 1;
+indikatorpath = "Parteien_2016.csv"
 
 function createSidebar() {
   d3.csv("data/Eidg_Abstimmungen_2000_2017_Kanton_inkl_Themen.csv", data => {

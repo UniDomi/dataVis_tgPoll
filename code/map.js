@@ -38,7 +38,7 @@ function drawMap(title) {
     .defer(d3.csv, "data/gemeinden/auslagerung.csv")
     //.defer(d3.csv, "data/gemeinden/"+poll+".csv")
     //.defer(d3.csv, "data/gemeinden/multipoll.csv")
-    .defer(d3.csv, "data/indikatoren/Parteien_2016.csv")
+    .defer(d3.csv, "data/indikatoren/"+ indikatorpath)
     .await(ready)
 
   function ready(error, data, csvAbstimmung, csvParteien) {
@@ -163,9 +163,9 @@ function drawMap(title) {
       .on("click", function(d) { //function(e,f){
         d3.select('#piechart').select('h3').html(d.properties.data.GEMEINDE_NAME);
         d3.selectAll("#piechart").select("g").remove()
-
+        drawPiechartAuslaender(d.properties.data2, r);
         //console.log(d.properties.data2);
-        //drawPiechart(d.properties.data2);
+        //drawPiechart(d.properties.data2, r);
         //drawPiechartAuslaender(d.properties.data2);
       })
 

@@ -122,9 +122,8 @@ var legend =  d3.selectAll("#piechart")
 
 
 //Pie Chart Auslaender 2015-2017
-function drawPiechartAuslaender() {
+function drawPiechartAuslaender(data2, r) {
      var filteredData = data2;
-    var r = 250;
             //Farbskala Pie Chart
 			var colorpie = d3.scaleOrdinal()
 				.range(["#ff0000", "#0059b2"])
