@@ -1,2 +1,0 @@
-# Visualisierung-TG-Test
-Test

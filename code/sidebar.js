@@ -12,13 +12,24 @@ function createSidebar() {
   })
 
   function drawBlocks(blockId) {
+    var mapColour = d3.scaleThreshold()
+      .domain([0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.51, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 1])
+      .range(['#4c0000', '#99000d', '#cb181d', '#ef3b2c', '#fb6a4a', '#fc9272', '#fcbba1', '#fee5d9', "#cce5ff", '#99ccff', '#66b2ff', '#3299ff', '#0080ff', '#0066cc', '#004c99', '#003366', "#00264c"]);
+
     var block = d3.selectAll("g." + blockId);
     block
       .append("rect")
       .attr("width", 230)
       .attr("height", 40)
       .attr("fill", function(d) {
-        return d.value <= 50 ? "#e50000" : '#0066cc'
+        if (d.value) {
+          var percentage = d.value/100;
+          /*console.log(percentage)*/
+          ;
+          return mapColour((percentage)); //Ja-Stimmen in Prozent
+        } else if (d.id == "9329") {
+          return "white"//"#2299ee"
+        } //if lake fill white/blue
       })
       .attr("border", "solid black 1px")
 
@@ -168,7 +179,7 @@ function createSidebar() {
 
     pollsG.on("click", function(d) {
       //d3.select("#map").select("svg").destroy();
-      
+
       poll = d.VORLAGE_NR;
       datum = d.DATUM_ABSTIMMUNG.substring(6);
       bezeichnung = d.VORLAGE_BEZEICHNUNG;
