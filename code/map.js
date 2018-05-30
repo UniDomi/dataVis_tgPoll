@@ -62,14 +62,13 @@ function drawMap() {
 
       var keys = legend.selectAll('li.key')
         .data(scale.range());
+      
+      var legendLabels = ["0%", "15%","20%","25%","30%","35%","40%","45%","51%","55%","60%","65%","70%","75%","80%","85%","100%",];
 
       keys.enter().append('li')
         .attr('class', 'key')
         .style('border-top-color', String)
-        .text(function(d) {
-          var r = scale.invertExtent(d);
-          return Math.round(r[0] * 1000) / 10 + '%';
-        });
+        .text(function(d, i) {return legendLabels[i]; });
     }
 
     var Gemeinden = topojson.feature(data, data.objects.municipalities).features;
