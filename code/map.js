@@ -34,11 +34,11 @@ function drawMap(title) {
 
   //load data files
   d3.queue()
-    .defer(d3.json, "map-TG.json")
+    .defer(d3.json, "data/geodata/map-TG.json")
     .defer(d3.csv, "data/gemeinden/auslagerung.csv")
     //.defer(d3.csv, "data/gemeinden/"+poll+".csv")
     //.defer(d3.csv, "data/gemeinden/multipoll.csv")
-    .defer(d3.csv, "Parteien_2016.csv")
+    .defer(d3.csv, "data/indikatoren/Parteien_2016.csv")
     .await(ready)
 
   function ready(error, data, csvAbstimmung, csvParteien) {
