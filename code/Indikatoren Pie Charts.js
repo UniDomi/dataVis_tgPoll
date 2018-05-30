@@ -1,5 +1,5 @@
 // Pie Chart Parteien 2008, 2012, 2016
-function drawPiechartParteien2012_2016(data2) {
+function drawPiechartParteien() {
         var filteredData = data2;
         
         console.log(filteredData);
@@ -25,21 +25,28 @@ function drawPiechartParteien2012_2016(data2) {
 console.log(piedata)     
     
             var arc = d3.arc()
-				.innerRadius(80) //if inner radius is 0 then it becomes a pie chart
-				.outerRadius(r);
+		.innerRadius(80) //if inner radius is 0 then it becomes a pie chart
+		.outerRadius(r);
 				
-			var pie = d3.pie()
-				.value(function (d) {return d.votes;});
-            
-            var arcs = canvas.selectAll(".arc")
-				.data(pie(piedata))
-				.enter()
-				.append("g")
-                .attr("class", "arc");  
-				
-			arcs.append("path")
-				.attr("d", arc)
-        
+	var pie = d3.pie()
+		.value(function (d) {return d.votes;});
+	
+	
+	d3.selectAll("#piechart")
+		.select("svg")
+		.append("g")
+		.attr("transform", "translate(180,160)")
+		.selectAll("path")
+		.data(pie(piedata))
+		.enter()
+		.append("path")
+		.attr("d", arc)
+		.style("stroke", "black")
+		.style("stroke-width", "1px")
+		.attr("fill", function(d, i) {
+		  return colorpie(piedata[i].party);
+	})
+           
                   .on("mouseover", function(d, i) {
                      d3.select(this)
                         .style('stroke', function (d) {
@@ -57,32 +64,42 @@ console.log(piedata)
                             .style("left", (d3.event.pageX) + "px")
                             .style("top", (d3.event.pageY - 28) + "px");
                     })
-                .attr("fill", function (d, i) {return colorpie (piedata[i].party);}); 
+                .on("mouseout", function(d, i) {
+		    d3.select(this)
+		      .style('stroke', function(d) {
+			return 'black';
+		      })
+		      .style('stroke-width', function(d) {
+			return '1';
+		      });
+	})
     
     //prepare Legend
     var legendRectSize = 12,
         legendSpacing = 4;
-    
-    var legend = canvas.selectAll('.legend')
+	
+var legend =  d3.selectAll("#piechart")
+        .select("svg")
+        .append("g")
+        .selectAll('.legend')
         .data(colorpie.domain())
         .enter()
         .append('g')
-        .attr('class', 'legend')
-        .attr('transform', function(d, i) {        
-            var height = legendRectSize + legendSpacing;
-            var offset =  height * colorpie.domain().length / 2;
-            var horz, vert;
-            if(i<5){
-                horz = (i * legendRectSize*5.4)-155; // -2 * legendRectSize;
-                vert = 205;// i * height - offset;
-            }else{
-                horz = ((i-5) * legendRectSize*5.4)-155;
-                vert = height +215;      
-            }
-            
-            return 'translate(' + horz + ',' + vert + ')';
-            
-        });
+	.attr('class', 'legend')
+
+	 .attr('transform', function(d, i) {
+		  var height = legendRectSize + legendSpacing;
+		  var offset = height * colorpie.domain().length / 2;
+		  var horz, vert;
+		  if (i < 5) {
+		    horz = (i * legendRectSize * 5.4) + 35; // -2 * legendRectSize;
+		    vert = 360; // i * height - offset;
+		  } else {
+		    horz = ((i - 5) * legendRectSize * 5.4) + 35;
+		    vert = height + 370;
+		  }
+          return 'translate(' + horz + ',' + vert + ')';
+	});
     
     legend.append('rect')
         .attr('width', legendRectSize)
