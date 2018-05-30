@@ -1,6 +1,6 @@
 function drawMap() {
   cleanup();
-  d3.select("h2").html("<h2>" + bezeichnung + "</h2>");
+  d3.select("h2").html("<h2>" + bezeichnung+ "("+datum+ ")" + "</h2>");
   var dataset;
 
   var width = 960,
@@ -37,13 +37,14 @@ function drawMap() {
   d3.queue()
     .defer(d3.json, "data/geodata/map-TG.json")
     .defer(d3.csv, "data/gemeinden/auslagerung.csv")
-    //.defer(d3.csv, "data/gemeinden/"+poll+".csv")
-    //.defer(d3.csv, "data/gemeinden/multipoll.csv")
     .defer(d3.csv, "data/indikatoren/"+ indikatorpath)
+    .defer(d3.csv, "data/indikatoren/Parteistaerke_Gemeinde_2008.csv")
+    .defer(d3.csv, "data/indikatoren/Parteistaerke_Gemeinde_2012.csv")
+    .defer(d3.csv, "data/indikatoren/Parteistaerke_Gemeinde_2016.csv")
     .await(ready)
 
-  function ready(error, data, csvAbstimmung, csvParteien) {
-
+  function ready(error, data, csvAbstimmung, csvParteien, partei08, partei12, partei16) {
+    console.log(csvParteien);
     if (error) {
       console.log("Error: " + error)
     };
@@ -83,10 +84,69 @@ function drawMap() {
         }
       });
     });
+    switch (indikator){
+      case 1:
+        console.log("Starting with Parteien")
+        if(datum < 2008){
+          datum = 2008;
+          filteredData = partei08;
+        }
+        else if(datum < 2012){
+          datum = 2008;
+          filteredData = partei08;
+        }
+        else if(datum < 2016){
+          datum = 2012;
+          filteredData = partei12;
+        }
+        else if(datum > 2016){
+          datum = 2016;
+          filteredData = partei16;
+        }
+        console.log(filteredData);
+        break;
+      case 2:
+        datum = "";
+        var filteredData = csvParteien
+        break;
+      case 3:
+        console.log("Starting with Altersgruppen")
+        console.log(datum)
+        if(datum < 2004){
+          console.log("Year too low")
+          datum = 2004;
+        }
+        if(datum > 2017){
+          console.log("Year too high")
+          datum = 2017;
+        }
+        var filteredData = csvParteien.filter(function(d) {
+          if (d["Statistikjahr"] == datum) return d;
+        });
+        break;
+      case 4:
+        console.log("Starting with Ausländer")
+        console.log(datum)
+        if(datum < 2015){
+          console.log("Year too low")
+          datum = 2015;
+        }
+        if(datum > 2017){
+          console.log("Year too high")
+          datum = 2017;
+        }
+        var filteredData = csvParteien.filter(function(d) {
+          if (d["Jahr"] == datum) return d;
+        });
+        break;
+        default:
+          console.log("This does nuffin!");
 
+    }
+    console.log(filteredData)
     //match id (topojson) & BFS_NR_GEMEINDE (csvParteien)
     Gemeinden.forEach(function(gemeinde) {
-      csvParteien.some(function(csvrow) {
+      filteredData.some(function(csvrow) {
         if (gemeinde.id == csvrow.BFS_NR_GEMEINDE) {
           gemeinde.properties.data2 = csvrow;
           return true;
@@ -162,7 +222,7 @@ function drawMap() {
       })
 
       .on("click", function(d) { //function(e,f){
-        d3.select('#piechart').select('h3').html(d.properties.data.GEMEINDE_NAME);
+        d3.select('#piechart').select('h3').html(d.properties.data.GEMEINDE_NAME +" "+ datum);
         switch (indikator){
           case 1:
             drawPiechartParteien(d.properties.data2, r);

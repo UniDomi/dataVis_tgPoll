@@ -1,8 +1,11 @@
 // Pie Chart Parteien 2008, 2012, 2016
 function drawPiechartParteien(data2, r) {
   var filteredData = data2;
-
-  console.log(filteredData);
+  /*
+  var filteredData = data2.filter(function(d) {
+    if (d["D1E1_BEZEICHNUNG"] == d1e1) return d;
+  })
+  */
 
   //Farbskala Pie Chart
   var colorpie = d3.scaleOrdinal()
@@ -134,6 +137,8 @@ function drawPiechartParteien(data2, r) {
 //Pie Chart Auslaender 2015-2017
 function drawPiechartAuslaender(data2, r) {
   var filteredData = data2;
+  console.log("FilteredData:")
+  console.log(data2);
   //Farbskala Pie Chart
   var colorpie = d3.scaleOrdinal()
     .range(["#ff0000", "#0059b2"])
