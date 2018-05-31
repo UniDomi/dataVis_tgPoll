@@ -84,29 +84,31 @@ function drawMap() {
         }
       });
     });
+    
     switch (indikator){
       case 1:
         console.log("Starting with Parteien")
         if(datum < 2008){
-          datum = 2008;
+          datumI = 2008;
           filteredData = partei08;
         }
         else if(datum < 2012){
-          datum = 2008;
+          datumI = 2008;
           filteredData = partei08;
         }
         else if(datum < 2016){
-          datum = 2012;
+          datumI = 2012;
           filteredData = partei12;
         }
-        else if(datum > 2016){
-          datum = 2016;
+        else //if(datum > 2018)
+        {
+          datumI = 2016;
           filteredData = partei16;
         }
         console.log(filteredData);
         break;
       case 2:
-        datum = "";
+        datumI = "2010/2012";
         var filteredData = csvParteien
         break;
       case 3:
@@ -114,14 +116,15 @@ function drawMap() {
         console.log(datum)
         if(datum < 2004){
           console.log("Year too low")
-          datum = 2004;
+          datumI = 2004;
         }
-        if(datum > 2017){
+        if(datum > 2018){
           console.log("Year too high")
-          datum = 2017;
+          datumI = 2017;
         }
+        if (datum > 2004 && datum < 2017){datumI = datum;}
         var filteredData = csvParteien.filter(function(d) {
-          if (d["Statistikjahr"] == datum) return d;
+          if (d["Statistikjahr"] == datumI) return d;
         });
         break;
       case 4:
@@ -129,14 +132,15 @@ function drawMap() {
         console.log(datum)
         if(datum < 2015){
           console.log("Year too low")
-          datum = 2015;
+          datumI = 2015;
         }
-        if(datum > 2017){
+        if(datum > 2018){
           console.log("Year too high")
-          datum = 2017;
+          datumI = 2017;
         }
+        if (datum > 2015 && datum < 2018){datumI = datum;}
         var filteredData = csvParteien.filter(function(d) {
-          if (d["Jahr"] == datum) return d;
+          if (d["Jahr"] == datumI) return d;
         });
         break;
         default:
@@ -222,7 +226,7 @@ function drawMap() {
       })
 
       .on("click", function(d) { //function(e,f){
-        d3.select('#piechart').select('h3').html(d.properties.data.GEMEINDE_NAME +" "+ datum);
+        d3.select('#piechart').select('h3').html(d.properties.data.GEMEINDE_NAME +" "+ datumI);
         switch (indikator){
           case 1:
             drawPiechartParteien(d.properties.data2, r);
