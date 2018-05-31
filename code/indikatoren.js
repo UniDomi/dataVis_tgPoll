@@ -25,6 +25,7 @@ function selectIndikator(selection) {
     default:
   }
   d3.select("#indikatorTitle").html("<h4>" + title + "</h4>")
+  d3.select('#piechart').select('h3').html("Kanton Thurgau")
   console.log(title);
   console.log(indikator);
 }
