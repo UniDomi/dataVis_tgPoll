@@ -122,7 +122,7 @@ function drawMap() {
           console.log("Year too high")
           datumI = 2017;
         }
-        if (datum > 2004 && datum < 2017){datumI = datum;}
+        if (datum > 2004 && datum < 2018){datumI = datum;}
         var filteredData = csvParteien.filter(function(d) {
           if (d["Statistikjahr"] == datumI) return d;
         });
