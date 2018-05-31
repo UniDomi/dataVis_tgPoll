@@ -19,7 +19,7 @@ function selectIndikator(selection) {
       break;
     case 4:
       title = "Ausländeranteil";
-      indikatorpath = "Ausländeranteil_2015-2017.csv"
+      indikatorpath = "Auslaenderanteil_2015-2017.csv"
       drawMap();
       break;
     default:
