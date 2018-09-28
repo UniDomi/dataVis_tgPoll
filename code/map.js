@@ -1,40 +1,19 @@
+
+
 function drawMap() {
-  cleanup();
+
+  splitLoad();
+
   d3.select("h2").html("<h2>" + bezeichnung+ "("+datum+ ")" + "</h2>");
-  var dataset;
 
-  var width = 960,
-    height = 500;
+  function splitLoad(){
+    console.log('Splitting monster function into small bit')
+    cleanup();
+    loadData();
+  }
 
-  //#piechart
-  var width2 = 360;
-  var height2 = 480;
-
-  var svg = d3.select("#map").append("svg")
-    .attr("width", width)
-    .attr("height", height)
-    .attr("transform", "translate(-30, 0)");
-
-  canvas = d3.select("#piechart")
-    .append("svg")
-    .append("g")
-    .attr("width", width2)
-    .attr("height", height2)
-  //.attr("transform", "translate(" + width2 / 2 + "," + 200 + ")")
-
-  div = d3.select("body").append("div")
-    .attr("class", "tooltip")
-    .style("opacity", 0);
-
-   var r = Math.min(width2, height2) / 2.5; //var r = 180;
-
-  //map colour scale
-  var mapColour = d3.scaleThreshold()
-    .domain([0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.51, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 1])
-    .range(['#4c0000', '#99000d', '#cb181d', '#ef3b2c', '#fb6a4a', '#fc9272', '#fcbba1', '#fee5d9', "#cce5ff", '#99ccff', '#66b2ff', '#3299ff', '#0080ff', '#0066cc', '#004c99', '#003366', "#00264c"]);
-
-  //load data files
-  d3.queue()
+  function loadData(){
+    d3.queue()
     .defer(d3.json, "data/geodata/map-TG.json")
     .defer(d3.csv, "data/gemeinden/auslagerung.csv")
     .defer(d3.csv, "data/indikatoren/"+ indikatorpath)
@@ -42,12 +21,52 @@ function drawMap() {
     .defer(d3.csv, "data/indikatoren/Parteistaerke_Gemeinde_2012.csv")
     .defer(d3.csv, "data/indikatoren/Parteistaerke_Gemeinde_2016.csv")
     .await(ready)
+  }
 
   function ready(error, data, csvAbstimmung, csvParteien, partei08, partei12, partei16) {
     console.log(csvParteien);
     if (error) {
       console.log("Error: " + error)
-    };
+    };  
+  
+
+  
+  var dataset;
+
+  var map_width = 960,
+    map_height = 500;
+
+  //#piechart
+  var pie_width = 360;
+  var pie_height = 480;
+  function createMap(){
+    
+  }
+  var svg = d3.select("#map").append("svg")
+    .attr("width", map_width)
+    .attr("height", map_height)
+    .attr("transform", "translate(-30, 0)");
+
+  canvas = d3.select("#piechart")
+    .append("svg")
+    .append("g")
+    .attr("width", pie_width)
+    .attr("height", pie_height)
+
+  div = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+   var r = Math.min(pie_width, pie_height) / 2.5; //var r = 180;
+
+  //map colour scale
+  var mapColour = d3.scaleThreshold()
+    .domain([0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.51, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 1])
+    .range(['#4c0000', '#99000d', '#cb181d', '#ef3b2c', '#fb6a4a', '#fc9272', '#fcbba1', '#fee5d9', "#cce5ff", '#99ccff', '#66b2ff', '#3299ff', '#0080ff', '#0066cc', '#004c99', '#003366', "#00264c"]);
+
+  
+
+
 
     var abstimmung = csvAbstimmung.filter(function(d) {
       if (d["VORLAGE_BEZEICHNUNG"] == poll) return d;
