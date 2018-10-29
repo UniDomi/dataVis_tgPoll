@@ -263,6 +263,8 @@ function emptyMap() {
   splitLoad();
 
   d3.select("h2").html("Abstimmungsverhalten Kanton Thurgau");
+    d3.select("h3").html("Kanton Thurgau");
+    d3.select("#indikatorTitle").html("Indikator");
 
   function splitLoad() {
     console.log('Splitting monster function into small bit')
