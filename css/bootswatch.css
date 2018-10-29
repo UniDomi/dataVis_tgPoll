@@ -9573,3 +9573,12 @@ a.text-dark:hover, a.text-dark:focus {
     margin-left: 25px;
     margin-bottom: 15px;
 }
+
+.btn-right {
+    margin-left: 300px;
+    margin-bottom: 15px;
+}
+
+.modal-title {
+    margin-left: 60px;
+}
