@@ -9568,3 +9568,8 @@ a.text-dark:hover, a.text-dark:focus {
 .modal .close {
   color: #000;
 }
+
+.btn-space {
+    margin-left: 25px;
+    margin-bottom: 15px;
+}
