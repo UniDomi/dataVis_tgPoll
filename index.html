@@ -21,7 +21,7 @@
 
 <body onload="emptyMap()">
 	<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
-		<a class="navbar-brand" onclick="emptyMap()" href="#">Home</a>
+		<a class="navbar-brand" onclick="emptyMap()" href="#">Abstimmungsverhalten Kanton Thurgau</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
 	    <span class="navbar-toggler-icon">Test</span>
 	  </button>
@@ -66,7 +66,7 @@
         -->
 	</nav>
 	<div class="w3-sidebar w3-bar-block" style="display:none" id="mySidebar">
-		<button onclick="w3_close()" class="w3-bar-item w3-button w3-large">Close &times;</button>
+		<button onclick="w3_close()" class="w3-bar-item w3-button w3-large">Schliessen &times;</button>
 		<div id="viz">
 			<h1>Eidgenössische Abstimmungen seit 2000</h1>
 			<svg id="tree" style="width:2000px;height:2000px;border:1px lightgray solid;" />
@@ -89,6 +89,37 @@
                             <a class="dropdown-item" href="#" onclick="selectIndikator(3),w3_close()">Altersstruktur</a>
                             <a class="dropdown-item" href="#" onclick="selectIndikator(4),w3_close()">Ausländeranteil</a>
                           </div>
+                
+
+                
+                <button type="button" class="btn btn-primary btn-right" data-toggle="modal" data-target="#exampleModal">
+                  Anleitung
+                </button>
+                
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Anleitung</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                          <p>In einem ersten Schritt wird die Abstimmung ausgewählt, die auf der Karte dargestellt werden soll. Die Abstimmungsvorlagen im Abstimmungsbaum sind nach Themenbereiche kategorisiert. Beim Anklicken einer Abstimmung werden die Resultate der ausgewählten Abstimmung auf der Karte visualisiert. Wird die Maus über eine Gemeinde bewegt erscheint ein Tooltip mit Name, Anteil Ja-Stimmen und Stimmbeteiligung der Gemeinde. </p>
+                        
+                          <p>In einem zweiten Schritt kann ergänzend zu den Abstimmungsresultaten ein Indikator in Form von Bevölkerungsinformationen oder statistischen Daten zu den Thurgauer Gemeinden dargestellt werden. In der Dropdown-Liste kann der gewünschte Indikator ausgewählt werden. Der Indikator wird beim Anklicken einer Gemeinde für die ausgewählte Gemeinde in einem Diagramm neben der Karte dargestellt. Beim Bewegen der Maus über die einzelnen Teile im Diagramm erscheint ein Tooltip mit der entsprechenden Legende und dem Anteil.</p>
+                         
+                        <p>Durch die Kombination von Abstimmungsresultate mit zusätzlichen Informationen zu den jeweiligen Gemeinden lassen sich Muster im Abstimmungsverhalten entdecken.</p>
+                
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Schliessen</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
             
                 
 				<h2>Abstimmungsverhalten Kanton Thurgau</h2>
@@ -100,7 +131,7 @@
 			<div class="col-sm-3">
 				<div id="piechart" style="float:right">
 					<h3 BFS-Nr="000">Kanton Thurgau</h3>
-					<h4 id="indikatorTitle">Parteistärke</h4>
+					<h4 id="indikatorTitle">Indikator</h4>
 					<svg style="width:360px;height:480px;" />
 				</div>
 			</div>
